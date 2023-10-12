@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { fetchCategories } from "../../services/fakeStoreAPI"; // Ajuste o caminho para o seu arquivo api
-import { ProductList } from "./ProductList";
+import { fetchCategories } from "../../services/fakeStoreAPI";
+import { ProductList } from "./productList";
 
 interface Category {
   id: number;
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   categoryTitle: {
     fontSize: 32,
     marginLeft: 16,
+    marginRight: 16,
     color: "black",
     textTransform: "capitalize",
   },

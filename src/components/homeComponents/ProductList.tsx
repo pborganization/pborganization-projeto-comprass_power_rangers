@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { fetchProductsForCategory } from "../../services/fakeStoreAPI";
-import { Products } from "./Products";
+import { Products } from "./products";
 import { ProductType } from "../../interfaces/productType";
 
 interface ProductListProps {
@@ -47,5 +47,6 @@ const styles = StyleSheet.create({
   },
   productList: {
     marginLeft: 16,
+    marginRight: 16,
   },
 });

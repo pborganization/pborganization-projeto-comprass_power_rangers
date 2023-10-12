@@ -26,3 +26,12 @@ export const fetchProductsForCategory = async (
     throw error;
   }
 };
+
+export const fetchProductById = async (productId: any) => {
+  try {
+    const response = await api.get(`/products/${productId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -16,9 +16,9 @@ export const NotLogged = () => {
             </View>
             <View style={styles.subtitleContainer}>
                 <Text style={styles.subtitle}>You need to log in to see your details</Text>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.textButton}>LOGIN</Text>
-            </TouchableOpacity>
+                    <TouchableOpacity style={styles.button}>
+                        <Text style={styles.textButton}>LOGIN</Text>
+                    </TouchableOpacity>
             </View>
             <View style={styles.language}>
                 <LanguageOption />

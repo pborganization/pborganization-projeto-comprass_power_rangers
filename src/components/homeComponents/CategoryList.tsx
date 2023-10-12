@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   categoryTitle: {
     fontSize: 32,
     marginLeft: 16,
+    marginRight: 16,
     color: "black",
     textTransform: "capitalize",
   },

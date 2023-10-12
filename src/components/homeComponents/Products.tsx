@@ -24,7 +24,10 @@ export const Products: React.FC<ProductProps> = ({ product }) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerquanty}>
-        <QuantityIndicator />
+        <QuantityIndicator
+          increasestyle={styles.increasebutton}
+          decreasestyle={styles.decreasebutton}
+        />
       </View>
       <TouchableOpacity onPress={handleProductPress}>
         <Image source={{ uri: product.images[0] }} style={styles.image} />
@@ -63,5 +66,11 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 10,
+  },
+  increasebutton: {
+    borderTopRightRadius: 16,
+  },
+  decreasebutton: {
+    borderTopLeftRadius: 16,
   },
 });

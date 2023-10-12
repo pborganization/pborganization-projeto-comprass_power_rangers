@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { IncreaseButton } from "./increaseButton";
 import { DecreaseButton } from "./decreaseButton";
 
-export const QuantityIndicator = () => {
+export const QuantityIndicator = (props: any) => {
   const [quant, setQuant] = useState(0);
 
   const increaseQuantity = () => {
@@ -19,13 +19,19 @@ export const QuantityIndicator = () => {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <DecreaseButton onPress={decreaseQuantity} radius={18} />
+        <DecreaseButton
+          onPress={decreaseQuantity}
+          style={props.decreasestyle}
+        />
       </View>
       <View style={styles.numberContainer}>
         <Text>{quant}</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <IncreaseButton onPress={increaseQuantity} radius={18} />
+        <IncreaseButton
+          onPress={increaseQuantity}
+          style={props.increasestyle}
+        />
       </View>
     </View>
   );
@@ -48,5 +54,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderTopWidth: 1,
     borderColor: "gray",
+    height: "100%",
   },
 });

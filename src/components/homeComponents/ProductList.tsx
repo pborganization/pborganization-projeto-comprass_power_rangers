@@ -47,5 +47,6 @@ const styles = StyleSheet.create({
   },
   productList: {
     marginLeft: 16,
+    marginRight: 16,
   },
 });

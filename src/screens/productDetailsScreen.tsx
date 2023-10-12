@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { fetchProductById } from "../services/fakeStoreAPI";
 import { ProductType } from "../interfaces/productType";
 import { QuantityIndicator } from "../components/homeComponents/quantityIndicator";
+import { StatusBar } from "expo-status-bar";
 
 interface RouteParams {
   productId: number;
@@ -43,11 +44,32 @@ export const ProductDetailsScreen = () => {
           <View style={styles.containerdesc}>
             <Text>{product.description}</Text>
           </View>
-          <QuantityIndicator />
+          <View style={styles.containerquanty}>
+            <QuantityIndicator
+              increasestyle={styles.increasebutton}
+              decreasestyle={styles.decreasebutton}
+            />
+          </View>
+          <View>
+            <TouchableOpacity style={styles.containerButton}>
+              <Text style={styles.textButton}>Shipping Info</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity style={styles.containerButton}>
+              <Text style={styles.textButton}>Suport</Text>
+            </TouchableOpacity>
+          </View>
         </>
       ) : (
-        <Text>Carregando...</Text>
+        <View style={styles.loadingContainer}>
+          <Image
+            source={require("../../assets/icons/loading.gif")}
+            style={{ width: 50, height: 50 }}
+          />
+        </View>
       )}
+      <StatusBar style="dark" />
     </View>
   );
 };
@@ -55,6 +77,10 @@ export const ProductDetailsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  containerquanty: {
+    borderRadius: 8,
+    width: 150,
   },
   containerinfo: {
     flexDirection: "row",
@@ -70,7 +96,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 413,
+    height: "50%",
     resizeMode: "cover",
   },
   name: {
@@ -86,5 +112,26 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 10,
     fontWeight: "bold",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  increasebutton: {
+    borderTopRightRadius: 16,
+  },
+  decreasebutton: {
+    borderTopLeftRadius: 16,
+  },
+  containerButton: {
+    height: 56,
+    justifyContent: "center",
+    borderColor: "gray",
+    borderWidth: 1,
+  },
+  textButton: {
+    marginLeft: 16,
+    fontSize: 16,
   },
 });

@@ -5,7 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 export const IncreaseButton = (props: any) => {
   return (
     <TouchableOpacity onPress={props.onPress}>
-      <View style={[styles.container, { borderTopRightRadius: props.radius }]}>
+      <View style={[styles.container, props.style]}>
         <AntDesign name="plus" size={24} color="white" />
       </View>
     </TouchableOpacity>

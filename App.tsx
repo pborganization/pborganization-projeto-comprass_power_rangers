@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
-import { MainScreen } from "./src/screens/mainScreen";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <MainScreen />
     </View>
   );
 }

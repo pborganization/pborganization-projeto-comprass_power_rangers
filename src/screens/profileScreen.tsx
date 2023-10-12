@@ -7,8 +7,9 @@ import {
     Switch
   } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { LanguageOption } from "../components/profileComponents/LanguageOption";
 
-  export const ProfileScreen = () => {
+export const ProfileScreen = () => {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
     return (
@@ -32,10 +33,7 @@ import { Entypo } from "@expo/vector-icons";
                         style={styles.buttonSwitch}
                     />
                 </View>
-                <View style={styles.edits}>
-                    <Text style={styles.text}>Language</Text>
-                    <Entypo name='chevron-up' size={24} color='#9B9B9B' style={styles.iconLanguage} />
-                </View>
+                    <LanguageOption />
                 <View style={styles.edits}>
                     <Text style={styles.text}>Log out</Text>
                     <Entypo name='log-out' size={20} color='#9B9B9B' style={styles.iconLog} />
@@ -96,9 +94,6 @@ import { Entypo } from "@expo/vector-icons";
     },
     buttonSwitch: {
         marginLeft: 154,
-    },
-    iconLanguage: {
-        marginLeft: 246,
     },
     iconLog: {
         marginLeft: 265,

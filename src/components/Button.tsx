@@ -9,9 +9,9 @@ interface ButtonProps {
 }
 export const Button = ({ children, onPress, disabled }: ButtonProps) => {
   return (
-    <TouchableOpacity >
+    <TouchableOpacity disabled={disabled} onPress={onPress}>
       <View style={[styles.container, disabled ? styles.disabled : null]}>
-        <Text style={styles.text} disabled={disabled} onPress={onPress}>{children}</Text>
+        <Text style={styles.text}>{children}</Text>
       </View>
     </TouchableOpacity>
   );

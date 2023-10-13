@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from "react";
-import { View, StyleSheet, TextInput, Text} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, TextInput, Text } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "../components/Button";
 import { Input } from "./Input";
-
+import { Colors } from "../../assets/styles/Colors";
 
 export const AdressForm = () => {
   const {
@@ -14,56 +14,58 @@ export const AdressForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      zipCode: '',
-      address: '',
-      city: '',
-      state: '',
-      fullName: ''
-
-    }
+      zipCode: "",
+      address: "",
+      city: "",
+      state: "",
+      fullName: "",
+    },
   });
 
   const [zipCode, setZipCode] = useState("");
   const [isValidZipCode, setIsValidZipCode] = useState(true);
-  const [allFieldsFilled, setFieldsFilled] = useState(false)
+  const [allFieldsFilled, setFieldsFilled] = useState(false);
 
   const onSubmit = async (data: any) => {
     console.log(data);
 
-    if(isValidZipCode && allFieldsFilled) {
+    if (isValidZipCode && allFieldsFilled) {
       console.log("envie os dados");
     } else {
-      console.log("preencha todos os campos")
+      console.log("preencha todos os campos");
     }
 
     if (isValidZipCode) {
-      console.log('deu certo');
+      console.log("deu certo");
     } else {
       console.log("Dados inválidos.");
     }
   };
   useEffect(() => {
-  
     if (zipCode.length === 8) {
-      
       const apiUrl = `https://viacep.com.br/ws/${zipCode}/json/`;
 
-      
       fetch(apiUrl, {
         method: "GET",
       })
         .then((response) => {
           if (response.status === 404) {
-            console.log('Código postal não encontrado');
+            console.log("Código postal não encontrado");
             setIsValidZipCode(false);
           } else if (response.ok) {
-            console.log('Código postal válido');
+            console.log("Código postal válido");
             setIsValidZipCode(true);
           } else if (response.status === 400) {
-            console.log('Cep invalido');
+            console.log("Cep invalido");
             setIsValidZipCode(false);
           } else {
-            console.log('Erro desconhecido', zipCode, apiUrl, response.status, response.statusText);
+            console.log(
+              "Erro desconhecido",
+              zipCode,
+              apiUrl,
+              response.status,
+              response.statusText
+            );
             setIsValidZipCode(false);
           }
         })
@@ -74,18 +76,24 @@ export const AdressForm = () => {
     }
   }, [zipCode]);
 
-
   const checkAllFields = () => {
-    const {zipCode, address, city, state, fullName} = getValues();
-    const fields = [zipCode, address, city, state, fullName]; 
+    const { zipCode, address, city, state, fullName } = getValues();
+    const fields = [zipCode, address, city, state, fullName];
 
     const isFilled = fields.every((value) => value.trim());
 
     setFieldsFilled(isFilled);
-  }
-   
+
+    console.log("allFieldsFilled:", isFilled);
+  };
+
+  useEffect(() => {
+    checkAllFields();
+  }, [getValues()]);
+
   return (
     <View style={styles.container}>
+      <View style={styles.inputContainer}>
       <Controller
         name="zipCode"
         control={control}
@@ -102,8 +110,7 @@ export const AdressForm = () => {
           />
         )}
       />
-     {errors.zipCode && <Text>This is required.</Text>}
-
+      {errors.zipCode && <Text>This is required.</Text>}
 
       <Controller
         name="address"
@@ -120,7 +127,6 @@ export const AdressForm = () => {
       />
       {errors.address && <Text>This is required.</Text>}
 
-
       <Controller
         name="city"
         control={control}
@@ -135,7 +141,6 @@ export const AdressForm = () => {
         )}
       />
       {errors.city && <Text>This is required.</Text>}
-
 
       <Controller
         name="state"
@@ -152,7 +157,6 @@ export const AdressForm = () => {
       />
       {errors.state && <Text>This is required.</Text>}
 
-
       <Controller
         name="fullName"
         control={control}
@@ -166,17 +170,27 @@ export const AdressForm = () => {
           />
         )}
       />
-      {errors.fullName && <Text>This is required.</Text>}
+      {errors.fullName && <Text>This is required.</Text>}        
+      </View>
 
-    
-    <Button disabled={!allFieldsFilled || !isValidZipCode} onPress={handleSubmit(onSubmit)} >SAVE ADDRESS</Button>
+      <Button
+        disabled={!isValidZipCode || !allFieldsFilled}
+        onPress={handleSubmit(onSubmit)}
+      >
+        SAVE ADDRESS
+      </Button>
+
+
     </View>
   );
-        };
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 32,
+    backgroundColor: Colors.white
   },
+  inputContainer: {
+    top: 32,
+  }
 });

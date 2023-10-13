@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { fetchCategories } from "../../services/fakeStoreAPI";
-import { ProductList } from "./productList";
+import { ProductList } from "./ProductList";
 
 interface Category {
   id: number;

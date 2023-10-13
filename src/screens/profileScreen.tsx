@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     StyleSheet,
@@ -8,10 +8,19 @@ import {
   } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { LanguageOption } from "../components/profileComponents/LanguageOption";
+import { EditInfos } from "../components/profileComponents/EditInfos";
 
 export const ProfileScreen = () => {
     const [isEnabled, setIsEnabled] = useState(false);
+    const [nameInput, setNameInput] = useState(null as React.ReactElement | null);
+
+    useEffect(() => {
+        setNameInput(isEnabled ? <EditInfos /> : null);
+     }, [isEnabled]);
+
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+
     return (
         <View style={styles.container}>
             <View style={styles.titleImageContainer}>
@@ -20,7 +29,11 @@ export const ProfileScreen = () => {
                 style={styles.image}/> 
             </View>     
                 <View style={styles.textInfoContainer}>
-                    <Text style={styles.textName}>Juliane Gonçalves Freitas</Text>
+                    {isEnabled ? (
+                        <EditInfos />
+                    ) : (
+                    <Text style={styles.textName}>{nameInput || 'Juliane Gonçalves Freitas'}</Text>
+                     )}
                     <Text style={styles.textEmail}>matildabrown@mail.com</Text>
                 </View>
                 <View style={styles.edits}>

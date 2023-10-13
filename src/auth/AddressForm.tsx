@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from "react";
-import { View, StyleSheet, TextInput, Text} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, TextInput, Text } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { Button } from "../components/Button";
+import { Button } from "../components/Buttons/Button";
 import { Input } from "./Input";
-
 
 export const AdressForm = () => {
   const {
@@ -14,49 +13,51 @@ export const AdressForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      zipCode: '',
-      address: '',
-      city: '',
-      state: '',
-      fullName: ''
-
-    }
+      zipCode: "",
+      address: "",
+      city: "",
+      state: "",
+      fullName: "",
+    },
   });
 
   const [zipCode, setZipCode] = useState("");
-  const [isValidZipCode, setIsValidZipCode] = useState(true)
+  const [isValidZipCode, setIsValidZipCode] = useState(true);
 
   const onSubmit = async (data: any) => {
     console.log(data);
 
     if (isValidZipCode) {
-      console.log('deu certo porra');
+      console.log("deu certo porra");
     } else {
-      console.log("Dados inválidos.")
+      console.log("Dados inválidos.");
     }
   };
   useEffect(() => {
-  
     if (zipCode.length === 8) {
-      
       const apiUrl = `https://viacep.com.br/ws/${zipCode}/json/`;
 
-      
       fetch(apiUrl, {
         method: "GET",
       })
         .then((response) => {
           if (response.status === 404) {
-            console.log('Código postal não encontrado');
+            console.log("Código postal não encontrado");
             setIsValidZipCode(false);
           } else if (response.ok) {
-            console.log('Código postal válido');
+            console.log("Código postal válido");
             setIsValidZipCode(true);
           } else if (response.status === 400) {
-            console.log('Cep invalido');
+            console.log("Cep invalido");
             setIsValidZipCode(false);
           } else {
-            console.log('Erro desconhecido', zipCode, apiUrl, response.status, response.statusText);
+            console.log(
+              "Erro desconhecido",
+              zipCode,
+              apiUrl,
+              response.status,
+              response.statusText
+            );
             setIsValidZipCode(false);
           }
         })
@@ -67,8 +68,6 @@ export const AdressForm = () => {
     }
   }, [zipCode]);
 
-
-   
   return (
     <View style={styles.container}>
       <Controller
@@ -87,8 +86,7 @@ export const AdressForm = () => {
           />
         )}
       />
-     {errors.zipCode && <Text>This is required.</Text>}
-
+      {errors.zipCode && <Text>This is required.</Text>}
 
       <Controller
         name="address"
@@ -105,7 +103,6 @@ export const AdressForm = () => {
       />
       {errors.address && <Text>This is required.</Text>}
 
-
       <Controller
         name="city"
         control={control}
@@ -120,7 +117,6 @@ export const AdressForm = () => {
         )}
       />
       {errors.city && <Text>This is required.</Text>}
-
 
       <Controller
         name="state"
@@ -137,7 +133,6 @@ export const AdressForm = () => {
       />
       {errors.state && <Text>This is required.</Text>}
 
-
       <Controller
         name="fullName"
         control={control}
@@ -153,11 +148,10 @@ export const AdressForm = () => {
       />
       {errors.fullName && <Text>This is required.</Text>}
 
-    
-    <Button onPress={handleSubmit(onSubmit)}>SAVE ADDRESS</Button>
+      <Button onPress={handleSubmit(onSubmit)}>SAVE ADDRESS</Button>
     </View>
   );
-        };
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -5,7 +5,7 @@ import { NotLogged } from "./src/components/profileComponents/NotLogged";
 export default function App() {
   return (
     <View style={styles.container}>
-      <NotLogged />
+      <ProfileScreen />
     </View>
   );
 }

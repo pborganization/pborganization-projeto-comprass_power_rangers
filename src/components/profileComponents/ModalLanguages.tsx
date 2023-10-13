@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
 View, 
 Text, 
@@ -14,28 +14,49 @@ interface ModalLanguagesProps {
 }
 
 export const ModalLanguages: React.FC<ModalLanguagesProps> = ({ visible, onClose}) => {
-    return (
-        <Modal transparent visible={visible} animationType='fade'>
-            <View style={styles.modalContainer}>
-                <TouchableWithoutFeedback onPress={onClose}>
-                    <View style={styles.modalOverlay}/>
-                </TouchableWithoutFeedback>
-                <View style={styles.modalContent}>
-                    <View style={styles.modalTitleContainer}>
-                        <Entypo name='minus' size={50} color='#9B9B9B'/>
-                        <Text style={styles.modalTitle}>Languages</Text>
-                    </View>    
-                    <TouchableOpacity style={styles.modalButtonEnglish}>
-                        <Text style={styles.buttonText}>English</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.modalButton}>
-                        <Text style={styles.buttonTextPortuguese}>Portuguese-Brazil</Text>
-                    </TouchableOpacity>
-                </View>
+    const [selectedLanguage, setSelectedLanguage] = useState('english');
+    const [isEnglishSelected, setIsEnglishSelected] = useState(true);
+
+    const onEnglishButtonClick = () => {
+        setSelectedLanguage('english');
+        setIsEnglishSelected(true);
+    }
+
+    const onPortugueseButtonClick = () => {
+        setSelectedLanguage('portuguese');
+        setIsEnglishSelected(false);
+    }
+
+return (
+    <Modal transparent visible={visible} animationType="fade">
+        <View style={styles.modalContainer}>
+            <TouchableWithoutFeedback onPress={onClose}>
+              <View style={styles.modalOverlay} />
+            </TouchableWithoutFeedback>
+            <View style={styles.modalContent}>
+              <View style={styles.modalTitleContainer}>
+                <Entypo name="minus" size={50} color="#9B9B9B" />
+                <Text style={styles.modalTitle}>Languages</Text>
+              </View>
+              <TouchableOpacity
+                style={[styles.modalButtonEnglish, { backgroundColor: selectedLanguage === 'english' ? '#DB3022' : '#F9F9F9' }]}
+                onPress={onEnglishButtonClick}
+              >
+                <Text style={[styles.buttonText, { color: selectedLanguage === 'english' ? '#FFF' : '#000' }]}>English</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, { backgroundColor: selectedLanguage === 'portuguese' ? '#DB3022' : '#F9F9F9' }]}
+                onPress={onPortugueseButtonClick}
+              >
+                <Text style={[styles.buttonTextPortuguese, { color: selectedLanguage === 'portuguese' ? '#FFF' : '#000' }]}>
+                  Portuguese-Brazil
+                </Text>
+              </TouchableOpacity>
             </View>
-        </Modal>
-    )
-}
+        </View>
+    </Modal>
+    );
+};
 
 const styles = StyleSheet.create({
     modalContainer: {

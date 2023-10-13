@@ -4,11 +4,13 @@ import {
     StyleSheet,
     Text,
     Image,
-    Switch
+    Switch,
+    TouchableOpacity
   } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { LanguageOption } from "../components/profileComponents/LanguageOption";
 import { EditInfos } from "../components/profileComponents/EditInfos";
+import { LogOutWarning } from "../components/profileComponents/Warnings";
 
 export const ProfileScreen = () => {
     const [isEnabled, setIsEnabled] = useState(false);
@@ -20,6 +22,7 @@ export const ProfileScreen = () => {
 
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    const [isLogOutWarningVisible, setIsLogOutWarningVisible] = useState(false);
 
     return (
         <View style={styles.container}>
@@ -49,7 +52,10 @@ export const ProfileScreen = () => {
                     <LanguageOption />
                 <View style={styles.edits}>
                     <Text style={styles.text}>Log out</Text>
-                    <Entypo name='log-out' size={20} color='#9B9B9B' style={styles.iconLog} />
+                    <TouchableOpacity onPress={() => setIsLogOutWarningVisible(true)}>
+                        <Entypo name='log-out' size={20} color='#9B9B9B' style={styles.iconLog} />
+                    </TouchableOpacity>
+                     {isLogOutWarningVisible && <LogOutWarning visible={isLogOutWarningVisible} />}
                 </View>
         </View>
     );

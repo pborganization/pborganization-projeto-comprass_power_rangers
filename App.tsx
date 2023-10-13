@@ -1,19 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { HomeNavigator } from "./src/routes/homeRoutes";
 
 export default function App() {
-  const Stack = createNativeStackNavigator();
-
   return (
-    <View style={styles.container}>
-    </View>
+    <NavigationContainer>
+      <HomeNavigator />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

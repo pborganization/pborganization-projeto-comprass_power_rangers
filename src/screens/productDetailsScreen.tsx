@@ -13,7 +13,7 @@ import {
   fetchProductById,
   fetchProductsForCategory,
 } from "../services/fakeStoreAPI";
-import { ProductType } from "../interfaces/productType";
+import { ProductType } from "../contexts/productType";
 import { QuantityIndicator } from "../components/homeComponents/quantityIndicator";
 import { StatusBar } from "expo-status-bar";
 import { AntDesign } from "@expo/vector-icons";

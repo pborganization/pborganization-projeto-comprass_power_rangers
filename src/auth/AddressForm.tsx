@@ -9,7 +9,7 @@ export const AdressForm = () => {
   const {
     control,
     register,
-    setValue,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -24,15 +24,22 @@ export const AdressForm = () => {
   });
 
   const [zipCode, setZipCode] = useState("");
-  const [isValidZipCode, setIsValidZipCode] = useState(true)
+  const [isValidZipCode, setIsValidZipCode] = useState(true);
+  const [allFieldsFilled, setFieldsFilled] = useState(false)
 
   const onSubmit = async (data: any) => {
     console.log(data);
 
-    if (isValidZipCode) {
-      console.log('deu certo porra');
+    if(isValidZipCode && allFieldsFilled) {
+      console.log("envie os dados");
     } else {
-      console.log("Dados inválidos.")
+      console.log("preencha todos os campos")
+    }
+
+    if (isValidZipCode) {
+      console.log('deu certo');
+    } else {
+      console.log("Dados inválidos.");
     }
   };
   useEffect(() => {
@@ -68,6 +75,14 @@ export const AdressForm = () => {
   }, [zipCode]);
 
 
+  const checkAllFields = () => {
+    const {zipCode, address, city, state, fullName} = getValues();
+    const fields = [zipCode, address, city, state, fullName]; 
+
+    const isFilled = fields.every((value) => value.trim());
+
+    setFieldsFilled(isFilled);
+  }
    
   return (
     <View style={styles.container}>
@@ -154,7 +169,7 @@ export const AdressForm = () => {
       {errors.fullName && <Text>This is required.</Text>}
 
     
-    <Button onPress={handleSubmit(onSubmit)}>SAVE ADDRESS</Button>
+    <Button disabled={!allFieldsFilled || !isValidZipCode} onPress={handleSubmit(onSubmit)} >SAVE ADDRESS</Button>
     </View>
   );
         };

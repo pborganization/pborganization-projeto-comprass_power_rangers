@@ -3,6 +3,22 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { ProductType } from "../../contexts/productType";
 import { useNavigation } from "@react-navigation/native";
 import { QuantityIndicator } from "./quantityIndicator";
+import { create } from "zustand";
+
+interface ProductState {
+  quantity: number;
+}
+
+interface ProductStore {
+  products: Record<number, ProductState>;
+  setProductState: (productId: number, state: ProductState) => void;
+}
+
+export const useProductStore = create<ProductStore>((set) => ({
+  products: {},
+  setProductState: (productId, state) =>
+    set((prev) => ({ products: { ...prev.products, [productId]: state } })),
+}));
 
 interface ProductProps {
   product: ProductType;
@@ -14,6 +30,13 @@ type ProductDetailsParams = {
 
 export const Products: React.FC<ProductProps> = ({ product }) => {
   const navigation = useNavigation();
+  const { products, setProductState } = useProductStore();
+
+  if (!products[product.id]) {
+    setProductState(product.id, { quantity: 0 });
+  }
+
+  const productState = products[product.id];
 
   const handleProductPress = () => {
     const params: ProductDetailsParams = { productId: product.id };
@@ -25,6 +48,7 @@ export const Products: React.FC<ProductProps> = ({ product }) => {
     <View style={styles.container}>
       <View style={styles.containerquanty}>
         <QuantityIndicator
+          productId={product.id}
           increasestyle={styles.increasebutton}
           decreasestyle={styles.decreasebutton}
         />

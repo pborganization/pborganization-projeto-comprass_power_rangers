@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginVertical: 8,
     borderRadius: 8,
+    elevation: 1,
   },
   imageContainer: {
     flex: 1,
   },
   infoContainer: {
     flex: 2,
-    marginHorizontal: 5,
     justifyContent: "space-between",
   },
   deleteIcon: {

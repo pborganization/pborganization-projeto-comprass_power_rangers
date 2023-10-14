@@ -1,14 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { View, StyleSheet } from "react-native";
+import { HomeNavigator } from "./src/routes/homeRoutes";
+import { CartScreen } from "./src/screens/CartScreen";
+import { AdressScreen } from "./src/screens/AdressScreen";
 
 export default function App() {
-  const Stack = createNativeStackNavigator();
-
   return (
-    <View style={styles.container}>
-      
+    <View>
+      <NavigationContainer>
+       <AdressScreen />
+      </NavigationContainer>
     </View>
   );
 }

@@ -3,58 +3,46 @@ import React, { useState } from "react";
 import { Delete } from "../../../assets/images/svg/DeleteProduct";
 import { Colors } from "../../../assets/styles/Colors";
 import { AntDesign } from "@expo/vector-icons";
+import { ProductType } from "../../contexts/productType";
+import { useProductStore } from "../homeComponents/Products";
+import { QuantityIndicator } from "../homeComponents/quantityIndicator";
 
 interface ProductProps {
-  title: string;
-  price: number;
-  image?: string;
+  product: ProductType;
 }
 
-export const CartProductCard = ({ title, price, image }: ProductProps) => {
-  const [value, setValue] = useState(0);
+export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
+  const { products, setProductState } = useProductStore();
 
-  const incrementValue = () => {
-    setValue((prevState) => prevState + 1);
-  };
+  const productState = products[product.id];
 
-  const decrementValue = () => {
-    setValue((prevState) => prevState - 1);
+  const handleDelete = () => {
+    setProductState(product.id, {
+      ...productState,
+      quantity: 0,
+    });
   };
-  const handleDelete = () => {};
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image
-          style={styles.img}
-          source={require("../../../assets/images/image.png")}
-        />
+        <Image style={styles.img} source={{ uri: product.images[0] }} />
       </View>
 
       <View style={styles.infoContainer}>
         <View>
-          <Text style={styles.text}>{title}</Text>
+          <Text style={styles.text}>{product.title}</Text>
           <View style={styles.deleteIcon}>
             <Delete onPress={handleDelete} />
           </View>
         </View>
         <View style={styles.itemContainer}>
-          <View style={styles.count}>
-            <AntDesign
-              onPress={decrementValue}
-              name="minuscircle"
-              size={36}
-              color={Colors.red_500}
-            />
-            <Text style={styles.countText}>{value}</Text>
-            <AntDesign
-              onPress={incrementValue}
-              name="pluscircle"
-              size={36}
-              color={Colors.red_500}
-            />
-          </View>
+          <QuantityIndicator
+            productId={product.id}
+            increasestyle={styles.increaseButton}
+            decreasestyle={styles.decreaseButton}
+          />
 
-          <Text style={styles.price}>{price} R$</Text>
+          <Text style={styles.price}>{product.price} R$</Text>
         </View>
       </View>
     </View>
@@ -116,5 +104,11 @@ const styles = StyleSheet.create({
     display: "flex",
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
+  },
+  increaseButton: {
+    backgroundColor: Colors.red_500,
+  },
+  decreaseButton: {
+    backgroundColor: Colors.red_500,
   },
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Modal, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 interface EditWarningProps {
@@ -7,6 +7,7 @@ interface EditWarningProps {
 
 interface LogOutWarningProps {
     visible: boolean,
+    onCloseModal: () => void; 
 }
 
 export const EditWarning: React.FC<EditWarningProps> = ({ visible }) => {
@@ -17,7 +18,7 @@ export const EditWarning: React.FC<EditWarningProps> = ({ visible }) => {
     );
 }
 
-export const LogOutWarning: React.FC<LogOutWarningProps> = ({ visible }) => {
+export const LogOutWarning: React.FC<LogOutWarningProps> = ({ visible, onCloseModal }) => {
     return (
         <Modal transparent visible={visible} animationType='fade'> 
             <View style={styles.warningContainer}>
@@ -31,7 +32,7 @@ export const LogOutWarning: React.FC<LogOutWarningProps> = ({ visible }) => {
                     <TouchableOpacity>
                         <Text style={styles.buttonText}>Yes</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={onCloseModal}>
                         <Text style={styles.buttonText}>No</Text>
                     </TouchableOpacity>
                 </View>

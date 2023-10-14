@@ -23,6 +23,9 @@ export const ProfileScreen = () => {
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     const [isLogOutWarningVisible, setIsLogOutWarningVisible] = useState(false);
+    const handleCloseModal = () => {
+        setIsLogOutWarningVisible(false);
+    };
 
     return (
         <View style={styles.container}>
@@ -55,7 +58,7 @@ export const ProfileScreen = () => {
                     <TouchableOpacity onPress={() => setIsLogOutWarningVisible(true)}>
                         <Entypo name='log-out' size={20} color='#9B9B9B' style={styles.iconLog} />
                     </TouchableOpacity>
-                     {isLogOutWarningVisible && <LogOutWarning visible={isLogOutWarningVisible} />}
+                     {isLogOutWarningVisible && <LogOutWarning visible={isLogOutWarningVisible} onCloseModal={handleCloseModal} />}
                 </View>
         </View>
     );

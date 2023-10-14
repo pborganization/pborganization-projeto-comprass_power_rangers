@@ -64,13 +64,15 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     modalOverlay: {
-        flex: 1,
+        ...StyleSheet.absoluteFillObject,
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     modalContent: {
         backgroundColor: '#F9F9F9',
         paddingTop: 5,
         paddingBottom: 20,
+        borderTopLeftRadius: 34,
+        borderTopRightRadius: 34,
     },
     modalTitleContainer: {
         alignItems: 'center',

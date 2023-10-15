@@ -4,8 +4,19 @@ import { useForm, Controller } from "react-hook-form";
 import { Button } from "../components/Button";
 import { Input } from "./Input";
 import { Colors } from "../../assets/styles/Colors";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useAddress } from "../../contexts/zustand";
 
-export const AdressForm = () => {
+
+export const AddressForm = () => {
+  const schemaValidate = yup.object({
+    zipCode: yup.string().required("Postal Code is required"),
+    address: yup.string().required("Adress is required"),
+    city: yup.string().required("City is required"),
+    state: yup.string().required("State, Province or region is required"),
+    fullName: yup.string().required("Full name is required"),
+  });
   const {
     control,
     register,
@@ -13,6 +24,8 @@ export const AdressForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    resolver: yupResolver(schemaValidate),
+    mode: "onChange",
     defaultValues: {
       zipCode: "",
       address: "",
@@ -23,14 +36,25 @@ export const AdressForm = () => {
   });
 
   const [zipCode, setZipCode] = useState("");
-  const [isValidZipCode, setIsValidZipCode] = useState(true);
+  const [isValidZipCode, setIsValidZipCode] = useState(false);
   const [allFieldsFilled, setFieldsFilled] = useState(false);
+  const setAddress = useAddress(state => state.setAddress);
 
-  const onSubmit = async (data: any) => {
-    console.log(data);
 
+  const onSubmit = async () => {
     if (isValidZipCode && allFieldsFilled) {
       console.log("envie os dados");
+      const formData = {
+        zipCode: getValues("zipCode"),
+        address: getValues("address"),
+        city: getValues("city"),
+        state: getValues("state"),
+        fullName: getValues("fullName"),
+      };
+  
+      setAddress(formData);
+  
+      console.log("Novo estado do endereço:", useAddress.getState().address);
     } else {
       console.log("preencha todos os campos");
     }
@@ -42,7 +66,7 @@ export const AdressForm = () => {
     }
   };
   useEffect(() => {
-    if (zipCode.length === 8) {
+    if (zipCode.length <= 8 ) {
       const apiUrl = `https://viacep.com.br/ws/${zipCode}/json/`;
 
       fetch(apiUrl, {
@@ -73,6 +97,8 @@ export const AdressForm = () => {
           console.error("Erro ao chamar a API:", error);
           setIsValidZipCode(false);
         });
+    } else {
+      console.log("Codigo invalidooo")
     }
   }, [zipCode]);
 
@@ -81,10 +107,7 @@ export const AdressForm = () => {
     const fields = [zipCode, address, city, state, fullName];
 
     const isFilled = fields.every((value) => value.trim());
-
     setFieldsFilled(isFilled);
-
-    console.log("allFieldsFilled:", isFilled);
   };
 
   useEffect(() => {
@@ -94,93 +117,85 @@ export const AdressForm = () => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-      <Controller
-        name="zipCode"
-        control={control}
-        rules={{ required: true }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Zip Code (Postal Code)"
-            value={value}
-            onChangeText={(text) => {
-              onChange(text);
-              setZipCode(text);
-            }}
-            onBlur={onBlur}
-          />
-        )}
-      />
-      {errors.zipCode && <Text>This is required.</Text>}
+        <Controller
+          name="zipCode"
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              placeholder="Zip Code (Postal Code)"
+              value={value}
+              onChangeText={(text) => {
+                onChange(text);
+                setZipCode(text);
+              }}
+              style={[
+                value && !errors.zipCode ? styles.validInput : null,
+              ]}
+            />
+          )}
+        />
+        {errors.zipCode && <Text  style={styles.errorMessage}>{errors.zipCode.message}</Text>}
 
-      <Controller
-        name="address"
-        control={control}
-        rules={{ required: true }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Address"
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-          />
-        )}
-      />
-      {errors.address && <Text>This is required.</Text>}
+        <Controller
+          name="address"
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              placeholder="Address"
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
+        />
+         {errors.address && <Text  style={styles.errorMessage}>{errors.address.message}</Text>}
 
-      <Controller
-        name="city"
-        control={control}
-        rules={{ required: true }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="City"
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-          />
-        )}
-      />
-      {errors.city && <Text>This is required.</Text>}
+        <Controller
+          name="city"
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <Input placeholder="City" value={value} onChangeText={onChange} />
+          )}
+        />
+         {errors.city && <Text  style={styles.errorMessage}>{errors.city.message}</Text>}
 
-      <Controller
-        name="state"
-        control={control}
-        rules={{ required: true }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="State/Province/Region"
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-          />
-        )}
-      />
-      {errors.state && <Text>This is required.</Text>}
+        <Controller
+          name="state"
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              placeholder="State/Province/Region"
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
+        />
+         {errors.state && <Text  style={styles.errorMessage}>{errors.state.message}</Text>}
 
-      <Controller
-        name="fullName"
-        control={control}
-        rules={{ required: true }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <Input
-            placeholder="Full name"
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-          />
-        )}
-      />
-      {errors.fullName && <Text>This is required.</Text>}        
+        <Controller
+          name="fullName"
+          control={control}
+          rules={{ required: true }}
+          render={({ field: { onChange, value } }) => (
+            <Input
+              placeholder="Full name"
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
+        />
+         {errors.fullName && <Text style={styles.errorMessage}>{errors.fullName.message}</Text>}
       </View>
 
       <Button
-        disabled={!isValidZipCode || !allFieldsFilled}
+        disabled={!isValidZipCode}
         onPress={handleSubmit(onSubmit)}
       >
         SAVE ADDRESS
       </Button>
-
-
     </View>
   );
 };
@@ -188,9 +203,16 @@ export const AdressForm = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
   },
   inputContainer: {
     top: 32,
+  },
+  errorMessage: {
+  color: Colors.red_500,
+  marginHorizontal: 16,
+  }, 
+  validInput: {
+    borderColor: Colors.green_900
   }
 });

@@ -8,33 +8,46 @@ import { TotalAmount } from "../components/Cart/TotalAmount";
 import { useProductStore } from "../components/homeComponents/Products";
 import { ProductType } from "../contexts/productType";
 import { fetchProductById } from "../services/fakeStoreAPI";
-
+import { useNavigation } from "@react-navigation/native";
+import { useAmountStore } from "../contexts/useAmountStore";
 
 export const CartScreen = () => {
   const { products } = useProductStore();
   const [cart, setCart] = useState<ProductType[]>([]);
-
+  const [totalAmount, setTotalAmount] = useState(0);
+  const setAmount = useAmountStore((state) => state.setAmount);
 
   useEffect(() => {
     async function fetchCardProducts() {
-      const cart = await Promise.all(
-        Object.values(products).map(async(productId) => {
-          const productData =  await fetchProductById(productId);
-          if(productData) {
+      const cartData = await Promise.all(
+        Object.entries(products).map(async ([productId, productState]) => {
+          const productData = await fetchProductById(productId);
+          if (productData) {
             return {
-              ...productData, quantity: productId.quantity,
-            }
+              ...productData,
+              quantity: productState,
+            };
           }
-          return null
+          return null;
         })
-      )
-      const filteredCart = cart.filter((item) => item !== null);
+      );
+      const filteredCart = cartData.filter((item) => item !== null);
       setCart(filteredCart);
+      const newAmount = calculateAmount(filteredCart);
+      setTotalAmount(newAmount);
+      setAmount(newAmount);
     }
 
-  fetchCardProducts}, [products])
-    
-  const calculateAmout = () => {}
+    fetchCardProducts;
+  }, [products]);
+
+  const calculateAmount = (items: ProductType[]) => {
+    return items.reduce((total, item) => total + item.price, 0);
+  };
+
+  const handleAmount = () => {
+    const navigation = useNavigation();
+  };
 
   return (
     <View style={styles.container}>
@@ -43,17 +56,15 @@ export const CartScreen = () => {
       <FlatList
         data={cart}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <CartProductCard product={item} />
-        )}
+        renderItem={({ item }) => <CartProductCard product={item} />}
         ListEmptyComponent={<EmptyCard />}
       />
 
       {cart.length === 0 && <EmptyCard />}
 
       <View style={styles.details}>
-        <TotalAmount>{}</TotalAmount>
-        <Button onPress={calculateAmout}>BUY</Button>
+        <TotalAmount>{totalAmount}</TotalAmount>
+        <Button onPress={handleAmount}>BUY</Button>
       </View>
     </View>
   );

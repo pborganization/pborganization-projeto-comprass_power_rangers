@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,17 +7,17 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
-} from "react-native";
-import { useRoute } from "@react-navigation/native";
+} from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import {
   fetchProductById,
   fetchProductCountForCategory,
-} from "../services/fakeStoreAPI";
-import { ProductType } from "../contexts/productType";
-import { QuantityIndicator } from "../components/home/quantityIndicator";
-import { StatusBar } from "expo-status-bar";
-import { AntDesign } from "@expo/vector-icons";
-import { ProductListByCategory } from "../components/productDetails/productsListByCategory";
+} from '../services/fakeStoreAPI';
+import { ProductType } from '../contexts/productType';
+import { QuantityIndicator } from '../components/home/quantityIndicator';
+import { StatusBar } from 'expo-status-bar';
+import { AntDesign } from '@expo/vector-icons';
+import { ProductListByCategory } from '../components/productDetails/productsListByCategory';
 
 interface RouteParams {
   productId: number;
@@ -43,12 +43,12 @@ export const ProductDetailsScreen = () => {
         setProduct(productData);
         if (productData) {
           const totalProducts = await fetchProductCountForCategory(
-            productData.category.id
+            productData.category.id,
           );
           setRelatedProductsCount(totalProducts);
         }
       } catch (error) {
-        console.error("Erro ao buscar o produto:", error);
+        console.error('Erro ao buscar o produto:', error);
         setProduct(null);
       } finally {
         setIsLoading(false);
@@ -60,13 +60,13 @@ export const ProductDetailsScreen = () => {
 
   const data = [
     {
-      key: "image",
+      key: 'image',
       component: product?.images[0] ? (
         <Image source={{ uri: product?.images[0] }} style={styles.image} />
       ) : null,
     },
     {
-      key: "info",
+      key: 'info',
       component: (
         <View style={styles.containerinfo}>
           <View>
@@ -78,13 +78,13 @@ export const ProductDetailsScreen = () => {
       ),
     },
     {
-      key: "description",
+      key: 'description',
       component: (
         <Text style={styles.containerdesc}>{product?.description}</Text>
       ),
     },
     {
-      key: "quantity",
+      key: 'quantity',
       component: product ? (
         <View style={styles.viewquanty}>
           <View style={styles.containerquanty}>
@@ -98,7 +98,7 @@ export const ProductDetailsScreen = () => {
       ) : null,
     },
     {
-      key: "shipping",
+      key: 'shipping',
       component: product ? (
         <TouchableOpacity
           style={[
@@ -110,7 +110,7 @@ export const ProductDetailsScreen = () => {
           <View style={styles.label}>
             <Text style={styles.textButton}>Shipping Info</Text>
             <AntDesign
-              name={showShippingInfo ? "down" : "right"}
+              name={showShippingInfo ? 'down' : 'right'}
               size={12}
               color="black"
             />
@@ -124,7 +124,7 @@ export const ProductDetailsScreen = () => {
       ) : null,
     },
     {
-      key: "support",
+      key: 'support',
       component: product ? (
         <TouchableOpacity
           style={[
@@ -136,7 +136,7 @@ export const ProductDetailsScreen = () => {
           <View style={styles.label}>
             <Text style={styles.textButton}>Support</Text>
             <AntDesign
-              name={showSupportInfo ? "down" : "right"}
+              name={showSupportInfo ? 'down' : 'right'}
               size={12}
               color="black"
             />
@@ -146,15 +146,15 @@ export const ProductDetailsScreen = () => {
               It is a long established fact that a reader will be distracted by
               the readable content of a page when looking at its layout. The
               point of using Lorem Ipsum is that it has a more-or-less normal
-              distribution of letters, as opposed to using 'Content here,
-              content here', making it look like readable English.
+              distribution of letters, as opposed to using Content here, content
+              here, making it look like readable English.
             </Text>
           )}
         </TouchableOpacity>
       ) : null,
     },
     {
-      key: "textAboveProductList",
+      key: 'textAboveProductList',
       component: (
         <View style={styles.categoryContainer}>
           <Text style={styles.textAboveProductList}>
@@ -167,7 +167,7 @@ export const ProductDetailsScreen = () => {
       ),
     },
     {
-      key: "relatedProducts",
+      key: 'relatedProducts',
       component: product ? (
         <ProductListByCategory
           categoryId={product.category.id}
@@ -200,8 +200,8 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   containerinfo: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginLeft: 16,
     marginRight: 16,
   },
@@ -212,37 +212,37 @@ const styles = StyleSheet.create({
   },
   viewquanty: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
     marginBottom: 10,
     elevation: 8,
     paddingVertical: 20,
   },
   containerquanty: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 8,
-    width: "80%",
+    width: '80%',
   },
   image: {
-    width: "100%",
+    width: '100%',
     height: 500,
-    resizeMode: "cover",
+    resizeMode: 'cover',
   },
   name: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: 10,
   },
   category: {
     fontSize: 11,
-    color: "gray",
+    color: 'gray',
   },
   price: {
     fontSize: 24,
     marginTop: 10,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   increasebutton: {
     borderTopRightRadius: 16,
@@ -256,8 +256,8 @@ const styles = StyleSheet.create({
   },
   containerButton: {
     height: 56,
-    justifyContent: "center",
-    borderColor: "gray",
+    justifyContent: 'center',
+    borderColor: 'gray',
     borderWidth: 1,
   },
   expandedButton: {
@@ -275,21 +275,21 @@ const styles = StyleSheet.create({
   label: {
     flex: 0,
     height: 54,
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
     marginRight: 20,
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   categoryContainer: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginVertical: 16,
     marginHorizontal: 16,
   },
@@ -297,6 +297,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   itemsNumber: {
-    color: "gray",
+    color: 'gray',
   },
 });

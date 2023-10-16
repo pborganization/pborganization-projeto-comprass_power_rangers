@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { IncreaseButton } from "./increaseButton";
-import { DecreaseButton } from "./decreaseButton";
-import { useProductStore } from "../../hooks/productStore";
+import React, { useCallback, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { IncreaseButton } from './increaseButton';
+import { DecreaseButton } from './decreaseButton';
+import { useProductStore } from '../../hooks/productStore';
 
 interface QuantityIndicatorProps {
   productId: number;
@@ -11,7 +11,7 @@ interface QuantityIndicatorProps {
 }
 
 export const QuantityIndicator: React.FC<QuantityIndicatorProps> = React.memo(
-  ({ productId, increasestyle, decreasestyle }) => {
+  ({ productId, increasestyle, decreasestyle }: QuantityIndicatorProps) => {
     const { products, setProductState } = useProductStore();
     const productState = products[productId] || { quantity: 0 };
 
@@ -54,27 +54,29 @@ export const QuantityIndicator: React.FC<QuantityIndicatorProps> = React.memo(
         </View>
       </View>
     );
-  }
+  },
 );
+
+QuantityIndicator.displayName = 'QuantityIndicator';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonContainer: {
     flex: 1,
-    height: "100%",
+    height: '100%',
   },
   numberContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: "gray",
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'gray',
     borderBottomWidth: 1,
     borderTopWidth: 1,
-    height: "100%",
+    height: '100%',
   },
 });

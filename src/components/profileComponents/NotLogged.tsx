@@ -1,75 +1,75 @@
-import React from "react";
+import React from 'react';
 import {
-    View,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-  } from "react-native";
-import { Entypo } from "@expo/vector-icons";
-import { LanguageOption } from "./LanguageOption";
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import { Entypo } from '@expo/vector-icons';
+import { LanguageOption } from './LanguageOption';
 
 export const NotLogged = () => {
-    return (
-        <View style={styles.container}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.textTitle}>My profile</Text>
-            </View>
-            <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitle}>You need to log in to see your details</Text>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.textButton}>LOGIN</Text>
-                    </TouchableOpacity>
-            </View>
-            <View style={styles.language}>
-                <LanguageOption />
-            </View>
-        </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.textTitle}>My profile</Text>
+      </View>
+      <View style={styles.subtitleContainer}>
+        <Text style={styles.subtitle}>You need to log in to see your details</Text>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.textButton}>LOGIN</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.language}>
+        <LanguageOption />
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-    },
-    titleContainer: {
-        marginTop: 107,
-        marginLeft: 16,
-        marginRight: 190,
-        flexDirection: 'column',
-    },
-    textTitle:{
-        color: '#000',
-        fontSize: 32,
-        fontWeight: '800',
-    },
-    subtitleContainer: {
-        marginTop: 83,
-        marginLeft: 45,
-        marginRight: 45,
-        marginBottom: 96,
-        alignItems: 'center',
-    },
-    subtitle: {
-        color: '#000',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    button: {
-        width: 136,
-        height: 48,
-        marginTop: 16,
-        borderRadius: 25,
-        backgroundColor: '#FF0024',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    textButton: {
-        color:'#FFFF' ,
-        fontSize: 16,
-        fontWeight: '800',
-    },
-    language: {
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  titleContainer: {
+    marginTop: 107,
+    marginLeft: 16,
+    marginRight: 190,
+    flexDirection: 'column',
+  },
+  textTitle:{
+    color: '#000',
+    fontSize: 32,
+    fontWeight: '800',
+  },
+  subtitleContainer: {
+    marginTop: 83,
+    marginLeft: 45,
+    marginRight: 45,
+    marginBottom: 96,
+    alignItems: 'center',
+  },
+  subtitle: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  button: {
+    width: 136,
+    height: 48,
+    marginTop: 16,
+    borderRadius: 25,
+    backgroundColor: '#FF0024',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textButton: {
+    color:'#FFFF' ,
+    fontSize: 16,
+    fontWeight: '800',
+  },
+  language: {
 
-    }
-})
+  }
+});

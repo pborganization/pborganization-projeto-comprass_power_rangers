@@ -1,7 +1,7 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { ProductType } from "../../contexts/productType";
-import { useNavigation } from "@react-navigation/native";
+import React from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { ProductType } from '../../contexts/productType';
+import { useNavigation } from '@react-navigation/native';
 
 interface ProductProps {
   product: ProductType;
@@ -11,37 +11,42 @@ type ProductDetailsParams = {
   productId: number;
 };
 
-export const Products: React.FC<ProductProps> = React.memo(({ product }) => {
-  const navigation = useNavigation();
+export const Products: React.FC<ProductProps> = React.memo(
+  ({ product }: ProductProps) => {
+    const navigation = useNavigation();
 
-  const handleProductPress = () => {
-    const params: ProductDetailsParams = { productId: product.id };
-    // @ts-ignore
-    navigation.navigate("ProductDetailsScreen", params);
-  };
+    const handleProductPress = () => {
+      const params: ProductDetailsParams = { productId: product.id };
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      navigation.navigate('ProductDetailsScreen', params);
+    };
 
-  const description =
-    product.description.length > 50
-      ? `${product.description.substring(0, 50)}...`
-      : product.description;
+    const description =
+      product.description.length > 50
+        ? `${product.description.substring(0, 50)}...`
+        : product.description;
 
-  const formattedPrice = product.price.toFixed(2);
+    const formattedPrice = product.price.toFixed(2);
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={handleProductPress}>
-        <View style={styles.info}>
-          <Image source={{ uri: product.images[0] }} style={styles.image} />
-          <Text style={styles.title}>{product.title}</Text>
-          <Text style={styles.description}>{description}</Text>
-        </View>
-        <View style={styles.priceContainer}>
-          <Text style={styles.price}>${formattedPrice}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
-});
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity onPress={handleProductPress}>
+          <View style={styles.info}>
+            <Image source={{ uri: product.images[0] }} style={styles.image} />
+            <Text style={styles.title}>{product.title}</Text>
+            <Text style={styles.description}>{description}</Text>
+          </View>
+          <View style={styles.priceContainer}>
+            <Text style={styles.price}>${formattedPrice}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  },
+);
+
+Products.displayName = 'Products';
 
 const styles = StyleSheet.create({
   container: {
@@ -54,16 +59,16 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    fontWeight: "bold",
-    color: "gray",
+    fontWeight: 'bold',
+    color: 'gray',
   },
   priceContainer: {
     flex: 1,
   },
   price: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "red",
+    fontWeight: 'bold',
+    color: 'red',
   },
   description: {
     fontSize: 10,

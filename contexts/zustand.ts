@@ -1,4 +1,4 @@
-import {create} from "zustand"
+import {create} from 'zustand';
 
 type AddressType = {
   zipCode: string,
@@ -18,7 +18,7 @@ export const useAddress = create<State>((set) => ({
   address: [],
 
   setAddress: (info) => {
-    set(({address: [info]}))
+    set(({address: [info]}));
   }
 
-}))
+}));

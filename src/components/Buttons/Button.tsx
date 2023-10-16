@@ -5,14 +5,13 @@ import { Colors } from "../../../assets/styles/Colors";
 interface ButtonProps {
   children: ReactNode;
   onPress: () => void;
+  disabled?: boolean;
 }
-export const Button = ({ children, onPress}: ButtonProps) => {
+export const Button = ({ children, onPress, disabled }: ButtonProps) => {
   return (
-    <TouchableOpacity>
-      <View style={[styles.container]}>
-        <Text style={styles.text} onPress={onPress}>
-          {children}
-        </Text>
+    <TouchableOpacity disabled={disabled} onPress={onPress}>
+      <View style={[styles.container, disabled ? styles.disabled : null]}>
+        <Text style={styles.text}>{children}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -27,8 +26,11 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     height: 48,
     width: 343,
-    backgroundColor: Colors.gray_900,
+    backgroundColor: Colors.red_500,
   },
+  disabled: {
+    backgroundColor: Colors.gray_500
+   },
   text: {
     color: Colors.white,
     fontWeight: "bold",

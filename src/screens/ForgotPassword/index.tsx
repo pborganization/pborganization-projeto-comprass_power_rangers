@@ -1,30 +1,41 @@
-import { useState } from 'react';
-import { ImageBackground, Dimensions, View, StyleSheet } from 'react-native';
+import { ImageBackground, Dimensions, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Container, Form, Logo, OtherOptions } from './styles';
+import { Container, Form } from './styles';
+import { Button } from '../../components/Button';
 import { LoginField } from '../../components/LoginField';
 import { Text } from '../../components/Text';
-import { Button } from '../../components/Button';
-import { FirstPartLogo } from '../../components/Icons/FirstPartLogo';
-import { LogoUol } from '../../components/Icons/LogoUol';
-import { SecondPartLogo } from '../../components/Icons/SecondPartLogo';
-import { SubText } from '../../components/SubText';
+import { LeftArrow } from '../../components/LeftArrow';
+import { useState } from 'react';
 
 const schema = yup.object({
+  name: yup
+    .string()
+    .matches(
+      /^[a-zA-Z0-9\s]+$/,
+      'Name can only contain letters, numbers, and spaces'
+    )
+    .required('Please complete all fields'),
   email: yup
     .string()
-    .email('Invalid Email')
+    .email('Your email is not valid')
     .required('Please complete all fields'),
   password: yup
     .string()
-    .min(6, 'A valid password must have at least 6 characters')
+    .min(6, 'Your password must be longer than 6 digits.')
+    .required('Please complete all fields'),
+  confirmPassword: yup
+    .string()
+    .oneOf(
+      [yup.ref('password'), null],
+      'Your password is not the same as your confirmation'
+    )
     .required('Please complete all fields'),
 });
 
-export function LoginScreen() {
+export function ForgotPasswordScreen() {
   const [isFontsLoaded] = useFonts({
     'OpenSans-400': require('../../assets/fonts/OpenSans-Regular.ttf'),
     'OpenSans-600': require('../../assets/fonts/OpenSans-SemiBold.ttf'),
@@ -42,17 +53,20 @@ export function LoginScreen() {
     resolver: yupResolver(schema),
   });
 
-  function handleLogIn(data: any) {
+  if (!isFontsLoaded) {
+    return null;
+  }
+
+  async function handleEmailCheck(data: any) {
     setIsSubmitting(true);
 
-    const { email, password } = data;
+    const { email } = data;
 
     const userData = {
       email: email,
-      password: password,
     };
 
-    fetch('https://api.escuelajs.co/api/v1/auth/login', {
+    fetch('https://api.escuelajs.co/api/v1/users/is-available', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -78,10 +92,41 @@ export function LoginScreen() {
       });
   }
 
-  if (!isFontsLoaded) {
-    return null;
-  }
+  function handlePasswordChange(data: any) {
+    setIsSubmitting(true);
 
+    const { email, password } = data;
+
+    const userData = {
+      email: email,
+      password: password,
+    };
+
+    fetch('https://api.escuelajs.co/api/v1/users/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Parse the response as JSON
+      })
+      .then((data) => {
+        // Handle the response data here
+        console.log('Successfully registered:', data);
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error('Error:', error);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+  }
   return (
     <Container>
       <ImageBackground
@@ -92,16 +137,15 @@ export function LoginScreen() {
         }}
         resizeMode="contain"
       >
-        <Logo>
-          <FirstPartLogo />
-          <View style={{ marginLeft: 4.9, marginRight: 5.91 }}>
-            <LogoUol />
-          </View>
-          <View style={{ marginBottom: -8.52 }}>
-            <SecondPartLogo />
-          </View>
-        </Logo>
+        <LeftArrow />
 
+        <Text size={32} weight={800} color="#FFF" style={styles.Title}>
+          Forgot Password
+        </Text>
+        <Text size={16} color="#FFF" style={styles.Description}>
+          Enter your email and let us see if it exists for you to change your
+          password :)
+        </Text>
         <Form>
           <Controller
             control={control}
@@ -135,7 +179,27 @@ export function LoginScreen() {
                 value={value}
                 isPassword={true}
               >
-                Password
+                New Password
+              </LoginField>
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="confirmPassword"
+            render={({
+              formState: { isSubmitted },
+              field: { onChange, value, ...rest },
+            }) => (
+              <LoginField
+                isInvalid={errors.confirmPassword}
+                showIcon={isSubmitted}
+                onChangeText={onChange}
+                value={value}
+                isPassword={true}
+                isSubmitting={isSubmitting}
+              >
+                Confirm New Password
               </LoginField>
             )}
           />
@@ -152,31 +216,37 @@ export function LoginScreen() {
             </Text>
           )}
 
-          <Button
-            styles={styles.Button}
-            disabled={isSubmitting}
-            onPress={handleSubmit(handleLogIn)}
-          >
-            LOGIN
+          {!errors.email &&
+            !errors.password &&
+            errors.confirmPassword && (
+            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+              {errors.confirmPassword?.message}
+            </Text>
+          )}
+
+          <Button onPress={handleSubmit(handleEmailCheck)} disabled={isSubmitting}>
+            SEARCH
+          </Button>
+
+          <Button onPress={handleSubmit(handlePasswordChange)} disabled={isSubmitting}>
+            CONFIRM
           </Button>
         </Form>
-
-        <OtherOptions>
-          <SubText>Not have an account yet? Sign up</SubText>
-          <SubText>I forgot my password</SubText>
-          <SubText>I don't want to log in</SubText>
-        </OtherOptions>
       </ImageBackground>
     </Container>
   );
 }
 
 const styles = StyleSheet.create({
-  ErrorsText: {
+  Title: {
     marginLeft: 16,
   },
-  Button: {
-    marginBottom: 31,
+  Description: {
+    marginLeft: 16,
+    marginTop: 16,
+    marginBottom: 32,
+  },
+  ErrorsText: {
     marginLeft: 16,
   },
 });

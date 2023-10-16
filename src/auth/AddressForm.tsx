@@ -147,7 +147,6 @@ export const AdressForm = () => {
         )}
       />
       {errors.fullName && <Text>This is required.</Text>}
-
       <Button onPress={handleSubmit(onSubmit)}>SAVE ADDRESS</Button>
     </View>
   );

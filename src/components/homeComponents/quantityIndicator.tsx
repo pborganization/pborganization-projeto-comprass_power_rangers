@@ -2,36 +2,51 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { IncreaseButton } from "./increaseButton";
 import { DecreaseButton } from "./decreaseButton";
+import { useProductStore } from "./Products";
 
-export const QuantityIndicator = (props: any) => {
-  const [quant, setQuant] = useState(0);
+interface QuantityIndicatorProps {
+  productId: number;
+  increasestyle: any;
+  decreasestyle: any;
+}
+
+export const QuantityIndicator: React.FC<QuantityIndicatorProps> = ({
+  productId,
+  increasestyle,
+  decreasestyle,
+}) => {
+  const { products, setProductState } = useProductStore();
+
+  const productState = products[productId];
 
   const increaseQuantity = () => {
-    setQuant(quant + 1);
+    // Atualize a quantidade do produto no estado do Zustand
+    setProductState(productId, {
+      ...productState,
+      quantity: productState.quantity + 1,
+    });
   };
 
   const decreaseQuantity = () => {
-    if (quant > 0) {
-      setQuant(quant - 1);
+    // Atualize a quantidade do produto no estado do Zustand
+    if (productState.quantity > 0) {
+      setProductState(productId, {
+        ...productState,
+        quantity: productState.quantity - 1,
+      });
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <DecreaseButton
-          onPress={decreaseQuantity}
-          style={props.decreasestyle}
-        />
+        <DecreaseButton onPress={decreaseQuantity} style={decreasestyle} />
       </View>
       <View style={styles.numberContainer}>
-        <Text>{quant}</Text>
+        <Text>{productState.quantity}</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <IncreaseButton
-          onPress={increaseQuantity}
-          style={props.increasestyle}
-        />
+        <IncreaseButton onPress={increaseQuantity} style={increasestyle} />
       </View>
     </View>
   );

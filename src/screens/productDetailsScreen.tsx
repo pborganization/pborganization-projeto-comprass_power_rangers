@@ -13,7 +13,7 @@ import {
   fetchProductById,
   fetchProductsForCategory,
 } from "../services/fakeStoreAPI";
-import { ProductType } from "../interfaces/productType";
+import { ProductType } from "../contexts/productType";
 import { QuantityIndicator } from "../components/homeComponents/quantityIndicator";
 import { StatusBar } from "expo-status-bar";
 import { AntDesign } from "@expo/vector-icons";
@@ -72,9 +72,9 @@ export const ProductDetailsScreen = () => {
         <View style={styles.containerinfo}>
           <View>
             <Text style={styles.name}>{product?.title}</Text>
-            <Text style={styles.category}>{product?.category.name}</Text>
+            <Text style={styles.category}>{product?.category?.name}</Text>
           </View>
-          <Text style={styles.price}>${product?.price.toFixed(2)}</Text>
+          <Text style={styles.price}>${product?.price?.toFixed(2)}</Text>
         </View>
       ),
     },
@@ -86,16 +86,17 @@ export const ProductDetailsScreen = () => {
     },
     {
       key: "quantity",
-      component: (
+      component: product ? (
         <View style={styles.viewquanty}>
           <View style={styles.containerquanty}>
             <QuantityIndicator
+              productId={product.id}
               increasestyle={styles.increasebutton}
               decreasestyle={styles.decreasebutton}
             />
           </View>
         </View>
-      ),
+      ) : null,
     },
     {
       key: "shipping",
@@ -160,7 +161,9 @@ export const ProductDetailsScreen = () => {
           <Text style={styles.textAboveProductList}>
             You can also like this
           </Text>
-          <Text style={styles.itemsNumber}>{relatedProductsCount} items</Text>
+          <Text style={styles.itemsNumber}>
+            {relatedProductsCount ?? 0} items
+          </Text>
         </View>
       ),
     },

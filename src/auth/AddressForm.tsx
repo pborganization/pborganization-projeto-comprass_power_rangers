@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TextInput, Text } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { Button } from "../components/Button";
+import { Button } from "../components/Buttons/Button";
 import { Input } from "./Input";
 import { Colors } from "../../assets/styles/Colors";
 import * as yup from "yup";

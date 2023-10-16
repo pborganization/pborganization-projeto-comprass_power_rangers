@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native";
-import { fetchProductsForCategory } from "../../services/fakeStoreAPI";
-import { ProductType } from "../../contexts/productType";
-import { LoadingProducts } from "./loadingProduct";
-import { ProductContainer } from "./productContainer";
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { fetchProductsForCategory } from '../../services/fakeStoreAPI';
+import { ProductType } from '../../contexts/productType';
+import { LoadingProducts } from './loadingProduct';
+import { ProductContainer } from './productContainer';
 
 interface ProductListProps {
   categoryId: number;
@@ -30,7 +30,7 @@ export const ProductList: React.FC<ProductListProps> = ({ categoryId }) => {
         setPage((prevPage) => prevPage + 1);
       }
     } catch (error) {
-      console.error("Erro ao buscar produtos:", error);
+      console.error('Erro ao buscar produtos:', error);
     } finally {
       setLoading(false);
     }
@@ -70,15 +70,15 @@ export const ProductList: React.FC<ProductListProps> = ({ categoryId }) => {
 const styles = StyleSheet.create({
   loadingProducts: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   productItem: {
     marginRight: 16,
   },
   productTitle: {
     fontSize: 16,
-    color: "gray",
+    color: 'gray',
   },
   productList: {
     marginLeft: 16,

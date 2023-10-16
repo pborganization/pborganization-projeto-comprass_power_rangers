@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, TextInput, StyleSheet, Image} from 'react-native';
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons';
 
 const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
   const [name, setName] = useState('');
@@ -37,13 +37,13 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
 
   const handleAddCard = () => {
     if(isFormValid()) {
-    setCardLogo(require('../../../assets/images/mastercard.png'));
-    onAddCard(cardNumber);
-    toggleModal()
-  } else {
-    setError('Please fill in all fields corretly.');
-  }
-};
+      setCardLogo(require('../../../assets/images/mastercard.png'));
+      onAddCard(cardNumber);
+      toggleModal();
+    } else {
+      setError('Please fill in all fields corretly.');
+    }
+  };
 
   return (
     <Modal
@@ -73,14 +73,14 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
           </View>
           <View style={styles.inputBox}>
             <View style={styles.cardnumberInput}>
-            {cardNumber ? renderLabel('Card number') : null}
-            <TextInput
-              style={styles.input}
-              value={cardNumber}
-              placeholder='Card number'
-              onChangeText={handleCardNumberChange}
-            />
-          </View>
+              {cardNumber ? renderLabel('Card number') : null}
+              <TextInput
+                style={styles.input}
+                value={cardNumber}
+                placeholder='Card number'
+                onChangeText={handleCardNumberChange}
+              />
+            </View>
           </View>
           <View style={styles.inputBox}>
             {expireDate ? renderLabel('Expire Date') : null}

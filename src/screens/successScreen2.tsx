@@ -11,8 +11,8 @@ const SuccessScreen2 = () => {
       <Text style={styles.tit}>Success!</Text>
       <Text style={styles.text}>Your order will be delivered soon. Thank you for choosing our app!</Text>
       <TouchableOpacity style={styles.continueButton}>
-          <Text style={styles.continue}>CONTNUE SHOPPING</Text>
-        </TouchableOpacity>
+        <Text style={styles.continue}>CONTNUE SHOPPING</Text>
+      </TouchableOpacity>
     </View>
   );
 };

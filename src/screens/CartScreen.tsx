@@ -1,15 +1,14 @@
-import { View, StyleSheet, Text, FlatList } from "react-native";
-import React, { useEffect, useState } from "react";
-import { CartProductCard } from "../components/Cart/CartProductCard";
-import { EmptyCard } from "../components/Cart/EmptyCart";
-import { Colors } from "../../assets/styles/Colors";
-import { Button } from "../components/Buttons/Button";
-import { TotalAmount } from "../components/Cart/TotalAmount";
-import { useProductStore } from "../components/homeComponents/Products";
-import { ProductType } from "../contexts/productType";
-import { fetchProductById } from "../services/fakeStoreAPI";
-import { useNavigation } from "@react-navigation/native";
-import { useAmountStore } from "../contexts/useAmountStore";
+import { View, StyleSheet, Text, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { CartProductCard } from '../components/Cart/CartProductCard';
+import { EmptyCard } from '../components/Cart/EmptyCart';
+import { Colors } from '../../assets/styles/Colors';
+import { Button } from '../components/Buttons/Button';
+import { TotalAmount } from '../components/Cart/TotalAmount';
+import { useProductStore } from '../hooks/productStore';
+import { ProductType } from '../contexts/productType';
+import { fetchProductById } from '../services/fakeStoreAPI';
+import { useAmountStore } from '../contexts/useAmountStore';
 
 export const CartScreen = () => {
   const { products } = useProductStore();
@@ -46,7 +45,6 @@ export const CartScreen = () => {
   };
 
   const handleAmount = () => {
-    const navigation = useNavigation();
   };
 
   return (
@@ -76,12 +74,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   details: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 25,
   },
   title: {
     fontSize: 34,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginHorizontal: 16,
     marginBottom: 8,
   },

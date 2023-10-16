@@ -1,7 +1,7 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { ProductType } from "../../contexts/productType";
-import { useNavigation } from "@react-navigation/native";
+import React from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { ProductType } from '../../contexts/productType';
+import { useNavigation } from '@react-navigation/native';
 
 interface ProductProps {
   product: ProductType;
@@ -17,7 +17,7 @@ export const Products: React.FC<ProductProps> = React.memo(({ product }) => {
   const handleProductPress = () => {
     const params: ProductDetailsParams = { productId: product.id };
     // @ts-ignore
-    navigation.navigate("ProductDetailsScreen", params);
+    navigation.navigate('ProductDetailsScreen', params);
   };
 
   const description =
@@ -54,16 +54,16 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    fontWeight: "bold",
-    color: "gray",
+    fontWeight: 'bold',
+    color: 'gray',
   },
   priceContainer: {
     flex: 1,
   },
   price: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "red",
+    fontWeight: 'bold',
+    color: 'red',
   },
   description: {
     fontSize: 10,

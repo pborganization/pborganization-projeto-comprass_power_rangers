@@ -1,8 +1,8 @@
-import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
-import { ProductDetailsScreen } from "../screens/productDetailsScreen";
-import { HomeScreen } from "../screens/homeScreen";
-import { AdressScreen } from "../screens/AdressScreen";
+import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
+import { ProductDetailsScreen } from '../screens/productDetailsScreen';
+import { HomeScreen } from '../screens/homeScreen';
+import { AdressScreen } from '../screens/AdressScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,18 +25,18 @@ export const HomeNavigator = () => {
         name="ProductDetailsScreen"
         component={ProductDetailsScreen}
         options={{
-          title: "Details",
+          title: 'Details',
           headerShown: true,
-          headerTitleAlign: "center",
+          headerTitleAlign: 'center',
         }}
       />
       <Stack.Screen
         name="AddressScreen"
         component={AdressScreen}
         options={{
-          title: "Adress Screen",
+          title: 'Adress Screen',
           headerShown: true,
-          headerTitleAlign: "center",
+          headerTitleAlign: 'center',
         }}
       />
     </Stack.Navigator>

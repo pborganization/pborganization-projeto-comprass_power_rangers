@@ -1,19 +1,30 @@
-import { StyleSheet, View } from 'react-native';
-import { HomeNavigator } from './src/routes/homeRoutes';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, View } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import { AddressForm } from "./src/auth/AddressForm";
+import { Colors } from "./assets/styles/Colors";
 
 export default function App() {
-	return (
-		<View style={styles.container}>
+  const Stack = createNativeStackNavigator();
+
+  return (
+    <View style={styles.container}>
       <NavigationContainer>
-        <HomeNavigator />
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Adding Shipping Address"
+            component={AddressForm}
+            options={{ headerShadowVisible: false }}
+          />
+        </Stack.Navigator>
       </NavigationContainer>
-		</View>
-	);
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
+  container: {
+    flex: 1,
+    backgroundColor: Colors.white,
+  },
 });

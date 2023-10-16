@@ -11,13 +11,13 @@ import {
 import { useRoute } from "@react-navigation/native";
 import {
   fetchProductById,
-  fetchProductsForCategory,
+  fetchProductCountForCategory,
 } from "../services/fakeStoreAPI";
 import { ProductType } from "../contexts/productType";
-import { QuantityIndicator } from "../components/homeComponents/quantityIndicator";
+import { QuantityIndicator } from "../components/home/quantityIndicator";
 import { StatusBar } from "expo-status-bar";
 import { AntDesign } from "@expo/vector-icons";
-import { ProductList } from "../components/productDetailsComponents/productsList";
+import { ProductListByCategory } from "../components/productDetails/productsListByCategory";
 
 interface RouteParams {
   productId: number;
@@ -41,12 +41,11 @@ export const ProductDetailsScreen = () => {
       try {
         const productData = await fetchProductById(productId);
         setProduct(productData);
-        // Busque os produtos da categoria para contar o número
         if (productData) {
-          const productsForCategory = await fetchProductsForCategory(
+          const totalProducts = await fetchProductCountForCategory(
             productData.category.id
           );
-          setRelatedProductsCount(productsForCategory.length);
+          setRelatedProductsCount(totalProducts);
         }
       } catch (error) {
         console.error("Erro ao buscar o produto:", error);
@@ -170,7 +169,7 @@ export const ProductDetailsScreen = () => {
     {
       key: "relatedProducts",
       component: product ? (
-        <ProductList
+        <ProductListByCategory
           categoryId={product.category.id}
           currentProductId={product.id}
         />

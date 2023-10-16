@@ -1,7 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from 'react-native';
+import { ProfileScreen } from './src/screens/profileScreen';
 
 export default function App() {
-  return <View style={styles.container}></View>;
+  return <View style={styles.container}>
+    <ProfileScreen />
+  </View>;
 }
 
 const styles = StyleSheet.create({

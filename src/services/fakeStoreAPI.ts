@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ProductType } from "../interfaces/productType";
+import { ProductType } from "../contexts/productType";
 
 const api = axios.create({
   baseURL: "https://api.escuelajs.co/api/v1",

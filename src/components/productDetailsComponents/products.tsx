@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { ProductType } from "../../interfaces/productType";
+import { ProductType } from "../../contexts/productType";
 import { useNavigation } from "@react-navigation/native";
 
 interface ProductProps {

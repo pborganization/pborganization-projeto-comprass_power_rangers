@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { fetchProductsForCategory } from "../../services/fakeStoreAPI";
 import { Products } from "./products";
-import { ProductType } from "../../interfaces/productType";
+import { ProductType } from "../../contexts/productType";
 
 interface ProductListProps {
   categoryId: number;

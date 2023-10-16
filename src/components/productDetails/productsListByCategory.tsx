@@ -20,6 +20,7 @@ export const ProductListByCategory: React.FC<ProductListProps> = React.memo(
     const [products, setProducts] = useState<ProductType[]>([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true); // Adicione a variável hasMore
 
     useEffect(() => {
       const limit = 10;
@@ -36,6 +37,9 @@ export const ProductListByCategory: React.FC<ProductListProps> = React.memo(
             (product: any) => product.id !== currentProductId,
           );
           setProducts((prevProducts) => [...prevProducts, ...filteredProducts]);
+          if (filteredProducts.length === 0) {
+            setHasMore(false); // Defina hasMore como false quando não há mais produtos a serem carregados
+          }
         } catch (error) {
           console.error('Erro ao buscar produtos:', error);
         } finally {
@@ -47,7 +51,10 @@ export const ProductListByCategory: React.FC<ProductListProps> = React.memo(
     }, [categoryId, currentProductId, page]);
 
     const handleLoadMore = () => {
-      setPage(page + 1);
+      if (hasMore) {
+        // Verifique se há mais produtos a serem carregados
+        setPage(page + 1);
+      }
     };
 
     return (

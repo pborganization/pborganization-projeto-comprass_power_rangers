@@ -9,7 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.3.2",
+    "@expo/vector-icons": "^13.0.0",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
     "axios": "^1.5.1",

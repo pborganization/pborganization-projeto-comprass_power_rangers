@@ -17,10 +17,15 @@ export const fetchCategories = async () => {
 };
 
 export const fetchProductsForCategory = async (
-  categoryId: number
-): Promise<ProductType[]> => {
+  categoryId: any,
+  offset: any,
+  limit: any
+) => {
   try {
-    const response = await api.get(`/products/?categoryId=${categoryId}`);
+    const response = await api.get(
+      `/products?categoryId=${categoryId}&offset=${offset}&limit=${limit}`
+    );
+
     return response.data;
   } catch (error) {
     throw error;
@@ -35,3 +40,13 @@ export const fetchProductById = async (productId: any) => {
     throw error;
   }
 };
+
+export async function fetchProductCountForCategory(categoryId: any) {
+  try {
+    const response = await api.get(`/products?categoryId=${categoryId}`);
+    return response.data.length;
+  } catch (error) {
+    console.error("Erro ao buscar produtos da categoria:", error);
+    return 0; // Trate o erro adequadamente de acordo com a sua aplicação.
+  }
+}

@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Entypo } from "@expo/vector-icons";
-import { CategoryList } from "../components/homeComponents/CategoryList";
+import { CategoryList } from "../components/home/CategoryList";
 
 const screenHeight = Dimensions.get("window").height;
 

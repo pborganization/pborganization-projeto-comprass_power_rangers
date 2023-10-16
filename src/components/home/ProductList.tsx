@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { fetchProductsForCategory } from '../../services/fakeStoreAPI';
-import { ProductType } from '../../contexts/productType';
+import { ProductType } from '../../interfaces/productType';
 import { LoadingProducts } from './loadingProduct';
 import { ProductContainer } from './productContainer';
 
@@ -21,7 +21,7 @@ export const ProductList: React.FC<ProductListProps> = ({ categoryId }) => {
       const newProducts = await fetchProductsForCategory(
         categoryId,
         (page - 1) * 10,
-        10
+        10,
       );
       if (newProducts.length === 0) {
         setHasMore(false);
@@ -82,6 +82,5 @@ const styles = StyleSheet.create({
   },
   productList: {
     marginLeft: 16,
-    marginRight: 16,
   },
 });

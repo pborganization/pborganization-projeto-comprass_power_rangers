@@ -12,7 +12,7 @@ import {
 import { AntDesign } from '@expo/vector-icons';
 import { Colors } from '../../../../assets/styles/Colors';
 import { fetchProductByName } from '../../../services/fakeStoreAPI';
-import { ProductType } from '../../../contexts/productType';
+import { ProductType } from '../../../interfaces/productType';
 import { ProductSearched } from './productsSearched';
 
 export const SearchButton = () => {

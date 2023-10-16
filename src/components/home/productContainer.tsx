@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { QuantityIndicator } from './quantityIndicator';
 import { Products } from './Products';
-import { ProductType } from '../../contexts/productType';
+import { ProductType } from '../../interfaces/productType';
 
 interface ProductContainerProps {
   product: ProductType;

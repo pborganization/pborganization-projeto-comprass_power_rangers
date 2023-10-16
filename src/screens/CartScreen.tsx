@@ -6,7 +6,7 @@ import { Colors } from '../../assets/styles/Colors';
 import { Button } from '../components/Buttons/Button';
 import { TotalAmount } from '../components/Cart/TotalAmount';
 import { useProductStore } from '../hooks/productStore';
-import { ProductType } from '../contexts/productType';
+import { ProductType } from '../interfaces/productType';
 import { fetchProductById } from '../services/fakeStoreAPI';
 import { useNavigation } from '@react-navigation/native';
 import { useAmountStore } from '../contexts/useAmountStore';
@@ -29,7 +29,7 @@ export const CartScreen = () => {
             };
           }
           return null;
-        })
+        }),
       );
       const filteredCart = cartData.filter((item) => item !== null);
       setCart(filteredCart);

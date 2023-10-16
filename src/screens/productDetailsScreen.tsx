@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import {
   fetchProductById,
   fetchProductCountForCategory,
 } from '../services/fakeStoreAPI';
-import { ProductType } from '../contexts/productType';
+import { ProductType } from '../interfaces/productType';
 import { QuantityIndicator } from '../components/home/quantityIndicator';
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
@@ -26,6 +27,8 @@ interface RouteParams {
 export const ProductDetailsScreen = () => {
   const route = useRoute();
   const { productId } = route.params as RouteParams;
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const [product, setProduct] = useState<ProductType | null>(null);
   const [showShippingInfo, setShowShippingInfo] = useState(false);
@@ -61,9 +64,23 @@ export const ProductDetailsScreen = () => {
   const data = [
     {
       key: 'image',
-      component: product?.images[0] ? (
-        <Image source={{ uri: product?.images[0] }} style={styles.image} />
-      ) : null,
+      component:
+        product && product.images && product.images.length > 0 ? (
+          <FlatList
+            horizontal
+            data={product.images}
+            keyExtractor={(item, index) => `image-${index}`}
+            renderItem={({ item }) => (
+              <Image
+                source={{ uri: item }}
+                style={[
+                  styles.image,
+                  { width: Dimensions.get('window').width },
+                ]}
+              />
+            )}
+          />
+        ) : null,
     },
     {
       key: 'info',
@@ -226,7 +243,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   image: {
-    width: '100%',
+    width: 100,
     height: 500,
     resizeMode: 'cover',
   },
@@ -284,6 +301,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
   },
   categoryContainer: {
     flex: 1,

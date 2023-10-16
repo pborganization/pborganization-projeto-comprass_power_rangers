@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Delete } from '../../../assets/images/svg/DeleteProduct';
 import { Colors } from '../../../assets/styles/Colors';
 import { AntDesign } from '@expo/vector-icons';
-import { ProductType } from '../../contexts/productType';
+import { ProductType } from '../../interfaces/productType';
 import { useProductStore } from '../homeComponents/Products';
 import { QuantityIndicator } from '../homeComponents/quantityIndicator';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProductType } from '../../../contexts/productType';
+import { ProductType } from '../../../interfaces/productType';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../../../assets/styles/Colors';

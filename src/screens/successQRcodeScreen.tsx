@@ -5,11 +5,14 @@ const SuccessQRcodeScreen = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/images/qrcode.jpg')} 
+        source={require('../../assets/images/qrcode.jpg')}
         style={styles.image}
       />
       <Text style={styles.tit}>Success!</Text>
-      <Text style={styles.text}>Pay your pix using the QR code above and then follow the steps sent by email.</Text>
+      <Text style={styles.text}>
+        Pay your pix using the QR code above and then follow the steps sent by
+        email.
+      </Text>
       <TouchableOpacity style={styles.continueButton}>
         <Text style={styles.continue}>CONTNUE SHOPPING</Text>
       </TouchableOpacity>
@@ -24,9 +27,9 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 209,
-    width: 225, 
-    height: 225, 
-    resizeMode: 'contain', 
+    width: 225,
+    height: 225,
+    resizeMode: 'contain',
   },
   tit: {
     color: '#000',
@@ -34,7 +37,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginTop: 20,
     width: 132,
-    height: 44
+    height: 44,
   },
   text: {
     color: '#000',
@@ -43,17 +46,16 @@ const styles = StyleSheet.create({
     width: 284,
     height: 42,
     fontSize: 14,
-    fontWeight: '400'
+    fontWeight: '400',
   },
   continueButton: {
-    backgroundColor: '#FF0024', 
+    backgroundColor: '#FF0024',
     marginTop: 174,
     width: 343,
-    height: 48, 
-    borderRadius: 24, 
-
+    height: 48,
+    borderRadius: 24,
   },
-  continue:{
+  continue: {
     color: '#FFF',
     marginTop: 14,
     marginLeft: 100,
@@ -61,9 +63,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 154,
     height: 20,
-    fontWeight: '800'
-
-  }
+    fontWeight: '800',
+  },
 });
 
 export default SuccessQRcodeScreen;

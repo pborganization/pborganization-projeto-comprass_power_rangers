@@ -11,24 +11,39 @@ import { Entypo } from '@expo/vector-icons';
 import { LanguageOption } from '../components/profileComponents/LanguageOption';
 import { EditInfos } from '../components/profileComponents/EditInfos';
 import { LogOutWarning } from '../components/profileComponents/Warnings';
+import { AntDesign } from '@expo/vector-icons';
 
 export const ProfileScreen = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [nameInput, setNameInput] = useState(null as React.ReactElement | null);
+  const [verificationIcon, setVerificationIcon] = useState(false);
 
   useEffect(() => {
     setNameInput(isEnabled ? <EditInfos /> : null);
+    setVerificationIcon(isEnabled);
   }, [isEnabled]);
 
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   const [isLogOutWarningVisible, setIsLogOutWarningVisible] = useState(false);
   const handleCloseModal = () => {
+    if (!isLogOutWarningVisible) {
+      setVerificationIcon(!isEnabled);
+    }
     setIsLogOutWarningVisible(false);
   };
+  const handleNoPress = () => {
+    setVerificationIcon(false); 
+  };
+  
 
   return (
     <View style={styles.container}>
+      {verificationIcon && (
+        <TouchableOpacity style={styles.verification}>
+          <AntDesign name='checkcircle' size={46} color='green'/>
+        </TouchableOpacity>
+      )} 
       <View style={styles.titleImageContainer}>
         <Text style={styles.textTitle}>My profile</Text>
         <Image
@@ -71,6 +86,7 @@ export const ProfileScreen = () => {
           <LogOutWarning
             visible={isLogOutWarningVisible}
             onCloseModal={handleCloseModal}
+            onNoPress={handleNoPress} 
           />
         )}
       </View>
@@ -82,6 +98,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+  },
+  verification: {
+    position: 'absolute',
+    top: 0,
+    right: 16,
+    marginTop: 66.87,
+    marginRight: 5,
   },
   titleImageContainer: {
     marginTop: 107,

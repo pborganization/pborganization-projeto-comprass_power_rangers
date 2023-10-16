@@ -8,6 +8,7 @@ interface EditWarningProps {
 interface LogOutWarningProps {
   visible: boolean;
   onCloseModal: () => void;
+  onNoPress: () => void;
 }
 
 export const EditWarning: React.FC<EditWarningProps> = ({ visible }) => {
@@ -17,7 +18,13 @@ export const EditWarning: React.FC<EditWarningProps> = ({ visible }) => {
 export const LogOutWarning: React.FC<LogOutWarningProps> = ({
   visible,
   onCloseModal,
+  onNoPress
 }) => {
+  const handleNoPress = () => {
+    onNoPress();
+    onCloseModal(); 
+  };
+
   return (
     <Modal transparent visible={visible} animationType="fade">
       <View style={styles.warningContainer}>
@@ -31,7 +38,7 @@ export const LogOutWarning: React.FC<LogOutWarningProps> = ({
             <TouchableOpacity>
               <Text style={styles.buttonText}>Yes</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={onCloseModal}>
+            <TouchableOpacity onPress={handleNoPress}>
               <Text style={styles.buttonText}>No</Text>
             </TouchableOpacity>
           </View>

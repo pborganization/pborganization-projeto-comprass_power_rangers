@@ -1,17 +1,17 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { IncreaseButton } from './increaseButton';
-import { DecreaseButton } from './decreaseButton';
 import { useProductStore } from '../../hooks/productStore';
+import { AntDesign } from '@expo/vector-icons';
+import { Colors } from '../../../assets/styles/Colors';
 
-interface QuantityIndicatorProps {
+interface IndicatorProps {
 	productId: number;
 	increasestyle?: any;
 	decreasestyle?: any;
 }
 
-export const QuantityIndicator: React.FC<QuantityIndicatorProps> = React.memo(
-  ({ productId, increasestyle, decreasestyle }) => {
+export const Indicator: React.FC<IndicatorProps> = React.memo(
+  ({ productId}) => {
     const { products, setProductState } = useProductStore();
     const productState = products[productId] || { quantity: 0 };
 
@@ -43,15 +43,9 @@ export const QuantityIndicator: React.FC<QuantityIndicatorProps> = React.memo(
 
     return (
       <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <DecreaseButton onPress={decreaseQuantity} style={decreasestyle} />
-        </View>
-        <View style={styles.numberContainer}>
-          <Text>{productState.quantity}</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <IncreaseButton onPress={increaseQuantity} style={increasestyle} />
-        </View>
+          <AntDesign name="minuscircle" size={36} color={Colors.red_500} onPress={decreaseQuantity} style={styles.icon} />
+          <Text style={styles.text}>{productState.quantity}</Text>
+          <AntDesign name="pluscircle" size={36} color={Colors.red_500} onPress={increaseQuantity}  style={styles.icon} />
       </View>
     );
   }
@@ -63,18 +57,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  buttonContainer: {
-    flex: 1,
-    height: '100%',
+    marginBottom: 12
   },
   numberContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: 'gray',
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    height: '100%',
   },
+  text: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginHorizontal: 8
+  }
 });

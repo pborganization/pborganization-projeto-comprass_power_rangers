@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, FlatList, ActivityIndicator } from "react-native";
-import { fetchProductsForCategory } from "../../services/fakeStoreAPI";
-import { Products } from "./products";
-import { ProductType } from "../../contexts/productType";
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { fetchProductsForCategory } from '../../services/fakeStoreAPI';
+import { Products } from './products';
+import { ProductType } from '../../contexts/productType';
 
 interface ProductListProps {
   categoryId: number;
@@ -35,7 +35,7 @@ export const ProductListByCategory: React.FC<ProductListProps> = ({
         );
         setProducts((prevProducts) => [...prevProducts, ...filteredProducts]);
       } catch (error) {
-        console.error("Erro ao buscar produtos:", error);
+        console.error('Erro ao buscar produtos:', error);
       } finally {
         setIsLoading(false);
       }
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   productTitle: {
     fontSize: 16,
-    color: "gray",
+    color: 'gray',
   },
   productList: {
     marginLeft: 16,

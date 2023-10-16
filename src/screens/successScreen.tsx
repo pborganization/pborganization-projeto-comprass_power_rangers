@@ -4,7 +4,7 @@ import { StyleSheet, View, ImageBackground, Text, TouchableOpacity } from 'react
 const SuccessScreen = () => {
   return (
     <ImageBackground
-      source={require("../../assets/images/image.jpg")} 
+      source={require('../../assets/images/image.jpg')} 
       style={styles.container}
     >
       <View style={styles.overlay}>
@@ -21,7 +21,7 @@ const SuccessScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    resizeMode: "cover",
+    resizeMode: 'cover',
   },
   overlay: {
     flex: 1,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 
   tit: {
     marginTop: 115,
-    color: "#000",
+    color: '#000',
     fontSize: 32,
     fontWeight: '700',
   },
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     width: 251,
     height: 48,
     marginTop: 12,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 15,
     fontWeight: '400',
   },

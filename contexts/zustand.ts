@@ -14,9 +14,9 @@ type State = {
 };
 
 export const useAddress = create<State>(set => ({
-	address: [],
+  address: [],
 
-	setAddress: info => {
-		set({ address: [info] });
-	},
+  setAddress: info => {
+    set({ address: [info] });
+  },
 }));

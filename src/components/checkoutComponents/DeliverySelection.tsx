@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons'; 
 
 const DeliverySection = () => {
@@ -17,7 +17,7 @@ const DeliverySection = () => {
         <TouchableOpacity onPress={() => handleOptionPress('FedEx')}>
           <View style={[styles.optionBox, selectedOption === 'FedEx' && styles.selectedOption]}>
             <View style={styles.optionContent}>
-              <Image source={require("../../../assets/images/fedex-logo.png")} style={styles.logo} />
+              <Image source={require('../../../assets/images/fedex-logo.png')} style={styles.logo} />
               <Text style={styles.optionDate}>2-3 days</Text>
             </View>
             {selectedOption === 'FedEx' && (
@@ -28,7 +28,7 @@ const DeliverySection = () => {
         <TouchableOpacity onPress={() => handleOptionPress('USPS')}>
           <View style={[styles.optionBox, selectedOption === 'USPS' && styles.selectedOption]}>
             <View style={styles.optionContent}>
-              <Image source={require("../../../assets/images/usps.png")} style={styles.logo} />
+              <Image source={require('../../../assets/images/usps.png')} style={styles.logo} />
               <Text style={styles.optionDate}>2-3 days</Text>
             </View>
             {selectedOption === 'USPS' && (
@@ -39,7 +39,7 @@ const DeliverySection = () => {
         <TouchableOpacity onPress={() => handleOptionPress('DHL')}>
           <View style={[styles.optionBox, selectedOption === 'DHL' && styles.selectedOption]}>
             <View style={styles.optionContent}>
-              <Image source={require("../../../assets/images/dhl.png")} style={styles.logo}/>
+              <Image source={require('../../../assets/images/dhl.png')} style={styles.logo}/>
               <Text style={styles.optionDate}>2-3 days</Text>
             </View>
             {selectedOption === 'DHL' && (

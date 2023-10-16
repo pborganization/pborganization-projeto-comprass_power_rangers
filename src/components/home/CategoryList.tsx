@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import { fetchCategories } from "../../services/fakeStoreAPI";
-import { ProductList } from "./ProductList";
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { fetchCategories } from '../../services/fakeStoreAPI';
+import { ProductList } from './ProductList';
 
 interface Category {
   id: number;
@@ -37,7 +37,7 @@ export const CategoryList = () => {
         ]);
       }
     } catch (error) {
-      console.error("Erro ao buscar categorias:", error);
+      console.error('Erro ao buscar categorias:', error);
     } finally {
       setLoading(false);
     }
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     marginLeft: 16,
     marginRight: 16,
-    color: "black",
-    textTransform: "capitalize",
+    color: 'black',
+    textTransform: 'capitalize',
   },
 });

@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     StyleSheet,
     Text,
     Image,
-    Switch
+    Switch,
+    TouchableOpacity
   } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { LanguageOption } from "../components/profileComponents/LanguageOption";
+import { EditInfos } from "../components/profileComponents/EditInfos";
+import { LogOutWarning } from "../components/profileComponents/Warnings";
 
 export const ProfileScreen = () => {
     const [isEnabled, setIsEnabled] = useState(false);
+    const [nameInput, setNameInput] = useState(null as React.ReactElement | null);
+
+    useEffect(() => {
+        setNameInput(isEnabled ? <EditInfos /> : null);
+     }, [isEnabled]);
+
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
+    const [isLogOutWarningVisible, setIsLogOutWarningVisible] = useState(false);
+    const handleCloseModal = () => {
+        setIsLogOutWarningVisible(false);
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.titleImageContainer}>
@@ -20,7 +35,11 @@ export const ProfileScreen = () => {
                 style={styles.image}/> 
             </View>     
                 <View style={styles.textInfoContainer}>
-                    <Text style={styles.textName}>Juliane Gonçalves Freitas</Text>
+                    {isEnabled ? (
+                        <EditInfos />
+                    ) : (
+                    <Text style={styles.textName}>{nameInput || 'Juliane Gonçalves Freitas'}</Text>
+                     )}
                     <Text style={styles.textEmail}>matildabrown@mail.com</Text>
                 </View>
                 <View style={styles.edits}>
@@ -36,7 +55,10 @@ export const ProfileScreen = () => {
                     <LanguageOption />
                 <View style={styles.edits}>
                     <Text style={styles.text}>Log out</Text>
-                    <Entypo name='log-out' size={20} color='#9B9B9B' style={styles.iconLog} />
+                    <TouchableOpacity onPress={() => setIsLogOutWarningVisible(true)}>
+                        <Entypo name='log-out' size={20} color='#9B9B9B' style={styles.iconLog} />
+                    </TouchableOpacity>
+                     {isLogOutWarningVisible && <LogOutWarning visible={isLogOutWarningVisible} onCloseModal={handleCloseModal} />}
                 </View>
         </View>
     );

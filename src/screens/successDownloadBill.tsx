@@ -11,11 +11,11 @@ const SuccessDownloadBill = () => {
       <Text style={styles.tit}>Success!</Text>
       <Text style={styles.text}>Pay the invoice by 02/10/2023 and then follow the steps sent by email.</Text>
       <TouchableOpacity style={styles.baixarBoletoButton}>
-          <Text style={styles.baixarBoleto}>BAIXAR BOLETO</Text>
-        </TouchableOpacity>
+        <Text style={styles.baixarBoleto}>BAIXAR BOLETO</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.continueButton}>
-          <Text style={styles.continue}>CONTNUE SHOPPING</Text>
-        </TouchableOpacity>
+        <Text style={styles.continue}>CONTNUE SHOPPING</Text>
+      </TouchableOpacity>
     </View>
   );
 };

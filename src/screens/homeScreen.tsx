@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -7,12 +7,12 @@ import {
   Image,
   FlatList,
   Dimensions,
-} from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { Entypo } from "@expo/vector-icons";
-import { CategoryList } from "../components/home/CategoryList";
+} from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { Entypo } from '@expo/vector-icons';
+import { CategoryList } from '../components/home/CategoryList';
 
-const screenHeight = Dimensions.get("window").height;
+const screenHeight = Dimensions.get('window').height;
 
 export const HomeScreen = () => {
   return (
@@ -21,13 +21,13 @@ export const HomeScreen = () => {
         ListHeaderComponent={
           <View style={styles.bannercontainer}>
             <ImageBackground
-              source={require("../../assets/images/compass-banner.jpg")}
+              source={require('../../assets/images/compass-banner.jpg')}
               style={styles.backgroundImage}
             >
               <View style={styles.logo}>
                 <Text style={styles.logotext}>C</Text>
                 <Image
-                  source={require("../../assets/icons/logo-compass-uol.png")}
+                  source={require('../../assets/icons/logo-compass-uol.png')}
                   style={styles.logopic}
                 />
                 <Text style={styles.logotext}>mprass</Text>
@@ -63,34 +63,34 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundImage: {
-    resizeMode: "cover",
-    height: "100%",
+    resizeMode: 'cover',
+    height: '100%',
   },
   logo: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   logotext: {
     fontSize: 56,
-    color: "white",
+    color: 'white',
   },
   logopic: {
     width: 45,
     height: 45,
   },
   slogan: {
-    color: "white",
+    color: 'white',
     marginLeft: 16,
     marginBottom: 16,
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   slogantext: {
-    color: "white",
+    color: 'white',
     fontSize: 22,
     marginRight: 16,
   },

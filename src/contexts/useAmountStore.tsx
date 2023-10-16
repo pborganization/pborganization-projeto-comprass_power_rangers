@@ -1,5 +1,5 @@
-import React from "react";
-import { create } from "zustand";
+import React from 'react';
+import { create } from 'zustand';
 
 type State = {
   amount: number | null;

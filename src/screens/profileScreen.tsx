@@ -36,7 +36,6 @@ export const ProfileScreen = () => {
     setVerificationIcon(false); 
   };
   
-
   return (
     <View style={styles.container}>
       {verificationIcon && (

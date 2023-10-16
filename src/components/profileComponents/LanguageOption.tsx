@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   text: {
-    color: "#000",
-    fontWeight: "700",
+    color: '#000',
+    fontWeight: '700',
   },
   iconLanguage: {
     marginLeft: 246,

@@ -1,6 +1,6 @@
-import React from "react";
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import React from 'react';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 export const IncreaseButton = (props: any) => {
   return (
@@ -15,8 +15,8 @@ export const IncreaseButton = (props: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "red",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red',
   },
 });

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import { Text } from '../Text';
 import { Container, IconContainer, Input } from './styles';
 import { StyleSheet } from 'react-native';
@@ -16,6 +17,7 @@ interface LoginFieldProps {
   onChangeText: () => void;
   isPassword?: boolean;
   value: string;
+  isSubmitting?: boolean;
 }
 
 export function LoginField({
@@ -25,6 +27,7 @@ export function LoginField({
   onChangeText,
   isPassword,
   value,
+  isSubmitting,
   ...rest
 }: LoginFieldProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -58,6 +61,14 @@ export function LoginField({
           }}
         >
           {isSecureEntry ? <ClosedEye /> : <OpenEye />}
+        </IconContainer>
+      ) : (
+        <></>
+      )}
+
+      {isSubmitting ? (
+        <IconContainer styles={styles.Icon}>
+          <ActivityIndicator size="large" animating={true} color="#FF0024" />
         </IconContainer>
       ) : (
         <></>

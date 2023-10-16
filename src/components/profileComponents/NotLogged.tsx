@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native';
 import { LanguageOption } from './LanguageOption';
 
 export const NotLogged = () => {
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor={'#FFFF'} barStyle={'dark-content'}/>
       <View style={styles.titleContainer}>
         <Text style={styles.textTitle}>My profile</Text>
       </View>

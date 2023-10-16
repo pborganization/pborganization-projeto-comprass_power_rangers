@@ -6,6 +6,7 @@ import {
   Image,
   Switch,
   TouchableOpacity,
+  StatusBar
 } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { LanguageOption } from '../components/profileComponents/LanguageOption';
@@ -38,9 +39,10 @@ export const ProfileScreen = () => {
   
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor={'#FFFF'} barStyle={'dark-content'}/>
       {verificationIcon && (
         <TouchableOpacity style={styles.verification}>
-          <AntDesign name='checkcircle' size={46} color='green'/>
+          <AntDesign name='checkcircle' size={46} color='#2AA952'/>
         </TouchableOpacity>
       )} 
       <View style={styles.titleImageContainer}>
@@ -102,11 +104,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 16,
-    marginTop: 66.87,
+    marginTop: 23.87,
     marginRight: 5,
   },
   titleImageContainer: {
-    marginTop: 107,
+    marginTop: 64,
     marginLeft: 16,
     marginRight: 190,
     flexDirection: 'column',

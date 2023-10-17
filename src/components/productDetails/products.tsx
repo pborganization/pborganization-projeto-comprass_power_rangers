@@ -1,7 +1,11 @@
-import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { ProductType } from "../../contexts/productType";
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+<<<<<<< HEAD
+import { ProductType } from '../../contexts/productType';
+=======
+import { ProductType } from '../../interfaces/productType';
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
+import { useNavigation } from '@react-navigation/native';
 
 interface ProductProps {
   product: ProductType;
@@ -17,7 +21,7 @@ export const Products: React.FC<ProductProps> = ({ product }) => {
   const handleProductPress = () => {
     const params: ProductDetailsParams = { productId: product.id };
     // @ts-ignore
-    navigation.navigate("ProductDetailsScreen", params);
+    navigation.navigate('ProductDetailsScreen', params);
   };
 
   return (
@@ -45,16 +49,16 @@ const styles = StyleSheet.create({
   },
   category: {
     fontSize: 12,
-    color: "gray",
+    color: 'gray',
   },
   title: {
     fontSize: 14,
-    fontWeight: "bold",
-    color: "black",
+    fontWeight: 'bold',
+    color: 'black',
   },
   price: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "gray",
+    fontWeight: 'bold',
+    color: 'gray',
   },
 });

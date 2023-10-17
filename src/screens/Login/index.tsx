@@ -14,6 +14,7 @@ import { SecondPartLogo } from '../../components/Icons/SecondPartLogo';
 import { SubText } from '../../components/SubText';
 import { StatusBar } from 'expo-status-bar';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 const schema = yup.object({
   email: yup
@@ -35,6 +36,8 @@ export function LoginScreen() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const navigation = useNavigation();
 
   const { user, signIn } = useAuth();
 
@@ -91,6 +94,16 @@ export function LoginScreen() {
   if (!isFontsLoaded) {
     return null;
   }
+
+  const handleSignUp = () => {
+    navigation.navigate('SignUpScreen');
+  };
+  const handleForgotPassword = () => {
+    navigation.navigate('ForgotPasswordScreen');
+  };
+  const handleNotLogin = () => {
+    navigation.goBack();
+  };
 
   return (
     <>
@@ -174,9 +187,13 @@ export function LoginScreen() {
           </Form>
 
           <OtherOptions>
-            <SubText>Not have an account yet? Sign up</SubText>
-            <SubText>I forgot my password</SubText>
-            <SubText>I don't want to log in</SubText>
+            <SubText onPress={handleSignUp}>
+              Not have an account yet? Sign up
+            </SubText>
+            <SubText onPress={handleForgotPassword}>
+              I forgot my password
+            </SubText>
+            <SubText onPress={handleNotLogin}>I don't want to log in</SubText>
           </OtherOptions>
         </ImageBackground>
       </Container>

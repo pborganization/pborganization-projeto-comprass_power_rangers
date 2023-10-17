@@ -1,11 +1,10 @@
-import { View, Text, Image, StyleSheet } from "react-native";
-import React, { useState } from "react";
-import { Delete } from "../../../assets/images/svg/DeleteProduct";
-import { Colors } from "../../../assets/styles/Colors";
-import { AntDesign } from "@expo/vector-icons";
-import { ProductType } from "../../contexts/productType";
-import { useProductStore } from "../homeComponents/Products";
-import { QuantityIndicator } from "../homeComponents/quantityIndicator";
+import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useMemo } from 'react';
+import { Delete } from '../../../assets/images/svg/DeleteProduct';
+import { Colors } from '../../../assets/styles/Colors';
+import { ProductType } from '../../interfaces/productType';
+import { useProductStore } from '../../hooks/productStore';
+import { Indicator } from './Indicator';
 
 interface ProductProps {
   product: ProductType;
@@ -16,12 +15,20 @@ export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
 
   const productState = products[product.id];
 
-  const handleDelete = () => {
+  const totalPrice = useMemo(() => {
+    return productState.quantity * product.price;
+  }, [productState.quantity, product.price]);
+
+  const handleDelete = async () => {
     setProductState(product.id, {
       ...productState,
       quantity: 0,
     });
   };
+
+  if (productState.quantity === 0) {
+    return null;
+  }
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -36,13 +43,9 @@ export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
           </View>
         </View>
         <View style={styles.itemContainer}>
-          <QuantityIndicator
-            productId={product.id}
-            increasestyle={styles.increaseButton}
-            decreasestyle={styles.decreaseButton}
-          />
+          <Indicator productId={product.id} />
 
-          <Text style={styles.price}>{product.price} R$</Text>
+          <Text style={styles.price}>{totalPrice}.00 R$</Text>
         </View>
       </View>
     </View>
@@ -51,9 +54,9 @@ export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    flexDirection: "row",
-    width: 343,
+    display: 'flex',
+    flexDirection: 'row',
+    width: '92%',
     height: 104,
     backgroundColor: Colors.white,
     marginHorizontal: 16,
@@ -62,50 +65,55 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   imageContainer: {
-    flex: 1,
+    flex: 0,
   },
   infoContainer: {
     flex: 2,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
+    marginLeft: 18,
   },
   deleteIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: 0,
   },
   itemContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginVertical: 12,
     marginHorizontal: 5,
   },
   count: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   text: {
     fontSize: 16,
-    fontWeight: "bold",
-    marginVertical: 12,
+    fontWeight: 'bold',
+    marginLeft: 0,
   },
   countText: {
     fontSize: 14,
-    fontWeight: "600",
+    fontWeight: '600',
     margin: 8,
   },
   price: {
     fontSize: 14,
-    fontWeight: "600",
+    fontWeight: '600',
     marginHorizontal: 16,
   },
   img: {
-    display: "flex",
+    display: 'flex',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
+    width: 104,
+    height: 104,
   },
   increaseButton: {
+    width: 15,
+    height: 15,
     backgroundColor: Colors.red_500,
   },
   decreaseButton: {

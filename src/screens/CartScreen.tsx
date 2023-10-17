@@ -1,21 +1,23 @@
-import { View, StyleSheet, Text, FlatList } from "react-native";
-import React, { useEffect, useState } from "react";
-import { CartProductCard } from "../components/Cart/CartProductCard";
-import { EmptyCard } from "../components/Cart/EmptyCart";
-import { Colors } from "../../assets/styles/Colors";
-import { Button } from "../components/Buttons/Button";
-import { TotalAmount } from "../components/Cart/TotalAmount";
-import { useProductStore } from "../components/homeComponents/Products";
-import { ProductType } from "../contexts/productType";
-import { fetchProductById } from "../services/fakeStoreAPI";
-import { useNavigation } from "@react-navigation/native";
-import { useAmountStore } from "../contexts/useAmountStore";
+import { View, StyleSheet, Text, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { CartProductCard } from '../components/Cart/CartProductCard';
+import { EmptyCard } from '../components/Cart/EmptyCart';
+import { Colors } from '../../assets/styles/Colors';
+import { Button } from '../components/Buttons/Button';
+import { TotalAmount } from '../components/Cart/TotalAmount';
+import { useProductStore } from '../hooks/productStore';
+import { ProductType } from '../interfaces/productType';
+import { fetchProductById } from '../services/fakeStoreAPI';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '../contexts/AuthContext';
 
 export const CartScreen = () => {
   const { products } = useProductStore();
   const [cart, setCart] = useState<ProductType[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
-  const setAmount = useAmountStore((state) => state.setAmount);
+  const navigation = useNavigation();
+  const { user } = useAuth();
 
   useEffect(() => {
     async function fetchCardProducts() {
@@ -29,24 +31,46 @@ export const CartScreen = () => {
             };
           }
           return null;
-        })
+        }),
       );
       const filteredCart = cartData.filter((item) => item !== null);
       setCart(filteredCart);
       const newAmount = calculateAmount(filteredCart);
       setTotalAmount(newAmount);
-      setAmount(newAmount);
     }
 
-    fetchCardProducts;
+    fetchCardProducts();
   }, [products]);
 
   const calculateAmount = (items: ProductType[]) => {
-    return items.reduce((total, item) => total + item.price, 0);
+    if (items.length === 0) {
+      return 0;
+    }
+    const totalAmount = items.reduce((total, item) => {
+      const quantityObject = products[item.id];
+      if (typeof quantityObject === 'object' && 'quantity' in quantityObject) {
+        const quantity = quantityObject.quantity;
+        if (typeof quantity === 'number') {
+          return total + item.price * quantity;
+        }
+      }
+      return total;
+    }, 0);
+
+    return totalAmount;
   };
 
-  const handleAmount = () => {
-    const navigation = useNavigation();
+  const handleAmount = async () => {
+    try {
+      await AsyncStorage.setItem('totalAmount', totalAmount.toString());
+      {
+        user
+          ? navigation.navigate('AdressScreen')
+          : navigation.navigate('CheckoutNotLoggedin');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -59,8 +83,6 @@ export const CartScreen = () => {
         renderItem={({ item }) => <CartProductCard product={item} />}
         ListEmptyComponent={<EmptyCard />}
       />
-
-      {cart.length === 0 && <EmptyCard />}
 
       <View style={styles.details}>
         <TotalAmount>{totalAmount}</TotalAmount>
@@ -76,12 +98,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   details: {
-    position: "absolute",
-    bottom: 25,
+    backgroundColor: Colors.white,
+    position: 'absolute',
+    alignItems: 'center',
+    width: '100%',
+    bottom: 0,
   },
   title: {
     fontSize: 34,
-    fontWeight: "bold",
+    fontWeight: 'bold',
+    marginTop: '20%',
     marginHorizontal: 16,
     marginBottom: 8,
   },

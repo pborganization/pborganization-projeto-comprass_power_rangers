@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import React from 'react';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 
 export const LoadingProducts: React.FC = () => {
   const loadingData = Array.from({ length: 10 }).map((_, index) => ({
@@ -13,7 +13,7 @@ export const LoadingProducts: React.FC = () => {
       keyExtractor={(item) => item.id}
       horizontal
       showsHorizontalScrollIndicator={false}
-      renderItem={({ item }) => (
+      renderItem={() => (
         <View style={styles.container}>
           <View style={styles.productInfo}>
             <View style={styles.imagePlaceholder} />
@@ -44,32 +44,32 @@ const styles = StyleSheet.create({
   imagePlaceholder: {
     width: 148,
     height: 184,
-    backgroundColor: "lightgray", // Cor de fundo para a imagem de carregamento
+    backgroundColor: 'lightgray', // Cor de fundo para a imagem de carregamento
     marginBottom: 3,
     borderRadius: 8,
   },
   titlePlaceholder: {
     fontSize: 14,
-    fontWeight: "bold",
-    color: "gray",
-    backgroundColor: "lightgray", // Cor de fundo para o título de carregamento
+    fontWeight: 'bold',
+    color: 'gray',
+    backgroundColor: 'lightgray', // Cor de fundo para o título de carregamento
     marginBottom: 3,
     borderRadius: 8,
-    width: "60%",
+    width: '60%',
   },
   descriptionPlaceholder: {
     fontSize: 10,
-    backgroundColor: "lightgray", // Cor de fundo para a descrição de carregamento
+    backgroundColor: 'lightgray', // Cor de fundo para a descrição de carregamento
     marginBottom: 3,
     borderRadius: 8,
   },
   pricePlaceholder: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "red",
-    backgroundColor: "lightgray", // Cor de fundo para o preço de carregamento
+    fontWeight: 'bold',
+    color: 'red',
+    backgroundColor: 'lightgray', // Cor de fundo para o preço de carregamento
     borderRadius: 8,
-    width: "40%",
+    width: '40%',
     height: 15,
   },
 });

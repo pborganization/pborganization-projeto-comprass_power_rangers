@@ -1,6 +1,7 @@
-import React from "react";
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import React from 'react';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { Colors } from '../../../assets/styles/Colors';
 
 export const DecreaseButton = (props: any) => {
   return (
@@ -15,9 +16,9 @@ export const DecreaseButton = (props: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "red",
-    width: "100%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.red_500,
+    width: '100%',
   },
 });

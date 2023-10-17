@@ -15,8 +15,8 @@ export const MainNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="TabNavigatorScreen"
-        component={TabNavigator}
+        name="AddressScreen"
+        component={AdressScreen}
         options={{
           headerShown: false,
         }}

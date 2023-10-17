@@ -12,6 +12,8 @@ import { FirstPartLogo } from '../../components/Icons/FirstPartLogo';
 import { LogoUol } from '../../components/Icons/LogoUol';
 import { SecondPartLogo } from '../../components/Icons/SecondPartLogo';
 import { SubText } from '../../components/SubText';
+import { StatusBar } from 'expo-status-bar';
+import { useAuth } from '../../contexts/AuthContext';
 
 const schema = yup.object({
   email: yup
@@ -34,6 +36,8 @@ export function LoginScreen() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const {user, signIn} = useAuth();
+
   const {
     control,
     handleSubmit,
@@ -42,14 +46,14 @@ export function LoginScreen() {
     resolver: yupResolver(schema),
   });
 
-  function handleLogIn(data:any){
+  function handleLogIn(data: any) {
     setIsSubmitting(true);
 
     const { email, password } = data;
 
     const userData = {
       email: email,
-      password: password
+      password: password,
     };
 
     fetch('https://api.escuelajs.co/api/v1/auth/login', {
@@ -67,7 +71,10 @@ export function LoginScreen() {
       })
       .then((data) => {
         // Handle the response data here
+        const { access_token } = data;
+        signIn(access_token);
         console.log('Successfully registered:', data);
+
       })
       .catch((error) => {
         // Handle errors here
@@ -76,94 +83,107 @@ export function LoginScreen() {
       .finally(() => {
         setIsSubmitting(false);
       });
+
+    {console.log(user);}
   }
 
   if (!isFontsLoaded) {
     return null;
   }
 
+
+
   return (
-    <Container>
-      <ImageBackground
-        source={require('../../assets/img/CompassBackgroundLogo.png')}
-        style={{
-          width: Dimensions.get('window').width,
-          height: Dimensions.get('window').height,
-        }}
-        resizeMode="contain"
-      >
-        <Logo>
-          <FirstPartLogo />
-          <View style={{ marginLeft: 4.9, marginRight: 5.91 }}>
-            <LogoUol />
-          </View>
-          <View style={{ marginBottom: -8.52 }}>
-            <SecondPartLogo />
-          </View>
-        </Logo>
+    <>
 
-        <Form>
-          <Controller
-            control={control}
-            name="email"
-            render={({
-              formState: { isSubmitted },
-              field: { onChange, value, ...rest },
-            }) => (
-              <LoginField
-                isInvalid={errors.email}
-                showIcon={isSubmitted}
-                onChangeText={onChange}
-                value={value}
-              >
+      <StatusBar style='light' backgroundColor='#111213' />
+      <Container>
+        <ImageBackground
+          source={require('../../assets/img/CompassBackgroundLogo.png')}
+          style={{
+            width: Dimensions.get('window').width,
+            height: Dimensions.get('window').height,
+          }}
+          resizeMode="contain"
+        >
+          <Logo>
+            <FirstPartLogo />
+            <View style={{ marginLeft: 4.9, marginRight: 5.91 }}>
+              <LogoUol />
+            </View>
+            <View style={{ marginBottom: -8.52 }}>
+              <SecondPartLogo />
+            </View>
+          </Logo>
+
+          <Form>
+            <Controller
+              control={control}
+              name="email"
+              render={({
+                formState: { isSubmitted },
+                field: { onChange, value, ...rest },
+              }) => (
+                <LoginField
+                  isInvalid={errors.email}
+                  showIcon={isSubmitted}
+                  onChangeText={onChange}
+                  value={value}
+                >
                 Email
-              </LoginField>
-            )}
-          />
+                </LoginField>
+              )}
+            />
 
-          <Controller
-            control={control}
-            name="password"
-            render={({
-              formState: { isSubmitted },
-              field: { onChange, value, ...rest },
-            }) => (
-              <LoginField
-                isInvalid={errors.password}
-                showIcon={isSubmitted}
-                onChangeText={onChange}
-                value={value}
-                isPassword={true}
-              >
+            <Controller
+              control={control}
+              name="password"
+              render={({
+                formState: { isSubmitted },
+                field: { onChange, value, ...rest },
+              }) => (
+                <LoginField
+                  isInvalid={errors.password}
+                  showIcon={isSubmitted}
+                  onChangeText={onChange}
+                  value={value}
+                  isPassword={true}
+                >
                 Password
-              </LoginField>
+                </LoginField>
+              )}
+            />
+
+            {errors.email && (
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {errors.email?.message}
+              </Text>
             )}
-          />
 
-          {errors.email && (
-            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-              {errors.email?.message}
-            </Text>
-          )}
+            {!errors.email && errors.password && (
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {errors.password?.message}
+              </Text>
+            )}
 
-          {!errors.email && errors.password && (
-            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-              {errors.password?.message}
-            </Text>
-          )}
-
-          <Button styles={styles.Button} onPress={handleSubmit(handleLogIn)}>
+            <Button
+              styles={styles.Button}
+              disabled={isSubmitting}
+              onPress={handleSubmit(handleLogIn)}
+            >
             LOGIN
-          </Button>
-        </Form>
+            </Button>
+          </Form>
 
-        <OtherOptions>
-          <SubText>Not have an account yet? Sign up</SubText>
-          <SubText>I forgot my password</SubText>
-          <SubText>I don't want to log in</SubText>
-        </OtherOptions>
-      </ImageBackground>
-    </Container>
+          <OtherOptions>
+            <SubText>Not have an account yet? Sign up</SubText>
+            <SubText>I forgot my password</SubText>
+            <SubText>I don't want to log in</SubText>
+          </OtherOptions>
+        </ImageBackground>
+      </Container>
+    </>
+
   );
 }
 

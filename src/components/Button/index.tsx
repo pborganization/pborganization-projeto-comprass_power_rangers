@@ -1,3 +1,4 @@
+import { ActivityIndicator } from 'react-native';
 import { Text } from '../Text';
 import { Container } from './styles';
 
@@ -7,11 +8,20 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-export function Button ({children, onPress, disabled, ...rest}: ButtonProps){
+export function Button({ children, onPress, disabled, ...rest }: ButtonProps) {
   return (
-    <Container onPress={onPress} activeOpacity={0.7} {...rest} disabled={disabled}>
+    <Container
+      onPress={onPress}
+      activeOpacity={0.7}
+      {...rest}
+      disabled={disabled}
+    >
       <Text weight="800" color="#FFF">
-        {children}
+        {disabled ? (
+          <ActivityIndicator size="large" animating={true} color="#FFF" />
+        ) : (
+          children
+        )}
       </Text>
     </Container>
   );

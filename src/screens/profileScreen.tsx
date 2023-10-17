@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: '#F9F9F9'
   },
   verification: {
     position: 'absolute',

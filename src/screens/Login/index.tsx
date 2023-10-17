@@ -36,7 +36,7 @@ export function LoginScreen() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const {user, signIn} = useAuth();
+  const { user, signIn } = useAuth();
 
   const {
     control,
@@ -74,7 +74,6 @@ export function LoginScreen() {
         const { access_token } = data;
         signIn(access_token);
         console.log('Successfully registered:', data);
-
       })
       .catch((error) => {
         // Handle errors here
@@ -84,19 +83,18 @@ export function LoginScreen() {
         setIsSubmitting(false);
       });
 
-    {console.log(user);}
+    {
+      console.log(user);
+    }
   }
 
   if (!isFontsLoaded) {
     return null;
   }
 
-
-
   return (
     <>
-
-      <StatusBar style='light' backgroundColor='#111213' />
+      <StatusBar style="light" backgroundColor="#111213" />
       <Container>
         <ImageBackground
           source={require('../../assets/img/CompassBackgroundLogo.png')}
@@ -130,7 +128,7 @@ export function LoginScreen() {
                   onChangeText={onChange}
                   value={value}
                 >
-                Email
+                  Email
                 </LoginField>
               )}
             />
@@ -149,7 +147,7 @@ export function LoginScreen() {
                   value={value}
                   isPassword={true}
                 >
-                Password
+                  Password
                 </LoginField>
               )}
             />
@@ -171,7 +169,7 @@ export function LoginScreen() {
               disabled={isSubmitting}
               onPress={handleSubmit(handleLogIn)}
             >
-            LOGIN
+              LOGIN
             </Button>
           </Form>
 
@@ -183,7 +181,6 @@ export function LoginScreen() {
         </ImageBackground>
       </Container>
     </>
-
   );
 }
 

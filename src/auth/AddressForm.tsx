@@ -10,15 +10,11 @@ import { useAddress } from "../../contexts/zustand";
 
 export const AddressForm = () => {
   const schemaValidate = yup.object({
-    zipCode: yup.string().required("Postal Code is required"),
+    zipCode: yup.string().required("Zip code is invalid"),
     address: yup.string().required("Adress is required"),
     city: yup.string().required("City is required"),
-    state: yup.string().required("State, Province or region is required"),
-    fullName: yup.string().test("zipCode", "Invalid Zip Code", (value) => {
-      if (!value) {
-        return true;
-      }
-    }),
+    state: yup.string().required("State, province or region is required"),
+    fullName: yup.string().required("Full name is required"),
   });
   const {
     control,

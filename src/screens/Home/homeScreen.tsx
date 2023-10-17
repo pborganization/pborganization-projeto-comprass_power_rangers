@@ -12,25 +12,16 @@ import { StatusBar } from 'expo-status-bar';
 import { Entypo } from '@expo/vector-icons';
 import { CategoryList } from '../../components/home/CategoryList';
 import { SearchButton } from '../../components/home/SearchButtom/searchButtom';
-
-import { useNavigation } from '@react-navigation/native';
-import { Button } from '../../components/Buttons/Button';
 import { ActualUser } from '../../components/home/ActualUser';
-import { isAuthenticated } from '../../utils/isAuthenticated';
-const isLogged = isAuthenticated();
+import { useAuth } from '../../contexts/AuthContext';
+
 const screenHeight = Dimensions.get('window').height;
 
 export const HomeScreen = () => {
-  const navigation = useNavigation();
-
-  const handleNav = () => {
-    navigation.navigate('CartScreen');
-  };
-
+  const { user } = useAuth();
   return (
     <View style={styles.container}>
       <SearchButton />
-      <Button onPress={handleNav}>Nav</Button>
       <FlatList
         ListHeaderComponent={
           <View style={styles.bannercontainer}>
@@ -38,7 +29,7 @@ export const HomeScreen = () => {
               source={require('../../../assets/images/home/compass-banner.jpg')}
               style={styles.backgroundImage}
             >
-              <ActualUser isAuthenticated={isLogged} />
+              {user ? <ActualUser /> : <></>}
               <View style={styles.logo}>
                 <Text style={styles.logotext}>C</Text>
                 <Image
@@ -62,7 +53,6 @@ export const HomeScreen = () => {
         )}
         keyExtractor={(item) => item.toString()}
       />
-      <Button onPress={handleNav}>Nav</Button>
       <StatusBar style="light" />
     </View>
   );

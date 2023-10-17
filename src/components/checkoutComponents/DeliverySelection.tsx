@@ -60,7 +60,7 @@ const DeliverySection = () => {
         </View>
         <View style={styles.summaryContainer}>
           <Text style={styles.summary}>Summary:</Text>
-          <Text style={styles.summaryPrice}>{112 + delPrice + ',' + 0 + 0} $</Text>
+          <Text style={styles.summaryPrice}>{112 + delPrice + ',' + 0 + 0} R$</Text>
         </View>
       </View>
     </View>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   summaryPrice: {
     color: '#000',
-    marginLeft: 185,
+    marginLeft: 177,
     fontSize: 18,
     fontWeight: '600',
     textAlign: 'right'

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Modal, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from '@react-navigation/native';
 import CreditCardModal from "../components/checkoutComponents/CreditCardModal";
 import DeliverySelection from "../components/checkoutComponents/DeliverySelection";
+import { useAddress } from "../../contexts/zustand";
 
 const CheckoutScreen = () => {
-  const [shippingAddress, setShippingAddress] = useState("");
+  const [shippingAddress, setShippingAddress] = useState(useAddress.getState().address[0] || {});
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [highlightedOption, setHighlightedOption] = useState(null);
@@ -17,6 +19,8 @@ const CheckoutScreen = () => {
 
   useEffect(() => {
   }, []);
+
+  const navigation = useNavigation();
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -63,16 +67,13 @@ const CheckoutScreen = () => {
       <View style={styles.section}>
         <Text style={styles.shippingTitle}>Shipping address</Text>
         <View style={styles.shippingContainer}>
-          <TouchableOpacity style={styles.changeButton}>
-            <Text style={styles.changeButtonText}>Change</Text>
-          </TouchableOpacity>
-          <TextInput
-            style={styles.input}
-            value={shippingAddress}
-            onChangeText={(text) => setShippingAddress(text)}
-            placeholder="Click to add an address"
-          />
-        </View>
+       <TouchableOpacity style={styles.changeButton} onPress={() => navigation.navigate('AddressForm')}>
+        <Text style={styles.changeButtonText}>Change</Text>
+         </TouchableOpacity>
+       <Text style={styles.fullName}>{shippingAddress.fullName}</Text>
+      <Text style={styles.address}>{shippingAddress.address}</Text>
+      <Text style={styles.address2}>{shippingAddress.city}, {shippingAddress.zipCode}, {shippingAddress.state}</Text>
+      </View>
       </View>
 
       <View style={styles.section}>
@@ -169,6 +170,25 @@ const CheckoutScreen = () => {
 };
 const styles = StyleSheet.create({
 
+  fullName:{
+    marginTop: 20,
+    marginLeft: 24,
+    color: '#000',
+    fontSize: 14,
+    fontWeight: '600'
+  },
+  address:{
+    fontSize: 14,
+    fontWeight: '400',
+    marginLeft: 24,
+    marginTop: 2
+  },
+  address2:{
+    fontSize: 14,
+    fontWeight: '400',
+    marginLeft: 24,
+  },
+
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -206,11 +226,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   container: {
-    marginTop: 120,
+    marginTop: 100,
     marginLeft: 8,
     marginRight: 8,
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#rgba",
   },
   section: {
     padding: 10,
@@ -320,4 +340,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CheckoutScreen; 
+export default CheckoutScreen

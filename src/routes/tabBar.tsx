@@ -5,10 +5,14 @@ import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { HomeScreen } from '../screens/Home/homeScreen';
 import { CartScreen } from '../screens/CartScreen';
+import { useAuth } from '../contexts/AuthContext';
+import { NotLogged } from '../components/profileComponents/NotLogged';
 
 const Tab = createBottomTabNavigator();
 
 export function TabNavigator() {
+  const { user } = useAuth();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -44,7 +48,7 @@ export function TabNavigator() {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={user ? ProfileScreen : NotLogged}  
         options={{
           tabBarIcon: () => <AntDesign name="user" size={30} color="red" />,
         }}

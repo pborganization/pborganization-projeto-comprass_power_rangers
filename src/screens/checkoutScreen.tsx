@@ -86,7 +86,6 @@ const CheckoutScreen = (props : any) => {
       <Text style={styles.address2}>{shippingAddress.city}, {shippingAddress.zipCode}, {shippingAddress.state}</Text>
       </View>
       </View>
-
       <View style={styles.section}>
         <View style={styles.paymentSection}>
           <Text style={styles.paymentTitle}>Payment method</Text>
@@ -171,14 +170,12 @@ const CheckoutScreen = (props : any) => {
         <Text style={styles.deliveryTitle}>Delivery method</Text>
         <DeliverySelection setSelectedDeliveryMethod={setSelectedDeliveryMethod} />
       </View>
-     
       <TouchableOpacity
       style={[
         styles.sbutton,
         (shippingAddress && selectedPaymentMethod && selectedDeliveryMethod) ? { backgroundColor: '#FF0024' } : {}
       ]}
-      onPress={handleSubmitOrder}
-    >
+      onPress={handleSubmitOrder} >
       <Text style={styles.sbuttonText}>SUBMIT ORDER</Text>
     </TouchableOpacity>
     </View>

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Colors } from '../../../assets/styles/Colors';
 
 interface PriceProps {
-	children: ReactNode;
+  children: ReactNode;
 }
 export const TotalAmount = ({ children }: PriceProps) => {
   return (
@@ -20,9 +20,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: 343,
-    height: 22,
-    margin: 16,
+    width: '100%',
+    paddingHorizontal: 18,
   },
   totalAmount: {
     fontSize: 14,
@@ -31,5 +30,7 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: '600',
     fontSize: 18,
+    justifyContent: 'flex-end',
+    marginLeft: 16,
   },
 });

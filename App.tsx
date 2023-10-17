@@ -1,21 +1,14 @@
-import { StyleSheet, View } from 'react-native';
+import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { Colors } from './assets/styles/Colors';
 import { HomeNavigator } from './src/routes/homeRoutes';
+import { MainNavigator } from './src/routes/MainStack';
 
-export default function App() {
+function App() {
   return (
-    <View style={styles.container}>
-      <NavigationContainer>
-        <HomeNavigator />
-      </NavigationContainer>
-    </View>
+    <NavigationContainer>
+      <MainNavigator />
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.white,
-  },
-});
+export default App;

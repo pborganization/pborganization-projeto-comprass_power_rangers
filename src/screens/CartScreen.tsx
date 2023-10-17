@@ -62,7 +62,7 @@ export const CartScreen = () => {
     try {
       await AsyncStorage.setItem('totalAmount', totalAmount.toString());
       console.log('Valor atual do totalAmount:', totalAmount);
-      //navigation.navigate()
+      navigation.navigate("CheckoutScreen")
     } catch (error) {
       console.error(error);
     }
@@ -80,7 +80,7 @@ export const CartScreen = () => {
       />
 
       <View style={styles.details}>
-        <TotalAmount>{totalAmount}</TotalAmount>
+        <TotalAmount>{totalAmount}.00</TotalAmount>
         <Button onPress={handleAmount}>BUY</Button>
       </View>
     </View>

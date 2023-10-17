@@ -49,7 +49,7 @@ export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
             productId={product.id}
           />
 
-          <Text style={styles.price}>{totalPrice} R$</Text>
+          <Text style={styles.price}>{totalPrice}.00 R$</Text>
         </View>
       </View>
     </View>

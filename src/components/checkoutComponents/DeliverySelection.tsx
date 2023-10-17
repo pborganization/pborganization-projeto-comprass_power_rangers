@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Feather } from '@expo/vector-icons'; 
+import { Feather } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DeliverySection = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [delPrice, setDelPrice] = useState(0);
+  const [storedPrice, setStoredPrice] = useState(0);
 
+  useEffect(() => {
+    const getPriceFromAsyncStorage = async () => {
+      try{
+        const price = await AsyncStorage.getItem('totalAmount')
+        if (price !== null) {
+          setStoredPrice(parseFloat(price));
+        }
+      }catch (error) {
+        console.error('Erro ao obter valor do AsyncStorage:', error);
+      }
+    }
+    getPriceFromAsyncStorage()
+  }, [])
   const handleOptionPress = (option : any) => {
     setSelectedOption(option);
     setDelPrice(15);
@@ -52,15 +67,15 @@ const DeliverySection = () => {
       <View style={styles.price}>
         <View style={styles.orderContainer}>
           <Text style={styles.order}>Order:</Text>
-          <Text style={styles.orderPrice}>112,00 R$</Text>
+          <Text style={styles.orderPrice}>{storedPrice}.00 R$</Text>
         </View>
         <View style={styles.DContainer}>
           <Text style={styles.del}>Delivery:</Text>
-          <Text style={styles.delPrice}>{delPrice} R$</Text>
+          <Text style={styles.delPrice}>{delPrice}.00 R$</Text>
         </View>
         <View style={styles.summaryContainer}>
           <Text style={styles.summary}>Summary:</Text>
-          <Text style={styles.summaryPrice}>{112 + delPrice + ',' + 0 + 0} $</Text>
+          <Text style={styles.summaryPrice}>{storedPrice + delPrice}.00 R$</Text>{/* hiali mexer nessa linha */}
         </View>
       </View>
     </View>

@@ -9,7 +9,9 @@ interface ProductListProps {
   categoryId: number;
 }
 
-export const ProductList: React.FC<ProductListProps> = ({ categoryId }) => {
+export const ProductList: React.FC<ProductListProps> = ({
+  categoryId,
+}: ProductListProps) => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);

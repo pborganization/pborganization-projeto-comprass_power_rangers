@@ -14,6 +14,7 @@ export const ProductContainer: React.FC<ProductContainerProps> = React.memo(
       <View style={styles.container}>
         <View>
           <QuantityIndicator
+            key={product.id}
             productId={product.id}
             increasestyle={styles.increasebutton}
             decreasestyle={styles.decreasebutton}

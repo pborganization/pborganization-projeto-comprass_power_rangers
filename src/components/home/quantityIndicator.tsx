@@ -12,45 +12,44 @@ interface QuantityIndicatorProps {
 
 export const QuantityIndicator: React.FC<QuantityIndicatorProps> = React.memo(
   ({ productId, increasestyle, decreasestyle }: QuantityIndicatorProps) => {
-    const { products, setProductState } = useProductStore();
-    const productState = products[productId] || { quantity: 0 };
+    const { products, increaseQuantity, decreaseQuantity } = useProductStore();
+    const [localQuantity, setLocalQuantity] = useState(
+      products[productId]?.quantity || 0,
+    );
 
-    const [isUpdating, setIsUpdating] = useState(false);
-
-    const updateQuantityWithDelay = (newQuantity: any) => {
-      if (!isUpdating) {
-        setIsUpdating(true);
-
-        setProductState(productId, {
-          quantity: newQuantity,
-        });
-
-        setTimeout(() => {
-          setIsUpdating(false);
-        }, 1000);
+    const increaseQuantityHandler = useCallback(() => {
+      if (localQuantity === 0) {
+        increaseQuantity(productId);
+        setLocalQuantity(1);
+      } else {
+        increaseQuantity(productId);
+        setLocalQuantity(localQuantity + 1);
       }
-    };
+    }, [productId, localQuantity, increaseQuantity]);
 
-    const increaseQuantity = useCallback(() => {
-      updateQuantityWithDelay(productState.quantity + 1);
-    }, [productId, productState.quantity, setProductState, isUpdating]);
-
-    const decreaseQuantity = useCallback(() => {
-      if (productState.quantity > 0) {
-        updateQuantityWithDelay(productState.quantity - 1);
+    const decreaseQuantityHandler = useCallback(() => {
+      if (localQuantity > 0) {
+        decreaseQuantity(productId);
+        setLocalQuantity(localQuantity - 1);
       }
-    }, [productId, productState.quantity, setProductState, isUpdating]);
+    }, [productId, localQuantity, decreaseQuantity]);
 
     return (
       <View style={styles.container}>
         <View style={styles.buttonContainer}>
-          <DecreaseButton onPress={decreaseQuantity} style={decreasestyle} />
+          <DecreaseButton
+            onPress={decreaseQuantityHandler}
+            style={decreasestyle}
+          />
         </View>
         <View style={styles.numberContainer}>
-          <Text>{productState.quantity}</Text>
+          <Text>{localQuantity}</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <IncreaseButton onPress={increaseQuantity} style={increasestyle} />
+          <IncreaseButton
+            onPress={increaseQuantityHandler}
+            style={increasestyle}
+          />
         </View>
       </View>
     );

@@ -3,13 +3,16 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { ModalLanguages } from './ModalLanguages';
 
-
 export const LanguageOption = () => {
   const [isIconUp, setIsIconUp] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleIconPress = () => {
+<<<<<<< HEAD
     setIsIconUp(prevState => !prevState);
+=======
+    setIsIconUp((prevState) => !prevState);
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
     setIsModalVisible(true);
   };
 
@@ -21,13 +24,21 @@ export const LanguageOption = () => {
     <View style={styles.edits}>
       <Text style={styles.text}>Language</Text>
       <TouchableOpacity onPress={handleIconPress}>
+<<<<<<< HEAD
         <Entypo 
           name={isIconUp ? 'chevron-up' : 'chevron-down'}
           size={24} 
           color='#9B9B9B' 
           style={styles.iconLanguage} 
+=======
+        <Entypo
+          name={isIconUp ? 'chevron-up' : 'chevron-down'}
+          size={24}
+          color="#9B9B9B"
+          style={styles.iconLanguage}
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
         />
-        <ModalLanguages visible={isModalVisible} onClose={closeModal}/>
+        <ModalLanguages visible={isModalVisible} onClose={closeModal} />
       </TouchableOpacity>
     </View>
   );
@@ -41,7 +52,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#B6B6B6',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   text: {
     color: '#000',
@@ -51,4 +62,3 @@ const styles = StyleSheet.create({
     marginLeft: 246,
   },
 });
-

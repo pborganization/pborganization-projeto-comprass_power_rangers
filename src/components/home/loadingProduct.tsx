@@ -13,7 +13,7 @@ export const LoadingProducts: React.FC = () => {
       keyExtractor={(item) => item.id}
       horizontal
       showsHorizontalScrollIndicator={false}
-      renderItem={({ item }) => (
+      renderItem={() => (
         <View style={styles.container}>
           <View style={styles.productInfo}>
             <View style={styles.imagePlaceholder} />

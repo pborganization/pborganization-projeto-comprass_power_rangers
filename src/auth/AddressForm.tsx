@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
-import { useForm, Controller } from "react-hook-form";
-import { Button } from "../components/Buttons/Button";
-import { Input } from "./Input";
-import { Colors } from "../../assets/styles/Colors";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useAddress } from "../../contexts/zustand";
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, TextInput, Text } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
+import { Button } from '../components/Buttons/Button';
+import { Input } from './Input';
+import { Colors } from '../../assets/styles/Colors';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useAddress } from '../../contexts/zustand';
+import { useNavigation } from '@react-navigation/native';
 
 export const AddressForm = () => {
   const schemaValidate = yup.object({
-    zipCode: yup.string().required("Zip code is invalid"),
-    address: yup.string().required("Adress is required"),
-    city: yup.string().required("City is required"),
-    state: yup.string().required("State, province or region is required"),
-    fullName: yup.string().required("Full name is required"),
+    zipCode: yup.string().required('Postal Code is required'),
+    address: yup.string().required('Adress is required'),
+    city: yup.string().required('City is required'),
+    state: yup.string().required('State, Province or region is required'),
+    fullName: yup.string().required('Full name is required'),
   });
   const {
     control,
@@ -23,17 +24,17 @@ export const AddressForm = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schemaValidate),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      zipCode: "",
-      address: "",
-      city: "",
-      state: "",
-      fullName: "",
+      zipCode: '',
+      address: '',
+      city: '',
+      state: '',
+      fullName: '',
     },
   });
 
-  const [zipCode, setZipCode] = useState("");
+  const [zipCode, setZipCode] = useState('');
   const [isValidZipCode, setIsValidZipCode] = useState(false);
   const [allFieldsFilled, setFieldsFilled] = useState(false);
   const [validInput, setValidInput] = useState(false);
@@ -42,25 +43,31 @@ export const AddressForm = () => {
 
   const onSubmit = async () => {
     if (isValidZipCode && allFieldsFilled) {
+  const setAddress = useAddress((state) => state.setAddress);
+  const navigation = useNavigation();
+
+  const onSubmit = async () => {
+    if (isValidZipCode && allFieldsFilled) {
+      console.log('envie os dados');
       const formData = {
-        zipCode: getValues("zipCode"),
-        address: getValues("address"),
-        city: getValues("city"),
-        state: getValues("state"),
-        fullName: getValues("fullName"),
+        zipCode: getValues('zipCode'),
+        address: getValues('address'),
+        city: getValues('city'),
+        state: getValues('state'),
+        fullName: getValues('fullName'),
       };
 
       setAddress(formData);
-
-      console.log("Novo estado do endereço:", useAddress.getState().address);
+      console.log('Novo estado do endereço:', useAddress.getState().address);
     } else {
-      console.log("preencha todos os campos");
+      console.log('preencha todos os campos');
     }
 
     if (isValidZipCode) {
-      console.log("deu certo");
+      navigation.navigate('CheckoutScreen');
     } else {
-      console.log("Dados inválidos.");
+      console.log('Dados inválidos.');
+
     }
   };
   useEffect(() => {
@@ -70,31 +77,31 @@ export const AddressForm = () => {
       const apiUrl = `https://viacep.com.br/ws/${zipCode}/json/`;
 
       fetch(apiUrl, {
-        method: "GET",
+        method: 'GET',
       })
-        .then((response) => {
+        .then(response => {
           if (response.status === 404) {
-            console.log("Código postal não encontrado");
+            console.log('Código postal não encontrado');
             setIsValidZipCode(false);
           } else if (response.ok) {
-            console.log("Código postal válido");
+            console.log('Código postal válido');
             setIsValidZipCode(true);
           } else if (response.status === 400) {
-            console.log("Cep invalido");
+            console.log('Cep invalido');
             setIsValidZipCode(false);
           } else {
             console.log(
-              "Erro desconhecido",
+              'Erro desconhecido',
               zipCode,
               apiUrl,
               response.status,
-              response.statusText
+              response.statusText,
             );
             setIsValidZipCode(false);
           }
         })
         .catch((error) => {
-          console.error("Erro ao chamar a API:", error);
+          console.error('Erro ao chamar a API:', error);
           setIsValidZipCode(false);
         })
         .finally(() => {
@@ -110,7 +117,7 @@ export const AddressForm = () => {
     const { zipCode, address, city, state, fullName } = getValues();
     const fields = [zipCode, address, city, state, fullName];
 
-    const isFilled = fields.every((value) => value.trim());
+    const isFilled = fields.every(value => value.trim());
     setFieldsFilled(isFilled);
   };
 
@@ -125,20 +132,14 @@ export const AddressForm = () => {
           name="zipCode"
           control={control}
           rules={{ required: true }}
-          render={({
-            field: { onChange, value },
-          }) => (
+          render={({ field: { onChange, value } }) => (
             <Input
               placeholder="Zip Code (Postal Code)"
               value={value}
-              onChangeText={(text) => {
+              onChangeText={text => {
                 onChange(text);
                 setZipCode(text);
               }}
-              editable={true}
-              {...(loading && (
-                <ActivityIndicator size="small" color={Colors.red_500} />
-              ))}
               style={[value && !errors.zipCode ? styles.validInput : null]}
             />
           )}

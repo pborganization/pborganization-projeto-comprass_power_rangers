@@ -1,4 +1,5 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { Delete } from '../../../assets/images/svg/DeleteProduct';
 import { Colors } from '../../../assets/styles/Colors';
@@ -6,6 +7,14 @@ import { AntDesign } from '@expo/vector-icons';
 import { ProductType } from '../../contexts/productType';
 import { useProductStore } from '../homeComponents/Products';
 import { QuantityIndicator } from '../homeComponents/quantityIndicator';
+=======
+import React, { useMemo } from 'react';
+import { Delete } from '../../../assets/images/svg/DeleteProduct';
+import { Colors } from '../../../assets/styles/Colors';
+import { ProductType } from '../../interfaces/productType';
+import { useProductStore } from '../../hooks/productStore';
+import { Indicator } from './Indicator';
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 
 interface ProductProps {
   product: ProductType;
@@ -16,12 +25,20 @@ export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
 
   const productState = products[product.id];
 
-  const handleDelete = () => {
+  const totalPrice = useMemo(() => {
+    return productState.quantity * product.price;
+  }, [productState.quantity, product.price]);
+
+  const handleDelete = async () => {
     setProductState(product.id, {
       ...productState,
       quantity: 0,
     });
   };
+
+  if (productState.quantity === 0) {
+    return null;
+  }
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -36,13 +53,9 @@ export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
           </View>
         </View>
         <View style={styles.itemContainer}>
-          <QuantityIndicator
-            productId={product.id}
-            increasestyle={styles.increaseButton}
-            decreasestyle={styles.decreaseButton}
-          />
+          <Indicator productId={product.id} />
 
-          <Text style={styles.price}>{product.price} R$</Text>
+          <Text style={styles.price}>{totalPrice}.00 R$</Text>
         </View>
       </View>
     </View>
@@ -53,7 +66,11 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
+<<<<<<< HEAD
     width: 343,
+=======
+    width: '92%',
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
     height: 104,
     backgroundColor: Colors.white,
     marginHorizontal: 16,
@@ -62,11 +79,15 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   imageContainer: {
-    flex: 1,
+    flex: 0,
   },
   infoContainer: {
     flex: 2,
     justifyContent: 'space-between',
+<<<<<<< HEAD
+=======
+    marginLeft: 18,
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
   },
   deleteIcon: {
     position: 'absolute',
@@ -88,7 +109,11 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: 'bold',
+<<<<<<< HEAD
     marginVertical: 12,
+=======
+    marginLeft: 0,
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
   },
   countText: {
     fontSize: 14,
@@ -104,8 +129,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
+    width: 104,
+    height: 104,
   },
   increaseButton: {
+    width: 15,
+    height: 15,
     backgroundColor: Colors.red_500,
   },
   decreaseButton: {

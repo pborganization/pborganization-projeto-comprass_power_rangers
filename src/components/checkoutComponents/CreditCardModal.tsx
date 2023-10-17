@@ -1,5 +1,18 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { Modal, View, Text, TouchableOpacity, TextInput, StyleSheet, Image} from 'react-native';
+=======
+import React, { useState, useEffect } from 'react';
+import {
+  Modal,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+  Image,
+} from 'react-native';
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 import { AntDesign } from '@expo/vector-icons';
 
 const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
@@ -9,7 +22,6 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
   const [cvv, setCVV] = useState('');
   const [error, setError] = useState('');
   const [cardLogo, setCardLogo] = useState(null);
-  
 
   const handleNameChange = (text: string) => {
     setName(text);
@@ -18,7 +30,7 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
   const handleCardNumberChange = (text: string) => {
     setCardNumber(text);
   };
- 
+
   const handleExpireDateChange = (text: string) => {
     setExpireDate(text);
   };
@@ -27,21 +39,55 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
     setCVV(text);
   };
 
+  useEffect(() => {
+    if (cardNumber.length === 8) {
+      const cardIssuer = determineCardIssuer(cardNumber);
+      setCardLogo(cardIssuer);
+    } else {
+      setCardLogo(null);
+    }
+  }, [cardNumber]);
+
+  const determineCardIssuer = (cardNumber: any) => {
+    if (
+      name !== '' &&
+      cardNumber.length === 8 &&
+      expireDate.length >= 5 &&
+      cvv.length === 3
+    ) {
+      return require('../../../assets/images/mastercard.png');
+    }
+    return null;
+  };
+
   const renderLabel = (labelText: string) => (
     <Text style={styles.label}>{labelText}</Text>
   );
 
   const isFormValid = () => {
-    return name !== '' && cardNumber.length == 8 && expireDate.length >= 5 && cvv.length == 3;
+    return (
+      name !== '' &&
+      cardNumber.length === 8 &&
+      expireDate.length >= 5 &&
+      cvv.length === 3
+    );
   };
 
   const handleAddCard = () => {
+<<<<<<< HEAD
     if(isFormValid()) {
       setCardLogo(require('../../../assets/images/mastercard.png'));
       onAddCard(cardNumber);
       toggleModal();
     } else {
       setError('Please fill in all fields corretly.');
+=======
+    if (isFormValid()) {
+      onAddCard(cardNumber);
+      toggleModal();
+    } else {
+      setError('Please fill in all fields correctly.');
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
     }
   };
 
@@ -64,12 +110,10 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
             <TextInput
               style={styles.input}
               value={name}
-              placeholder='Name on card'
+              placeholder="Name on card"
               onChangeText={handleNameChange}
             />
-            {cardLogo && (
-              <Image source={cardLogo}  style={styles.cardLogo}/>
-            )}
+            {cardLogo && <Image source={cardLogo} style={styles.cardLogo} />}
           </View>
           <View style={styles.inputBox}>
             <View style={styles.cardnumberInput}>
@@ -77,7 +121,11 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
               <TextInput
                 style={styles.input}
                 value={cardNumber}
+<<<<<<< HEAD
                 placeholder='Card number'
+=======
+                placeholder="Card number"
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
                 onChangeText={handleCardNumberChange}
               />
             </View>
@@ -87,7 +135,7 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
             <TextInput
               style={styles.input}
               value={expireDate}
-              placeholder='Expire Date'
+              placeholder="Expire Date"
               onChangeText={handleExpireDateChange}
             />
           </View>
@@ -96,14 +144,14 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
             <TextInput
               style={styles.input}
               value={cvv}
-              placeholder='CVV'
+              placeholder="CVV"
               onChangeText={handleCVVChange}
             />
           </View>
           <TouchableOpacity
             style={[
               styles.addCardButton,
-              { backgroundColor: isFormValid() ? '#FF0024' : '#444' }
+              { backgroundColor: isFormValid() ? '#FF0024' : '#444' },
             ]}
             onPress={handleAddCard}
           >
@@ -168,13 +216,13 @@ const styles = StyleSheet.create({
     color: 'gray',
     marginBottom: 3,
   },
-  cardnumberInput:{
-    flexDirection: 'column'
+  cardnumberInput: {
+    flexDirection: 'column',
   },
-  cardLogo:{
+  cardLogo: {
     alignSelf: 'flex-end',
     marginTop: 35,
-    marginRight: 20
+    marginRight: 20,
   },
   addCardButton: {
     marginTop: 32,
@@ -196,8 +244,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#ff0000',
     marginBottom: 8,
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+  },
 });
 
 export default CreditCardModal;

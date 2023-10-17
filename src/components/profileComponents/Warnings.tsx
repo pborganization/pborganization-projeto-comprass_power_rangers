@@ -1,15 +1,23 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { View, Modal, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 interface EditWarningProps {
     visible: boolean,
 }
+=======
+import React from 'react';
+import { View, Modal, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useAuth } from '../../contexts/AuthContext';
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 
 interface LogOutWarningProps {
-    visible: boolean,
-    onCloseModal: () => void; 
+  visible: boolean;
+  onCloseModal: () => void;
+  onNoPress: () => void;
 }
 
+<<<<<<< HEAD
 export const EditWarning: React.FC<EditWarningProps> = ({ visible }) => {
   return (
     <Modal transparent visible={visible}>
@@ -23,21 +31,55 @@ export const LogOutWarning: React.FC<LogOutWarningProps> = ({ visible, onCloseMo
     <Modal transparent visible={visible} animationType='fade'> 
       <View style={styles.warningContainer}>
         <View style={styles.background}/>
+=======
+export const LogOutWarning: React.FC<LogOutWarningProps> = ({
+  visible,
+  onCloseModal,
+  onNoPress
+}) => {
+  const { signOut } = useAuth();
+
+  const handleYesPress = () => {
+    signOut();
+    onCloseModal();
+  };
+
+  const handleNoPress = () => {
+    onNoPress();
+    onCloseModal();
+  };
+
+  return (
+    <Modal transparent visible={visible} animationType="fade">
+      <View style={styles.warningContainer}>
+        <View style={styles.background} />
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
         <View style={styles.warningContent}>
           <View>
             <Text style={styles.warningTitle}>Warning</Text>
           </View>
           <Text style={styles.text}>Do you really want to leave?</Text>
           <View style={styles.buttons}>
+<<<<<<< HEAD
             <TouchableOpacity>
               <Text style={styles.buttonText}>Yes</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={onCloseModal}>
+=======
+            <TouchableOpacity onPress={handleYesPress}>
+              <Text style={styles.buttonText}>Yes</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleNoPress}>
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
               <Text style={styles.buttonText}>No</Text>
             </TouchableOpacity>
           </View>
         </View>
+<<<<<<< HEAD
       </View> 
+=======
+      </View>
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
     </Modal>
   );
 };
@@ -46,7 +88,11 @@ const styles = StyleSheet.create({
   warningContainer: {
     flex: 1,
     justifyContent: 'center',
+<<<<<<< HEAD
     alignItems: 'center'
+=======
+    alignItems: 'center',
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
   },
   background: {
     ...StyleSheet.absoluteFillObject,
@@ -69,11 +115,16 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontWeight: '400',
+<<<<<<< HEAD
     alignSelf: 'center'
+=======
+    alignSelf: 'center',
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
   },
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+<<<<<<< HEAD
     marginTop: 29
   },
   buttonText: {
@@ -81,3 +132,12 @@ const styles = StyleSheet.create({
     fontWeight: '700'
   }
 });
+=======
+    marginTop: 29,
+  },
+  buttonText: {
+    fontSize: 14,
+    fontWeight: '700',
+  },
+});
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50

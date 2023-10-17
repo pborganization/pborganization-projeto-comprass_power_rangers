@@ -1,21 +1,17 @@
-import { StyleSheet, View } from 'react-native';
+import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { Colors } from './assets/styles/Colors';
 import { HomeNavigator } from './src/routes/homeRoutes';
+import { MainNavigator } from './src/routes/MainStack';
+import { AuthProvider, useAuth } from './src/contexts/AuthContext';
 
-export default function App() {
+function App() {
   return (
-    <View style={styles.container}>
-      <NavigationContainer>
-        <HomeNavigator />
-      </NavigationContainer>
-    </View>
+    <AuthProvider>
+    <NavigationContainer>
+      <MainNavigator />
+    </NavigationContainer>
+    </AuthProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.white,
-  },
-});
+export default App;

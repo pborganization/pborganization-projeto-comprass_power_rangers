@@ -2,20 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 
-interface ActualUserProps {
-  isAuthenticated: boolean;
-}
-
-export const ActualUser = ({ isAuthenticated }: ActualUserProps) => {
-  if (!isAuthenticated) {
-    return null;
-  }
-
+export const ActualUser = () => {
   const { user } = useAuth();
-  const [nameInput, setNameInput] = useState('');
+
+  const [name, setName] = useState('');
   const [image, setImage] = useState('');
 
-  const fetchUserProfile = async (accessToken: string) => {
+  const fetchUserProfile = async (accessToken: any) => {
     try {
       const response = await fetch(
         'https://api.escuelajs.co/api/v1/auth/profile',
@@ -29,7 +22,7 @@ export const ActualUser = ({ isAuthenticated }: ActualUserProps) => {
 
       if (response.ok) {
         const data = await response.json();
-        setNameInput(data.name);
+        setName(data.name);
         setImage(data.avatar);
       } else {
         console.error('Failed to fetch user profile');
@@ -53,7 +46,7 @@ export const ActualUser = ({ isAuthenticated }: ActualUserProps) => {
           uri: `${image}`,
         }}
       />
-      <Text style={styles.text}>Hello, Clodosvaldo Moreiro{nameInput}</Text>
+      <Text style={styles.text}>Hello, {name}</Text>
     </View>
   );
 };
@@ -75,10 +68,12 @@ const styles = StyleSheet.create({
   text: {
     padding: 4,
     fontSize: 13,
+    marginRight: 10,
   },
   image: {
     width: 22,
     height: 22,
     borderRadius: 25,
+    marginLeft: 5,
   },
 });

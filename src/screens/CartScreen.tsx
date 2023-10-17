@@ -10,12 +10,14 @@ import { ProductType } from '../interfaces/productType';
 import { fetchProductById } from '../services/fakeStoreAPI';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '../contexts/AuthContext';
 
 export const CartScreen = () => {
   const { products } = useProductStore();
   const [cart, setCart] = useState<ProductType[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const navigation = useNavigation();
+  const { user } = useAuth();
 
   useEffect(() => {
     async function fetchCardProducts() {
@@ -61,12 +63,12 @@ export const CartScreen = () => {
   const handleAmount = async () => {
     try {
       await AsyncStorage.setItem('totalAmount', totalAmount.toString());
-      console.log('Valor atual do totalAmount:', totalAmount);
-<<<<<<< HEAD
-      navigation.navigate("CheckoutScreen")
-=======
-      navigation.navigate('CheckoutScreen');
->>>>>>> 6a866ceb98f8699b7b25a0bcd69e15a43d4f8af0
+      {
+        user
+          ? navigation.navigate('AdressScreen')
+          : navigation.navigate('CheckoutNotLoggedin');
+      }
+
     } catch (error) {
       console.error(error);
     }
@@ -84,7 +86,7 @@ export const CartScreen = () => {
       />
 
       <View style={styles.details}>
-        <TotalAmount>{totalAmount}.00</TotalAmount>
+        <TotalAmount>{totalAmount}</TotalAmount>
         <Button onPress={handleAmount}>BUY</Button>
       </View>
     </View>

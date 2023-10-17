@@ -10,55 +10,30 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Entypo } from '@expo/vector-icons';
-<<<<<<< HEAD:src/screens/homeScreen.tsx
-import { CategoryList } from '../components/home/CategoryList';
-import { Button } from '../components/Button';
-import { useNavigation } from '@react-navigation/native';
-
-=======
 import { CategoryList } from '../../components/home/CategoryList';
 import { SearchButton } from '../../components/home/SearchButtom/searchButtom';
-
-import { useNavigation } from '@react-navigation/native';
-import { Button } from '../../components/Buttons/Button';
 import { ActualUser } from '../../components/home/ActualUser';
-import { isAuthenticated } from '../../utils/isAuthenticated';
-const isLogged = isAuthenticated();
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50:src/screens/Home/homeScreen.tsx
+import { useAuth } from '../../contexts/AuthContext';
+
 const screenHeight = Dimensions.get('window').height;
 
 export const HomeScreen = () => {
-
-  const navigation = useNavigation();
-
-  const handleNav = () => {
-    navigation.navigate('CartScreen');
-  };
-
+  const { user } = useAuth();
   return (
     <View style={styles.container}>
       <SearchButton />
-      <Button onPress={handleNav}>Nav</Button>
       <FlatList
         ListHeaderComponent={
           <View style={styles.bannercontainer}>
             <ImageBackground
-<<<<<<< HEAD:src/screens/homeScreen.tsx
-              source={require('../../assets/images/compass-banner.jpg')}
-=======
               source={require('../../../assets/images/home/compass-banner.jpg')}
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50:src/screens/Home/homeScreen.tsx
               style={styles.backgroundImage}
             >
-              <ActualUser isAuthenticated={isLogged} />
+              {user ? <ActualUser /> : <></>}
               <View style={styles.logo}>
                 <Text style={styles.logotext}>C</Text>
                 <Image
-<<<<<<< HEAD:src/screens/homeScreen.tsx
-                  source={require('../../assets/icons/logo-compass-uol.png')}
-=======
                   source={require('../../../assets/images/home/logo-compass-uol.png')}
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50:src/screens/Home/homeScreen.tsx
                   style={styles.logopic}
                 />
                 <Text style={styles.logotext}>mprass</Text>
@@ -78,7 +53,6 @@ export const HomeScreen = () => {
         )}
         keyExtractor={(item) => item.toString()}
       />
-      <Button onPress={handleNav}>Nav</Button>
       <StatusBar style="light" />
     </View>
   );

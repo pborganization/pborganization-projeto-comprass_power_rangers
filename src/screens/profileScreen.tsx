@@ -179,8 +179,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 3,
-    borderColor: 'red',
   },
   textTitle: {
     color: '#000',

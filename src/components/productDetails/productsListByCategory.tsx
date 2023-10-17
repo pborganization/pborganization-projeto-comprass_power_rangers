@@ -1,10 +1,4 @@
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { fetchProductsForCategory } from '../../services/fakeStoreAPI';
-import { Products } from './products';
-import { ProductType } from '../../contexts/productType';
-=======
 import {
   View,
   StyleSheet,
@@ -15,7 +9,6 @@ import {
 import { fetchProductsForCategory } from '../../services/fakeStoreAPI';
 import { ProductsForDetails } from './productsForDetails';
 import { ProductType } from '../../interfaces/productType';
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 
 interface ProductListProps {
   categoryId: number;
@@ -32,25 +25,6 @@ export const ProductListByCategory: React.FC<ProductListProps> = React.memo(
     useEffect(() => {
       const limit = 10;
 
-<<<<<<< HEAD
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      try {
-        const productsData = await fetchProductsForCategory(
-          categoryId,
-          (page - 1) * limit, // Calcula o offset com base na página
-          limit
-        );
-        // Filter out the product with the same ID as the current product
-        const filteredProducts = productsData.filter(
-          (product: any) => product.id !== currentProductId
-        );
-        setProducts((prevProducts) => [...prevProducts, ...filteredProducts]);
-      } catch (error) {
-        console.error('Erro ao buscar produtos:', error);
-      } finally {
-        setIsLoading(false);
-=======
       const fetchProducts = async () => {
         setIsLoading(true);
         try {
@@ -80,7 +54,6 @@ export const ProductListByCategory: React.FC<ProductListProps> = React.memo(
       if (hasMore) {
         // Verifique se há mais produtos a serem carregados
         setPage(page + 1);
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
       }
     };
 

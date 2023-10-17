@@ -16,7 +16,6 @@ import { LogOutWarning } from '../components/profileComponents/Warnings';
 import { AntDesign } from '@expo/vector-icons';
 import { useAuth } from '../contexts/AuthContext';
 
-
 export const ProfileScreen = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [verificationIcon, setVerificationIcon] = useState(false);
@@ -27,7 +26,6 @@ export const ProfileScreen = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    // Fetch user's name and email when the component mounts
     if (!user) {
       fetchUserProfile('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImlhdCI6MTY5NzQ5Njc1NywiZXhwIjoxNjk5MjI0NzU3fQ.d_uxBRCgCjHyoEG1kwOz7-lzf-neXn4RgW-lfyW6YRM'); // Assuming you have a function to fetch the user profile
     }
@@ -79,7 +77,7 @@ export const ProfileScreen = () => {
         {
           method: 'PUT',
           body: JSON.stringify({
-            name: newName, // Only update the name
+            name: newName, 
           }),
         }
       );

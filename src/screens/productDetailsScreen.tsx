@@ -23,6 +23,14 @@ interface RouteParams {
   productId: number;
 }
 
+const UnavailableProductScreen = () => {
+  return (
+    <View style={styles.unavailableContainer}>
+      <Text style={styles.unavailableText}>This product is indisponible</Text>
+    </View>
+  );
+};
+
 export const ProductDetailsScreen = () => {
   const route = useRoute();
   const { productId } = route.params as RouteParams;
@@ -38,9 +46,11 @@ export const ProductDetailsScreen = () => {
   useEffect(() => {
     const loadProduct = async () => {
       setIsLoading(true);
+
       try {
         const productData = await fetchProductById(productId);
         setProduct(productData);
+
         if (productData) {
           const totalProducts = await fetchProductCountForCategory(
             productData.category.id,
@@ -57,6 +67,18 @@ export const ProductDetailsScreen = () => {
 
     loadProduct();
   }, [productId]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#FF0024" />
+      </View>
+    );
+  }
+
+  if (!product) {
+    return <UnavailableProductScreen />;
+  }
 
   const data = [
     {
@@ -298,5 +320,15 @@ const styles = StyleSheet.create({
   },
   itemsNumber: {
     color: 'gray',
+  },
+  unavailableContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  unavailableText: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginVertical: 20,
   },
 });

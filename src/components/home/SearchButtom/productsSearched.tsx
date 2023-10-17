@@ -1,6 +1,13 @@
 import React from 'react';
 import { ProductType } from '../../../interfaces/productType';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native'; // Adicionei Dimensions
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../../../assets/styles/Colors';
 
@@ -33,7 +40,7 @@ export const ProductSearched = ({ product }: ProductSearchedProps) => {
     <TouchableOpacity onPress={handleProductPress}>
       <View style={styles.container}>
         <Image source={{ uri: product.images[0] }} style={styles.image} />
-        <View>
+        <View style={styles.textContainer}>
           <Text style={styles.title}>{product.title}</Text>
           <Text style={styles.desc}>{description}</Text>
         </View>
@@ -43,6 +50,8 @@ export const ProductSearched = ({ product }: ProductSearchedProps) => {
   );
 };
 
+const screenWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -51,26 +60,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: Colors.gray_200,
     borderBottomWidth: 1,
+    paddingHorizontal: screenWidth * 0.02,
   },
   image: {
-    height: 37,
-    width: 29,
-    marginHorizontal: 16,
-    marginVertical: 14,
+    height: screenWidth * 0.09,
+    aspectRatio: 1,
+    marginHorizontal: screenWidth * 0.01,
+    marginVertical: screenWidth * 0.015,
+  },
+  textContainer: {
+    flex: 1,
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: screenWidth * 0.03,
   },
   desc: {
-    fontSize: 10,
+    fontSize: screenWidth * 0.025,
   },
   price: {
-    flex: 1,
     textAlign: 'right',
-    marginRight: 16,
-    fontSize: 16,
+    fontSize: screenWidth * 0.03,
     color: Colors.red_500,
     fontWeight: 'bold',
+    marginRight: screenWidth * 0.02,
   },
 });

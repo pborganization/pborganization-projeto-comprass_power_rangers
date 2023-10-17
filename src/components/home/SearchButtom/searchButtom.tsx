@@ -8,6 +8,7 @@ import {
   Platform,
   UIManager,
   TouchableWithoutFeedback,
+  Dimensions,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Colors } from '../../../../assets/styles/Colors';
@@ -59,6 +60,8 @@ export const SearchButton = () => {
     }
   }, []);
 
+  const screenWidth = Dimensions.get('window').width;
+
   return (
     <TouchableWithoutFeedback onPress={handleCloseSearchBox}>
       <View style={styles.container}>
@@ -76,7 +79,7 @@ export const SearchButton = () => {
                   placeholder="Enter the product name"
                   onChangeText={handleTextChange}
                   value={searchWord}
-                  autoFocus={true} // Set autofocus to true
+                  autoFocus={true}
                 />
               </View>
             </TouchableWithoutFeedback>
@@ -97,54 +100,55 @@ export const SearchButton = () => {
   );
 };
 
+const screenWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
     width: '100%',
     position: 'absolute',
-    marginTop: 60,
+    marginTop: screenWidth * 0.2,
     zIndex: 1,
-    marginVertical: 20,
+    marginVertical: screenWidth * 0.04,
     flexDirection: 'column',
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
   containerOcult: {
     width: '100%',
-    height: 1000,
+    height: 2000,
   },
   containerFlatlist: {
-    maxHeight: 200,
+    maxHeight: screenWidth * 1.6,
   },
   containerProducts: {
-    flex: 1,
     flexDirection: 'column',
     backgroundColor: Colors.white,
-    marginHorizontal: 30,
-    marginTop: 10,
+    marginHorizontal: screenWidth * 0.08,
+    marginTop: screenWidth * 0.02,
     borderRadius: 15,
-    maxHeight: 200,
+    maxHeight: screenWidth * 0.37,
   },
   searchButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 50,
-    height: 50,
-    marginRight: 18,
+    width: screenWidth * 0.1,
+    height: screenWidth * 0.1,
+    marginRight: screenWidth * 0.04,
     backgroundColor: Colors.red_500,
-    borderRadius: 25,
-    padding: 10,
+    borderRadius: screenWidth * 0.05,
+    padding: screenWidth * 0.02,
   },
   searchBox: {
     backgroundColor: 'white',
-    borderRadius: 30,
-    padding: 10,
+    borderRadius: screenWidth * 0.15,
+    padding: screenWidth * 0.02,
     width: '92%',
     borderColor: Colors.red_500,
-    borderWidth: 4,
-    marginHorizontal: 18,
-    marginTop: 8,
+    borderWidth: screenWidth * 0.01,
+    marginHorizontal: screenWidth * 0.04,
+    marginTop: screenWidth * 0.016,
   },
   text: {
-    paddingLeft: 10,
+    paddingLeft: screenWidth * 0.02,
   },
 });

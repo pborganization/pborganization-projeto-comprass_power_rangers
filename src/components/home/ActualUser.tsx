@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 export const ActualUser = () => {
   const { user } = useAuth();
@@ -39,7 +42,7 @@ export const ActualUser = () => {
   }, [user]);
 
   return (
-    <View style={[styles.absoluteContainer]}>
+    <View style={styles.absoluteContainer}>
       <Image
         style={styles.image}
         source={{
@@ -53,27 +56,26 @@ export const ActualUser = () => {
 
 const styles = StyleSheet.create({
   absoluteContainer: {
-    marginTop: 60,
-    marginLeft: 16,
     position: 'absolute',
     backgroundColor: 'white',
-    justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
     borderColor: 'black',
-    height: 30,
-    borderRadius: 25,
+    marginTop: windowHeight * 0.11,
+    marginLeft: windowHeight * 0.01,
+    height: windowHeight * 0.03,
+    borderRadius: (windowHeight * 0.05) / 2,
     flexDirection: 'row',
   },
   text: {
     padding: 4,
-    fontSize: 13,
-    marginRight: 10,
+    fontSize: windowHeight * 0.013,
+    marginRight: windowWidth * 0.02,
   },
   image: {
-    width: 22,
-    height: 22,
-    borderRadius: 25,
-    marginLeft: 5,
+    width: windowWidth * 0.04,
+    height: windowWidth * 0.04,
+    borderRadius: (windowWidth * 0.04) / 2,
+    marginLeft: windowWidth * 0.01,
   },
 });

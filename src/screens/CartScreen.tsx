@@ -62,7 +62,11 @@ export const CartScreen = () => {
     try {
       await AsyncStorage.setItem('totalAmount', totalAmount.toString());
       console.log('Valor atual do totalAmount:', totalAmount);
+<<<<<<< HEAD
+      navigation.navigate("CheckoutScreen")
+=======
       navigation.navigate('CheckoutScreen');
+>>>>>>> 6a866ceb98f8699b7b25a0bcd69e15a43d4f8af0
     } catch (error) {
       console.error(error);
     }

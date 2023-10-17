@@ -14,6 +14,7 @@ import { SecondPartLogo } from '../../components/Icons/SecondPartLogo';
 import { SubText } from '../../components/SubText';
 import { StatusBar } from 'expo-status-bar';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 const schema = yup.object({
   email: yup
@@ -36,7 +37,9 @@ export function LoginScreen() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const {user, signIn} = useAuth();
+  const navigation = useNavigation();
+
+  const { user, signIn } = useAuth();
 
   const {
     control,
@@ -74,7 +77,6 @@ export function LoginScreen() {
         const { access_token } = data;
         signIn(access_token);
         console.log('Successfully registered:', data);
-
       })
       .catch((error) => {
         // Handle errors here
@@ -84,19 +86,28 @@ export function LoginScreen() {
         setIsSubmitting(false);
       });
 
-    {console.log(user);}
+    {
+      console.log(user);
+    }
   }
 
   if (!isFontsLoaded) {
     return null;
   }
 
-
+  const handleSignUp = () => {
+    navigation.navigate('SignUpScreen');
+  };
+  const handleForgotPassword = () => {
+    navigation.navigate('ForgotPasswordScreen');
+  };
+  const handleNotLogin = () => {
+    navigation.goBack();
+  };
 
   return (
     <>
-
-      <StatusBar style='light' backgroundColor='#111213' />
+      <StatusBar style="light" backgroundColor="#111213" />
       <Container>
         <ImageBackground
           source={require('../../assets/img/CompassBackgroundLogo.png')}
@@ -130,7 +141,7 @@ export function LoginScreen() {
                   onChangeText={onChange}
                   value={value}
                 >
-                Email
+                  Email
                 </LoginField>
               )}
             />
@@ -149,7 +160,7 @@ export function LoginScreen() {
                   value={value}
                   isPassword={true}
                 >
-                Password
+                  Password
                 </LoginField>
               )}
             />
@@ -171,19 +182,22 @@ export function LoginScreen() {
               disabled={isSubmitting}
               onPress={handleSubmit(handleLogIn)}
             >
-            LOGIN
+              LOGIN
             </Button>
           </Form>
 
           <OtherOptions>
-            <SubText>Not have an account yet? Sign up</SubText>
-            <SubText>I forgot my password</SubText>
-            <SubText>I don't want to log in</SubText>
+            <SubText onPress={handleSignUp}>
+              Not have an account yet? Sign up
+            </SubText>
+            <SubText onPress={handleForgotPassword}>
+              I forgot my password
+            </SubText>
+            <SubText onPress={handleNotLogin}>I don't want to log in</SubText>
           </OtherOptions>
         </ImageBackground>
       </Container>
     </>
-
   );
 }
 

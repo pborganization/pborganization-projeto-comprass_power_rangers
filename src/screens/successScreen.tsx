@@ -1,24 +1,38 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, ImageBackground, Text, TouchableOpacity } from 'react-native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
-const SuccessScreen = () => {
+type RootStackParamList = {
+  SuccessQRCodeScreen: undefined;
+  SuccessScreen: { paymentMethod: string };
+};
+
+type SuccessScreenRouteProp = RouteProp<RootStackParamList, 'SuccessScreen'>;
+
+const SuccessScreen: React.FC = () => {
+  const navigation = useNavigation();
+  const route = useRoute<SuccessScreenRouteProp>();
+  const { paymentMethod } = route.params;
+
+  const handleContinue = () => {
+    if (paymentMethod === 'Pix') {
+      navigation.navigate('SuccessQRcodeScreen');
+    } else if (paymentMethod === 'Boleto Bancário') {
+      navigation.navigate('SuccessDownloadBill');
+    } else if (paymentMethod === 'Cartão') {
+      navigation.navigate('SuccessScreen2');
+    }
+  };
+
   return (
     <ImageBackground
-      source={require('../../assets/images/image.jpg')}
+      source={require("../../assets/images/image.jpg")}
       style={styles.container}
     >
       <View style={styles.overlay}>
         <Text style={styles.tit}>Success!</Text>
-        <Text style={styles.text}>
-          Your order will be delivered soon. Thank you for choosing our app!
-        </Text>
-        <TouchableOpacity style={styles.continueButton}>
+        <Text style={styles.text}>Your order will be delivered soon. Thank you for choosing our app!</Text>
+        <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
           <Text style={styles.continue}>Continue</Text>
         </TouchableOpacity>
       </View>

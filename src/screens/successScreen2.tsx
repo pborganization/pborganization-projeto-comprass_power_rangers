@@ -5,14 +5,16 @@ const SuccessScreen2 = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/images/bags.jpg')} 
+        source={require('../../assets/images/bags.jpg')}
         style={styles.image}
       />
       <Text style={styles.tit}>Success!</Text>
-      <Text style={styles.text}>Your order will be delivered soon. Thank you for choosing our app!</Text>
+      <Text style={styles.text}>
+        Your order will be delivered soon. Thank you for choosing our app!
+      </Text>
       <TouchableOpacity style={styles.continueButton}>
-          <Text style={styles.continue}>CONTNUE SHOPPING</Text>
-        </TouchableOpacity>
+        <Text style={styles.continue}>CONTNUE SHOPPING</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -24,9 +26,9 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 209,
-    width: 208, 
-    height: 213, 
-    resizeMode: 'contain', 
+    width: 208,
+    height: 213,
+    resizeMode: 'contain',
   },
   tit: {
     color: '#000',
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginTop: 20,
     width: 132,
-    height: 44
+    height: 44,
   },
   text: {
     color: '#000',
@@ -43,17 +45,16 @@ const styles = StyleSheet.create({
     width: 220,
     height: 42,
     fontSize: 14,
-    fontWeight: '400'
+    fontWeight: '400',
   },
   continueButton: {
-    backgroundColor: '#FF0024', 
+    backgroundColor: '#FF0024',
     marginTop: 174,
     width: 343,
-    height: 48, 
-    borderRadius: 24, 
-
+    height: 48,
+    borderRadius: 24,
   },
-  continue:{
+  continue: {
     color: '#FFF',
     marginTop: 14,
     marginLeft: 100,
@@ -61,9 +62,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 154,
     height: 20,
-    fontWeight: '800'
-
-  }
+    fontWeight: '800',
+  },
 });
 
 export default SuccessScreen2;

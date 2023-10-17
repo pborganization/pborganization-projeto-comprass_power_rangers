@@ -1,15 +1,23 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Text, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 
 const SuccessScreen = () => {
   return (
     <ImageBackground
-      source={require("../../assets/images/image.jpg")} 
+      source={require('../../assets/images/image.jpg')}
       style={styles.container}
     >
       <View style={styles.overlay}>
         <Text style={styles.tit}>Success!</Text>
-        <Text style={styles.text}>Your order will be delivered soon. Thank you for choosing our app!</Text>
+        <Text style={styles.text}>
+          Your order will be delivered soon. Thank you for choosing our app!
+        </Text>
         <TouchableOpacity style={styles.continueButton}>
           <Text style={styles.continue}>Continue</Text>
         </TouchableOpacity>
@@ -21,25 +29,24 @@ const SuccessScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    resizeMode: "cover",
+    resizeMode: 'cover',
   },
   overlay: {
     flex: 1,
     alignItems: 'center',
-  
   },
 
   tit: {
     marginTop: 115,
-    color: "#000",
+    color: '#000',
     fontSize: 32,
     fontWeight: '700',
   },
-  text:{
+  text: {
     width: 251,
     height: 48,
     marginTop: 12,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 15,
     fontWeight: '400',
   },
@@ -48,18 +55,16 @@ const styles = StyleSheet.create({
     marginTop: 24,
     width: 160,
     height: 36,
-    backgroundColor: '#FF0024', 
-    borderRadius: 24, 
-
+    backgroundColor: '#FF0024',
+    borderRadius: 24,
   },
-  continue:{
+  continue: {
     marginTop: 8,
     textAlign: 'center',
     color: '#FFF',
     fontSize: 14,
-    fontWeight: '700'
-
-  }
+    fontWeight: '700',
+  },
 });
 
 export default SuccessScreen;

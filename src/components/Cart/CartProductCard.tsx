@@ -1,11 +1,11 @@
-import { View, Text, Image, StyleSheet } from "react-native";
-import React, { useState } from "react";
-import { Delete } from "../../../assets/images/svg/DeleteProduct";
-import { Colors } from "../../../assets/styles/Colors";
-import { AntDesign } from "@expo/vector-icons";
-import { ProductType } from "../../contexts/productType";
-import { useProductStore } from "../homeComponents/Products";
-import { QuantityIndicator } from "../homeComponents/quantityIndicator";
+import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Delete } from '../../../assets/images/svg/DeleteProduct';
+import { Colors } from '../../../assets/styles/Colors';
+import { AntDesign } from '@expo/vector-icons';
+import { ProductType } from '../../interfaces/productType';
+import { useProductStore } from '../homeComponents/Products';
+import { QuantityIndicator } from '../homeComponents/quantityIndicator';
 
 interface ProductProps {
   product: ProductType;
@@ -51,8 +51,8 @@ export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
     width: 343,
     height: 104,
     backgroundColor: Colors.white,
@@ -66,42 +66,42 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 2,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
   },
   deleteIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: 0,
   },
   itemContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginVertical: 12,
     marginHorizontal: 5,
   },
   count: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   text: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginVertical: 12,
   },
   countText: {
     fontSize: 14,
-    fontWeight: "600",
+    fontWeight: '600',
     margin: 8,
   },
   price: {
     fontSize: 14,
-    fontWeight: "600",
+    fontWeight: '600',
     marginHorizontal: 16,
   },
   img: {
-    display: "flex",
+    display: 'flex',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
   },

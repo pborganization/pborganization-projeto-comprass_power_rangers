@@ -7,7 +7,7 @@ import {
   Image,
   Switch,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
 } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { LanguageOption } from '../components/profileComponents/LanguageOption';
@@ -27,7 +27,7 @@ export const ProfileScreen = () => {
 
   useEffect(() => {
     if (user) {
-      fetchUserProfile(user); 
+      fetchUserProfile(user);
     }
   }, [user]);
 
@@ -45,17 +45,20 @@ export const ProfileScreen = () => {
     setIsLogOutWarningVisible(false);
   };
   const handleNoPress = () => {
-    setVerificationIcon(false); 
+    setVerificationIcon(false);
   };
 
   const fetchUserProfile = async (accessToken: string) => {
     try {
-      const response = await fetch('https://api.escuelajs.co/api/v1/auth/profile', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
-      });
+      const response = await fetch(
+        'https://api.escuelajs.co/api/v1/auth/profile',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -77,16 +80,15 @@ export const ProfileScreen = () => {
         {
           method: 'PUT',
           body: JSON.stringify({
-            name: newName, 
+            name: newName,
           }),
-        }
+        },
       );
 
       if (response.ok) {
       } else {
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const handleVerificationPress = () => {
@@ -96,17 +98,22 @@ export const ProfileScreen = () => {
       updateUserProfile(nameInput);
     }
   };
-  
+
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={'#F9F9F9'} barStyle={'dark-content'}/>
+      <StatusBar backgroundColor={'#F9F9F9'} barStyle={'dark-content'} />
       {verificationIcon && (
-        <TouchableOpacity style={styles.verification} onPress={handleVerificationPress}>
-          <AntDesign name='checkcircle' size={46} color='#2AA952'/>
+        <TouchableOpacity
+          style={styles.verification}
+          onPress={handleVerificationPress}
+        >
+          <AntDesign name="checkcircle" size={46} color="#2AA952" />
         </TouchableOpacity>
-      )} 
+      )}
       <View style={styles.titleImageContainer}>
-        <Text style={styles.textTitle}>My profile</Text>
+        <View style={styles.containerTitle}>
+          <Text style={styles.textTitle}>My profile</Text>
+        </View>
         <Image
           source={require('../../assets/images/my-profile-image.png')}
           style={styles.image}
@@ -114,14 +121,9 @@ export const ProfileScreen = () => {
       </View>
       <View style={styles.textInfoContainer}>
         {isEnabled ? (
-          <EditInfos 
-            userName={nameInput}
-            onNameChange={setNameInput}
-          />
+          <EditInfos userName={nameInput} onNameChange={setNameInput} />
         ) : (
-          <Text style={styles.textName}>
-            {nameInput}
-          </Text>
+          <Text style={styles.textName}>{nameInput}</Text>
         )}
         <Text style={styles.textEmail}>{email || 'matildabrown@mail.com'}</Text>
       </View>
@@ -150,7 +152,7 @@ export const ProfileScreen = () => {
           <LogOutWarning
             visible={isLogOutWarningVisible}
             onCloseModal={handleCloseModal}
-            onNoPress={handleNoPress} 
+            onNoPress={handleNoPress}
           />
         )}
       </View>
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#F9F9F9'
+    backgroundColor: '#F9F9F9',
   },
   verification: {
     position: 'absolute',
@@ -173,14 +175,21 @@ const styles = StyleSheet.create({
   },
   titleImageContainer: {
     marginTop: 64,
-    marginLeft: 16,
-    marginRight: 190,
     flexDirection: 'column',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 3,
+    borderColor: 'red',
   },
   textTitle: {
     color: '#000',
     fontSize: 32,
     fontWeight: '800',
+  },
+  containerTitle: {
+    paddingLeft: 15,
+    width: '100%',
   },
   image: {
     marginTop: 40.03,

@@ -1,12 +1,14 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, TextInput, StyleSheet, Image} from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-=======
 import React, { useState, useEffect } from 'react';
-import { Modal, View, Text, TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native';
-import { AntDesign } from "@expo/vector-icons";
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
+import {
+  Modal,
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+  Image,
+} from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
   const [name, setName] = useState('');
@@ -42,7 +44,12 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
   }, [cardNumber]);
 
   const determineCardIssuer = (cardNumber: any) => {
-    if (name !== '' && cardNumber.length === 8 && expireDate.length >= 5 && cvv.length === 3) {
+    if (
+      name !== '' &&
+      cardNumber.length === 8 &&
+      expireDate.length >= 5 &&
+      cvv.length === 3
+    ) {
       return require('../../../assets/images/mastercard.png');
     }
     return null;
@@ -53,24 +60,20 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
   );
 
   const isFormValid = () => {
-    return name !== '' && cardNumber.length === 8 && expireDate.length >= 5 && cvv.length === 3;
+    return (
+      name !== '' &&
+      cardNumber.length === 8 &&
+      expireDate.length >= 5 &&
+      cvv.length === 3
+    );
   };
 
   const handleAddCard = () => {
-<<<<<<< HEAD
-    if(isFormValid()) {
-      setCardLogo(require('../../../assets/images/mastercard.png'));
-      onAddCard(cardNumber);
-      toggleModal();
-    } else {
-      setError('Please fill in all fields corretly.');
-=======
     if (isFormValid()) {
       onAddCard(cardNumber);
       toggleModal();
     } else {
       setError('Please fill in all fields correctly.');
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
     }
   };
 
@@ -93,12 +96,10 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
             <TextInput
               style={styles.input}
               value={name}
-              placeholder='Name on card'
+              placeholder="Name on card"
               onChangeText={handleNameChange}
             />
-            {cardLogo && (
-              <Image source={cardLogo} style={styles.cardLogo} />
-            )}
+            {cardLogo && <Image source={cardLogo} style={styles.cardLogo} />}
           </View>
           <View style={styles.inputBox}>
             <View style={styles.cardnumberInput}>
@@ -106,7 +107,7 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
               <TextInput
                 style={styles.input}
                 value={cardNumber}
-                placeholder='Card number'
+                placeholder="Card number"
                 onChangeText={handleCardNumberChange}
               />
             </View>
@@ -116,7 +117,7 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
             <TextInput
               style={styles.input}
               value={expireDate}
-              placeholder='Expire Date'
+              placeholder="Expire Date"
               onChangeText={handleExpireDateChange}
             />
           </View>
@@ -125,14 +126,14 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
             <TextInput
               style={styles.input}
               value={cvv}
-              placeholder='CVV'
+              placeholder="CVV"
               onChangeText={handleCVVChange}
             />
           </View>
           <TouchableOpacity
             style={[
               styles.addCardButton,
-              { backgroundColor: isFormValid() ? '#FF0024' : '#444' }
+              { backgroundColor: isFormValid() ? '#FF0024' : '#444' },
             ]}
             onPress={handleAddCard}
           >
@@ -198,12 +199,12 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   cardnumberInput: {
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   cardLogo: {
     alignSelf: 'flex-end',
     marginTop: 35,
-    marginRight: 20
+    marginRight: 20,
   },
   addCardButton: {
     marginTop: 32,
@@ -225,8 +226,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#ff0000',
     marginBottom: 8,
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+  },
 });
 
 export default CreditCardModal;

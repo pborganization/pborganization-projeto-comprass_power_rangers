@@ -99,13 +99,9 @@ const DeliverySection = () => {
         </View>
         <View style={styles.summaryContainer}>
           <Text style={styles.summary}>Summary:</Text>
-<<<<<<< HEAD
           <Text style={styles.summaryPrice}>
-            {112 + delPrice + ',' + 0 + 0} $
+            {112 + delPrice + ',' + 0 + 0} R$
           </Text>
-=======
-          <Text style={styles.summaryPrice}>{112 + delPrice + ',' + 0 + 0} R$</Text>
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
         </View>
       </View>
     </View>

@@ -11,7 +11,7 @@ const SuccessQRcodeScreen = () => {
       <Text style={styles.tit}>Success!</Text>
       <Text style={styles.text}>Pay your pix using the QR code above and then follow the steps sent by email.</Text>
       <TouchableOpacity style={styles.continueButton}>
-          <Text style={styles.continue}>CONTNUE SHOPPING</Text>
+          <Text style={styles.continue}>CONTINUE SHOPPING</Text>
         </TouchableOpacity>
     </View>
   );

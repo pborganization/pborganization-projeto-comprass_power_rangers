@@ -6,7 +6,8 @@ import CreditCardModal from "../components/checkoutComponents/CreditCardModal";
 import DeliverySelection from "../components/checkoutComponents/DeliverySelection";
 import { useAddress } from "../../contexts/zustand";
 
-const CheckoutScreen = () => {
+
+const CheckoutScreen = (props : any) => {
   const [shippingAddress, setShippingAddress] = useState(useAddress.getState().address[0] || {});
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -16,11 +17,15 @@ const CheckoutScreen = () => {
   const [showCardLogo, setShowCardLogo] = useState(false);
   const [showBoletoLogo, setShowBoletoLogo] = useState(false);
   const [cardNumber, setCardNumber] = useState(false);
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
+  const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(null);
+  
 
   useEffect(() => {
   }, []);
 
   const navigation = useNavigation();
+
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -61,6 +66,12 @@ const CheckoutScreen = () => {
     setIsCreditCardModalVisible(!isCreditCardModalVisible);
     setIsModalVisible(false);
   }
+
+  const handleSubmitOrder = () => {
+    if (shippingAddress && selectedPaymentMethod && selectedDeliveryMethod) {
+      navigation.navigate('SuccessScreen', { paymentMethod: selectedPaymentMethod });
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -158,10 +169,16 @@ const CheckoutScreen = () => {
 
       <View style={styles.section}>
         <Text style={styles.deliveryTitle}>Delivery method</Text>
-          <DeliverySelection />
+        <DeliverySelection setSelectedDeliveryMethod={setSelectedDeliveryMethod} />
       </View>
      
-      <TouchableOpacity style={styles.sbutton}>
+      <TouchableOpacity
+      style={[
+        styles.sbutton,
+        (shippingAddress && selectedPaymentMethod && selectedDeliveryMethod) ? { backgroundColor: '#FF0024' } : {}
+      ]}
+      onPress={handleSubmitOrder}
+    >
       <Text style={styles.sbuttonText}>SUBMIT ORDER</Text>
     </TouchableOpacity>
     </View>
@@ -340,4 +357,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CheckoutScreen
+export default CheckoutScreen;

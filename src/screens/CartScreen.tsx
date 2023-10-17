@@ -33,7 +33,9 @@ export const CartScreen = () => {
           return null;
         }),
       );
+      console.log('cartData:', cartData)
       const filteredCart = cartData.filter((item) => item !== null);
+      console.log('filteredCart:', filteredCart);
       setCart(filteredCart);
       const newAmount = calculateAmount(filteredCart);
       setTotalAmount(newAmount);
@@ -87,7 +89,10 @@ export const CartScreen = () => {
 
       <View style={styles.details}>
         <TotalAmount>{totalAmount}</TotalAmount>
+        <View style={styles.buttonContainer}>
         <Button onPress={handleAmount}>BUY</Button>
+        </View>
+
       </View>
     </View>
   );
@@ -112,4 +117,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginBottom: 8,
   },
+  buttonContainer: {
+      marginLeft: 16,
+      marginRight: 16,
+      marginTop: 'auto',
+      marginBottom: 16
+  }
 });

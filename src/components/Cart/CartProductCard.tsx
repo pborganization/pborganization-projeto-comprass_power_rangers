@@ -29,6 +29,9 @@ export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
   if (productState.quantity === 0) {
     return null;
   }
+  if (productState.quantity === null) {
+    return null;
+  }
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>

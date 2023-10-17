@@ -1,11 +1,17 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Linking } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const SuccessDownloadBill = () => {
   const navigation = useNavigation();
   const handleDownloadBoleto = () => {
-
     const downloadLink = 'http://exemplo.com/boleto.pdf';
 
     Linking.openURL(downloadLink);
@@ -13,13 +19,24 @@ const SuccessDownloadBill = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/images/bags.jpg')} style={styles.image} />
+      <Image
+        source={require('../../assets/images/bags.jpg')}
+        style={styles.image}
+      />
       <Text style={styles.tit}>Success!</Text>
-      <Text style={styles.text}>Pay the invoice by 02/10/2023 and then follow the steps sent by email.</Text>
-      <TouchableOpacity style={styles.baixarBoletoButton} onPress={handleDownloadBoleto}>
+      <Text style={styles.text}>
+        Pay the invoice by 02/10/2023 and then follow the steps sent by email.
+      </Text>
+      <TouchableOpacity
+        style={styles.baixarBoletoButton}
+        onPress={handleDownloadBoleto}
+      >
         <Text style={styles.baixarBoleto}>BAIXAR BOLETO</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate('HomeScreen')}>
+      <TouchableOpacity
+        style={styles.continueButton}
+        onPress={() => navigation.navigate('TabNavigatorHome')}
+      >
         <Text style={styles.continue}>CONTINUE SHOPPING</Text>
       </TouchableOpacity>
     </View>
@@ -30,13 +47,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   image: {
     marginTop: 209,
     width: 208,
     height: 213,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   tit: {
     color: '#000',
@@ -60,7 +77,7 @@ const styles = StyleSheet.create({
     marginTop: 110,
     width: 343,
     height: 48,
-    borderRadius: 24
+    borderRadius: 24,
   },
   baixarBoleto: {
     color: '#FFF',
@@ -70,14 +87,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 154,
     height: 20,
-    fontWeight: '800'
+    fontWeight: '800',
   },
   continueButton: {
     backgroundColor: '#FF0024',
     marginTop: 16,
     width: 343,
     height: 48,
-    borderRadius: 24
+    borderRadius: 24,
   },
   continue: {
     color: '#FFF',
@@ -87,8 +104,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: 154,
     height: 20,
-    fontWeight: '800'
-  }
+    fontWeight: '800',
+  },
 });
 
 export default SuccessDownloadBill;

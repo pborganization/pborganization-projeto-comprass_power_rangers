@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
 
 const windowWidth = Dimensions.get('window').width;
@@ -9,7 +16,10 @@ export const ActualUser = () => {
   const { user } = useAuth();
 
   const [name, setName] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(
+    'https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg',
+  );
+  const [isLoading, setIsLoading] = useState(true); // Estado para controlar o indicador de atividade
 
   const fetchUserProfile = async (accessToken: any) => {
     try {
@@ -32,6 +42,8 @@ export const ActualUser = () => {
       }
     } catch (error) {
       console.error('Error fetching user profile', error);
+    } finally {
+      setIsLoading(false); // Define isLoading como false quando a chamada da API estiver concluída
     }
   };
 
@@ -50,6 +62,11 @@ export const ActualUser = () => {
         }}
       />
       <Text style={styles.text}>Hello, {name}</Text>
+      {isLoading && (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="small" color="red" />
+        </View>
+      )}
     </View>
   );
 };
@@ -77,5 +94,14 @@ const styles = StyleSheet.create({
     height: windowWidth * 0.04,
     borderRadius: (windowWidth * 0.04) / 2,
     marginLeft: windowWidth * 0.01,
+  },
+  loadingContainer: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: (windowHeight * 0.05) / 2,
+    width: '100%',
+    height: '100%',
   },
 });

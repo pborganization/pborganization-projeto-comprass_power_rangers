@@ -15,9 +15,12 @@ const SuccessQRcodeScreen = () => {
         Pay your pix using the QR code above and then follow the steps sent by
         email.
       </Text>
-      <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate('HomeScreen')}>
-          <Text style={styles.continue}>CONTINUE SHOPPING</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.continueButton}
+        onPress={() => navigation.navigate('TabNavigatorHome')}
+      >
+        <Text style={styles.continue}>CONTINUE SHOPPING</Text>
+      </TouchableOpacity>
     </View>
   );
 };

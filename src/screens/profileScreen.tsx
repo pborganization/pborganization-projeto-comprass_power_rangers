@@ -21,6 +21,9 @@ export const ProfileScreen = () => {
   const [verificationIcon, setVerificationIcon] = useState(false);
   const [nameInput, setNameInput] = useState('');
   const [email, setEmail] = useState('');
+  const [image, setImage] = useState(
+    'https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg',
+  );
   const [userId, setUserId] = useState(null);
 
   const { user } = useAuth();
@@ -65,6 +68,7 @@ export const ProfileScreen = () => {
         setNameInput(data.name);
         setEmail(data.email);
         setUserId(data.id);
+        setImage(data.avatar);
       } else {
         console.error('Failed to fetch user profile');
       }
@@ -114,9 +118,12 @@ export const ProfileScreen = () => {
         <View style={styles.containerTitle}>
           <Text style={styles.textTitle}>My profile</Text>
         </View>
+
         <Image
-          source={require('../../assets/images/my-profile-image.png')}
           style={styles.image}
+          source={{
+            uri: `${image}`,
+          }}
         />
       </View>
       <View style={styles.textInfoContainer}>
@@ -190,10 +197,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   image: {
-    marginTop: 40.03,
-    marginLeft: 109.34,
-    marginRight: 112.56,
     borderRadius: 100,
+    width: 150,
+    height: 150,
   },
   textInfoContainer: {
     marginLeft: 16,

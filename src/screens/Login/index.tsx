@@ -96,7 +96,7 @@ export function LoginScreen() {
           <FirstPartLogo />
           <View style={{ marginLeft: 4.9, marginRight: 5.91 }}>
             <LogoUol />
-          </View>
+          </View> 
           <View style={{ marginBottom: -8.52 }}>
             <SecondPartLogo />
           </View>

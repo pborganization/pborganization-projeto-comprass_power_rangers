@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { IncreaseButton } from './increaseButton';
 import { DecreaseButton } from './decreaseButton';
@@ -33,6 +33,13 @@ export const QuantityIndicator: React.FC<QuantityIndicatorProps> = React.memo(
         setLocalQuantity(localQuantity - 1);
       }
     }, [productId, localQuantity, decreaseQuantity]);
+
+    useEffect(() => {
+      const externalQuantity = products[productId]?.quantity || 0;
+      if (localQuantity !== externalQuantity) {
+        setLocalQuantity(externalQuantity);
+      }
+    }, [productId, products]);
 
     return (
       <View style={styles.container}>

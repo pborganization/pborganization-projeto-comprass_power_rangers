@@ -1,9 +1,6 @@
 import React from 'react';
 import { View, Modal, Text, StyleSheet, TouchableOpacity } from 'react-native';
-
-interface EditWarningProps {
-  visible: boolean;
-}
+import { useAuth } from '../../contexts/AuthContext';
 
 interface LogOutWarningProps {
   visible: boolean;
@@ -11,18 +8,21 @@ interface LogOutWarningProps {
   onNoPress: () => void;
 }
 
-export const EditWarning: React.FC<EditWarningProps> = ({ visible }) => {
-  return <Modal transparent visible={visible}></Modal>;
-};
-
 export const LogOutWarning: React.FC<LogOutWarningProps> = ({
   visible,
   onCloseModal,
   onNoPress
 }) => {
+  const { signOut } = useAuth();
+
+  const handleYesPress = () => {
+    signOut();
+    onCloseModal();
+  };
+
   const handleNoPress = () => {
     onNoPress();
-    onCloseModal(); 
+    onCloseModal();
   };
 
   return (
@@ -35,7 +35,7 @@ export const LogOutWarning: React.FC<LogOutWarningProps> = ({
           </View>
           <Text style={styles.text}>Do you really want to leave?</Text>
           <View style={styles.buttons}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleYesPress}>
               <Text style={styles.buttonText}>Yes</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleNoPress}>

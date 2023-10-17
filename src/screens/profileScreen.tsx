@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -13,14 +14,26 @@ import { LanguageOption } from '../components/profileComponents/LanguageOption';
 import { EditInfos } from '../components/profileComponents/EditInfos';
 import { LogOutWarning } from '../components/profileComponents/Warnings';
 import { AntDesign } from '@expo/vector-icons';
+import { useAuth } from '../contexts/AuthContext';
+
 
 export const ProfileScreen = () => {
   const [isEnabled, setIsEnabled] = useState(false);
-  const [nameInput, setNameInput] = useState(null as React.ReactElement | null);
   const [verificationIcon, setVerificationIcon] = useState(false);
+  const [nameInput, setNameInput] = useState('');
+  const [email, setEmail] = useState('');
+  const [userId, setUserId] = useState(null);
+
+  const { user } = useAuth();
 
   useEffect(() => {
-    setNameInput(isEnabled ? <EditInfos /> : null);
+    // Fetch user's name and email when the component mounts
+    if (!user) {
+      fetchUserProfile('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImlhdCI6MTY5NzQ5Njc1NywiZXhwIjoxNjk5MjI0NzU3fQ.d_uxBRCgCjHyoEG1kwOz7-lzf-neXn4RgW-lfyW6YRM'); // Assuming you have a function to fetch the user profile
+    }
+  }, [user]);
+
+  useEffect(() => {
     setVerificationIcon(isEnabled);
   }, [isEnabled]);
 
@@ -36,12 +49,61 @@ export const ProfileScreen = () => {
   const handleNoPress = () => {
     setVerificationIcon(false); 
   };
+
+  const fetchUserProfile = async (accessToken: string) => {
+    try {
+      const response = await fetch('https://api.escuelajs.co/api/v1/auth/profile', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setNameInput(data.name);
+        setEmail(data.email);
+        setUserId(data.id);
+      } else {
+        console.error('Failed to fetch user profile');
+      }
+    } catch (error) {
+      console.error('Error fetching user profile', error);
+    }
+  };
+
+  const updateUserProfile = async (newName: string) => {
+    try {
+      const response = await fetch(
+        `https://api.escuelajs.co/api/v1/users/${userId}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify({
+            name: newName, // Only update the name
+          }),
+        }
+      );
+
+      if (response.ok) {
+      } else {
+      }
+    } catch (error) {
+    }
+  };
+
+  const handleVerificationPress = () => {
+    if (isEnabled) {
+      setNameInput(nameInput);
+      setIsEnabled(false);
+      updateUserProfile(nameInput);
+    }
+  };
   
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={'#FFFF'} barStyle={'dark-content'}/>
       {verificationIcon && (
-        <TouchableOpacity style={styles.verification}>
+        <TouchableOpacity style={styles.verification} onPress={handleVerificationPress}>
           <AntDesign name='checkcircle' size={46} color='#2AA952'/>
         </TouchableOpacity>
       )} 
@@ -54,13 +116,16 @@ export const ProfileScreen = () => {
       </View>
       <View style={styles.textInfoContainer}>
         {isEnabled ? (
-          <EditInfos />
+          <EditInfos 
+            userName={nameInput}
+            onNameChange={setNameInput}
+          />
         ) : (
           <Text style={styles.textName}>
-            {nameInput || 'Juliane Gonçalves Freitas'}
+            {nameInput}
           </Text>
         )}
-        <Text style={styles.textEmail}>matildabrown@mail.com</Text>
+        <Text style={styles.textEmail}>{email || 'matildabrown@mail.com'}</Text>
       </View>
       <View style={styles.edits}>
         <Text style={styles.text}>Edit Informations</Text>

@@ -1,9 +1,11 @@
-import React, { forwardRef, useRef, useState } from 'react';
+import React,  { forwardRef, useRef, useState } from 'react';
 import { TextInput, TextInputProps, View, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Colors } from '../../assets/styles/Colors';
 
-export const Input = forwardRef((props: TextInputProps, ref) => {
+
+export const Input = forwardRef((props: TextInputProps, ref)  => {
+
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
 
@@ -16,13 +18,11 @@ export const Input = forwardRef((props: TextInputProps, ref) => {
   };
   return (
     <View style={[styles.container, isFocused ? styles.focusedInput : null]}>
-      <TextInput
-        style={[styles.input, isFocused ? styles.textInputFocused : null]}
+      <TextInput style={[styles.input, isFocused ? styles.textInputFocused : null]}
         onFocus={handleFocus}
-        ref={inputRef as any}
+        ref={(inputRef as any)}
         onBlur={handlerBlur}
-        {...props}
-      />
+        {...props}/>
     </View>
   );
 });
@@ -44,13 +44,14 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 14,
-    color: Colors.gray_500,
+    color: Colors.gray_500
   },
   focusedInput: {
     backgroundColor: Colors.white,
     borderColor: Colors.gray_200,
   },
   textInputFocused: {
-    color: Colors.black,
-  },
+    color: Colors.black
+  }
+
 });

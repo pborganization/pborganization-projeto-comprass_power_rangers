@@ -13,9 +13,15 @@ import { Entypo } from '@expo/vector-icons';
 import { CategoryList } from '../../components/home/CategoryList';
 import { SearchButton } from '../../components/home/SearchButtom/searchButtom';
 
+
 const screenHeight = Dimensions.get('window').height;
 
 export const HomeScreen = () => {
+  const navigation = useNavigation();
+
+  const handleNav = () => {
+    navigation.navigate('CartScreen');
+  };
   return (
     <View style={styles.container}>
       <SearchButton />

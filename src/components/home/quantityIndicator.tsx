@@ -5,9 +5,9 @@ import { DecreaseButton } from './decreaseButton';
 import { useProductStore } from '../../hooks/productStore';
 
 interface QuantityIndicatorProps {
-  productId: number;
-  increasestyle?: any;
-  decreasestyle?: any;
+	productId: number;
+	increasestyle?: any;
+	decreasestyle?: any;
 }
 
 export const QuantityIndicator: React.FC<QuantityIndicatorProps> = React.memo(

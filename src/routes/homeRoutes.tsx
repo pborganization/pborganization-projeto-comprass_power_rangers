@@ -1,9 +1,10 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import 'react-native-gesture-handler';
 import React from 'react';
 import { ProductDetailsScreen } from '../screens/productDetailsScreen';
 import { HomeScreen } from '../screens/Home/homeScreen';
 import { AdressScreen } from '../screens/AdressScreen';
+import { CartScreen } from '../screens/CartScreen';
+import CheckoutScreen from '../screens/checkoutScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,24 @@ export const HomeNavigator = () => {
         component={AdressScreen}
         options={{
           title: 'Adress Screen',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="CartScreen"
+        component={CartScreen}
+        options={{
+          title: '',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
+      />
+      <Stack.Screen
+        name="CheckoutScreen"
+        component={CheckoutScreen}
+        options={{
+          title: '',
           headerShown: true,
           headerTitleAlign: 'center',
         }}

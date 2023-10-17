@@ -1,11 +1,11 @@
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Colors } from '../../../assets/styles/Colors';
 
 interface PriceProps {
-   children: ReactNode
+	children: ReactNode;
 }
-export const TotalAmount = ({children}: PriceProps) => {
+export const TotalAmount = ({ children }: PriceProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.totalAmount}>Total amount:</Text>
@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
   },
   price: {
     fontWeight: '600',
-    fontSize: 18
-  }
+    fontSize: 18,
+  },
 });

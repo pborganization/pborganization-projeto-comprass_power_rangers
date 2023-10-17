@@ -1,6 +1,12 @@
 import React from 'react';
+<<<<<<< HEAD
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+=======
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { Colors } from '../../../assets/styles/Colors';
+>>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4
 
 export const IncreaseButton = (props: any) => {
   return (
@@ -17,6 +23,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+<<<<<<< HEAD
     backgroundColor: 'red',
+=======
+    backgroundColor: Colors.red_500,
+>>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4
   },
 });

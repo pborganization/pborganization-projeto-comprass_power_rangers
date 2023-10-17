@@ -1,19 +1,14 @@
-import { StyleSheet, View } from 'react-native';
-import { ProfileScreen } from './src/screens/profileScreen';
-import { AuthProvider } from './src/contexts/AuthContext';
-//import { NotLogged } from './src/components/profileComponents/NotLogged';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { HomeNavigator } from './src/routes/homeRoutes';
+import { MainNavigator } from './src/routes/MainStack';
 
-export default function App() {
-  return <View style={styles.container}>
-    <AuthProvider>
-      <ProfileScreen/>
-    </AuthProvider>
-  </View>;
+function App() {
+  return (
+    <NavigationContainer>
+      <MainNavigator />
+    </NavigationContainer>
+  );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
+export default App;

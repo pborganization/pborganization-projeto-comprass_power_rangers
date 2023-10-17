@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ProductType } from '../contexts/productType';
 
 const api = axios.create({
   baseURL: 'https://api.escuelajs.co/api/v1',
@@ -21,24 +20,21 @@ export const fetchProductsForCategory = async (
   offset: any,
   limit: any
 ) => {
-  try {
-    const response = await api.get(
-      `/products?categoryId=${categoryId}&offset=${offset}&limit=${limit}`
-    );
+  const response = await api.get(
+    `/products?categoryId=${categoryId}&offset=${offset}&limit=${limit}`
+  );
 
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return response.data;
 };
 
 export const fetchProductById = async (productId: any) => {
-  try {
-    const response = await api.get(`/products/${productId}`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await api.get(`/products/${productId}`);
+  return response.data;
+};
+
+export const fetchProductByName = async (productName: string) => {
+  const response = await api.get(`/products/?title=${productName}`);
+  return response.data;
 };
 
 export async function fetchProductCountForCategory(categoryId: any) {

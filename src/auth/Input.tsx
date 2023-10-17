@@ -18,7 +18,7 @@ export const Input = forwardRef((props: TextInputProps, ref)  => {
   };
   return (
     <View style={[styles.container, isFocused ? styles.focusedInput : null]}>
-      <TextInput style={[styles.input, isFocused ? styles.textInputFocused : null]} 
+      <TextInput style={[styles.input, isFocused ? styles.textInputFocused : null]}
         onFocus={handleFocus}
         ref={(inputRef as any)}
         onBlur={handlerBlur}

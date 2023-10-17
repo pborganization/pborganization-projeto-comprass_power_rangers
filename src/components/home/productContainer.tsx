@@ -1,20 +1,29 @@
+<<<<<<< HEAD
 import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { QuantityIndicator } from './quantityIndicator';
 import { Products } from './Products';
 import { ProductType } from '../../contexts/productType';
 import { useProductStore } from '../../hooks/productStore';
+=======
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { QuantityIndicator } from './quantityIndicator';
+import { Products } from './Products';
+import { ProductType } from '../../interfaces/productType';
+>>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4
 
 interface ProductContainerProps {
   product: ProductType;
 }
 
 export const ProductContainer: React.FC<ProductContainerProps> = React.memo(
-  ({ product }) => {
+  ({ product }: ProductContainerProps) => {
     return (
       <View style={styles.container}>
         <View>
           <QuantityIndicator
+            key={product.id}
             productId={product.id}
             increasestyle={styles.increasebutton}
             decreasestyle={styles.decreasebutton}
@@ -25,8 +34,10 @@ export const ProductContainer: React.FC<ProductContainerProps> = React.memo(
         </View>
       </View>
     );
-  }
+  },
 );
+
+ProductContainer.displayName = 'ProductContainer';
 
 const styles = StyleSheet.create({
   container: {

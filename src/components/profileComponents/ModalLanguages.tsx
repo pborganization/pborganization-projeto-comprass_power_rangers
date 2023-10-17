@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import {
   View,
   Text,
@@ -7,6 +8,15 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
 } from 'react-native';
+=======
+import { 
+  View, 
+  Text, 
+  Modal,
+  TouchableOpacity, 
+  TouchableWithoutFeedback, 
+  StyleSheet} from 'react-native';
+>>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4
 import { Entypo } from '@expo/vector-icons';
 
 interface ModalLanguagesProps {
@@ -14,12 +24,17 @@ interface ModalLanguagesProps {
   onClose: () => void;
 }
 
+<<<<<<< HEAD
 export const ModalLanguages: React.FC<ModalLanguagesProps> = ({
   visible,
   onClose,
 }) => {
   const [selectedLanguage, setSelectedLanguage] = useState('english');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+=======
+export const ModalLanguages: React.FC<ModalLanguagesProps> = ({ visible, onClose}) => {
+  const [selectedLanguage, setSelectedLanguage] = useState('english');
+>>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4
   const [isEnglishSelected, setIsEnglishSelected] = useState(true);
 
   const onEnglishButtonClick = () => {
@@ -44,6 +59,7 @@ export const ModalLanguages: React.FC<ModalLanguagesProps> = ({
             <Text style={styles.modalTitle}>Languages</Text>
           </View>
           <TouchableOpacity
+<<<<<<< HEAD
             style={[
               styles.modalButtonEnglish,
               {
@@ -79,6 +95,19 @@ export const ModalLanguages: React.FC<ModalLanguagesProps> = ({
               ]}
             >
               Portuguese-Brazil
+=======
+            style={[styles.modalButtonEnglish, { backgroundColor: selectedLanguage === 'english' ? '#DB3022' : '#F9F9F9' }]}
+            onPress={onEnglishButtonClick}
+          >
+            <Text style={[styles.buttonText, { color: selectedLanguage === 'english' ? '#FFF' : '#000' }]}>English</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.modalButton, { backgroundColor: selectedLanguage === 'portuguese' ? '#DB3022' : '#F9F9F9' }]}
+            onPress={onPortugueseButtonClick}
+          >
+            <Text style={[styles.buttonTextPortuguese, { color: selectedLanguage === 'portuguese' ? '#FFF' : '#000' }]}>
+                  Portuguese-Brazil
+>>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4
             </Text>
           </TouchableOpacity>
         </View>
@@ -94,7 +123,11 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     ...StyleSheet.absoluteFillObject,
+<<<<<<< HEAD
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+=======
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+>>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4
   },
   modalContent: {
     backgroundColor: '#F9F9F9',
@@ -128,11 +161,20 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginTop: 13,
   },
+<<<<<<< HEAD
   buttonTextPortuguese: {
+=======
+  buttonTextPortuguese:{
+>>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4
     color: '#000',
     fontSize: 16,
     fontWeight: '600',
     marginLeft: 16,
     marginTop: 13,
+<<<<<<< HEAD
   },
 });
+=======
+  }
+});
+>>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4

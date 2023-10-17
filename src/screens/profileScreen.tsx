@@ -26,8 +26,8 @@ export const ProfileScreen = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (!user) {
-      fetchUserProfile('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjgsImlhdCI6MTY5NzQ5Njc1NywiZXhwIjoxNjk5MjI0NzU3fQ.d_uxBRCgCjHyoEG1kwOz7-lzf-neXn4RgW-lfyW6YRM'); // Assuming you have a function to fetch the user profile
+    if (user) {
+      fetchUserProfile(user); 
     }
   }, [user]);
 

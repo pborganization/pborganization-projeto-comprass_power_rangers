@@ -66,7 +66,7 @@ export const AddressForm = () => {
   };
   useEffect(() => {
     setValidInput(true);
-    if (zipCode.length <= 8 && zipCode.length > 0) {
+    if (zipCode.length === 8 && zipCode.length > 0) {
       const apiUrl = `https://viacep.com.br/ws/${zipCode}/json/`;
 
       fetch(apiUrl, {
@@ -224,6 +224,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.white,
+    marginHorizontal: 16
   },
   inputContainer: {
     top: 32,
@@ -236,7 +237,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.green_900,
   },
   buttonContainer: {
-    position: 'absolute',
-    bottom: 25
+      marginLeft: 16,
+      marginRight: 16,
+      marginTop: 'auto',
+      marginBottom: 16
   }
 });

@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     borderRadius: 25,
     height: 48,
-    width: 343,
     backgroundColor: Colors.red_500,
   },
   disabled: {

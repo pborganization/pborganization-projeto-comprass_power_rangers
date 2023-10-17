@@ -34,7 +34,6 @@ export const Input = forwardRef((props: TextInputProps, ref)  => {
 const styles = StyleSheet.create({
   container: {
     height: 64,
-    width: 343,
     paddingHorizontal: 16,
     marginHorizontal: 16,
     marginVertical: 8,

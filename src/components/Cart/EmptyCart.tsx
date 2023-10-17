@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 324,
+    width: '100%',
     height: 150,
     marginVertical: 56,
-    marginHorizontal: 24,
   },
   text: {
     color: Colors.black,
+    paddingTop: 10,
     fontSize: 24,
     lineHeight: 36,
     textAlign: 'center',

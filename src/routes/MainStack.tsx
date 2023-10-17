@@ -1,22 +1,17 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { ProductDetailsScreen } from '../screens/productDetailsScreen';
-import { HomeScreen } from '../screens/homeScreen';
-import { AdressScreen } from '../screens/AdressScreen';
+import CheckoutScreen from '../screens/checkoutScreen';
+import { TabNavigator } from './tabBar';
 
 const Stack = createStackNavigator();
 
-export const HomeNavigator = () => {
+export const MainNavigator = () => {
   return (
-    <Stack.Navigator
-      initialRouteName="MainScreen"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
+    <Stack.Navigator>
       <Stack.Screen
-        name="MainScreen"
-        component={HomeScreen}
+        name="TabNavigatorScreen"
+        component={TabNavigator}
         options={{
           headerShown: false,
         }}
@@ -31,10 +26,10 @@ export const HomeNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="AddressScreen"
-        component={AdressScreen}
+        name="CheckoutScreen"
+        component={CheckoutScreen}
         options={{
-          title: 'Adress Screen',
+          title: 'Checkout',
           headerShown: true,
           headerTitleAlign: 'center',
         }}

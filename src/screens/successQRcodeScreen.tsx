@@ -14,8 +14,8 @@ const SuccessQRcodeScreen = () => {
         email.
       </Text>
       <TouchableOpacity style={styles.continueButton}>
-        <Text style={styles.continue}>CONTNUE SHOPPING</Text>
-      </TouchableOpacity>
+          <Text style={styles.continue}>CONTINUE SHOPPING</Text>
+        </TouchableOpacity>
     </View>
   );
 };

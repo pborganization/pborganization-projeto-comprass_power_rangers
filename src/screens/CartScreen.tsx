@@ -31,7 +31,7 @@ export const CartScreen = () => {
           return null;
         }),
       );
-      const filteredCart = cartData.filter(item => item !== null);
+      const filteredCart = cartData.filter((item) => item !== null);
       setCart(filteredCart);
       const newAmount = calculateAmount(filteredCart);
       setTotalAmount(newAmount);
@@ -62,7 +62,7 @@ export const CartScreen = () => {
     try {
       await AsyncStorage.setItem('totalAmount', totalAmount.toString());
       console.log('Valor atual do totalAmount:', totalAmount);
-      navigation.navigate("CheckoutScreen")
+      navigation.navigate('CheckoutScreen');
     } catch (error) {
       console.error(error);
     }
@@ -74,7 +74,7 @@ export const CartScreen = () => {
 
       <FlatList
         data={cart}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <CartProductCard product={item} />}
         ListEmptyComponent={<EmptyCard />}
       />
@@ -84,7 +84,6 @@ export const CartScreen = () => {
         <Button onPress={handleAmount}>BUY</Button>
       </View>
     </View>
-
   );
 };
 
@@ -96,13 +95,15 @@ const styles = StyleSheet.create({
   details: {
     backgroundColor: Colors.white,
     position: 'absolute',
-    bottom: 0
+    alignItems: 'center',
+    width: '100%',
+    bottom: 0,
   },
   title: {
     fontSize: 34,
     fontWeight: 'bold',
+    marginTop: '20%',
     marginHorizontal: 16,
     marginBottom: 8,
   },
-
 });

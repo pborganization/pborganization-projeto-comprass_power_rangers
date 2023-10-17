@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
 import { TextInput, StyleSheet, View } from 'react-native';
 
-export const EditInfos = () =>{
-  const [name, setName] = useState('Juliane Gonçalves Freitas');
+interface EditInfosProps{
+  userName: string,
+  onNameChange: (name: string) => void;
+}
+
+export const EditInfos = ({userName, onNameChange}: EditInfosProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [name, setName] = useState(userName);
+  const handleNameChange = (text: string) => {
+    setName(text);
+    onNameChange(text);  
+  };
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
         style={styles.textInput}
         placeholder="Edit your name"
-        value={name}
-        onChangeText={(text) => setName(text)}
+        value={userName}
+        onChangeText={handleNameChange} 
       />
     </View>
   );
@@ -22,12 +33,12 @@ const styles = StyleSheet.create({
   textInput: {
     width: 300,
     height: 40,
-    borderTopColor: '#FFF',
-    borderRightColor: '#FFF',
-    borderLeftColor: '#FFF',
+    borderTopColor: '#F9F9F9',
+    borderRightColor: '#F9F9F9',
+    borderLeftColor: '#F9F9F9',
     borderWidth: 1,
     marginTop: 20,
     fontSize: 24,
     fontWeight: '600',
-  }
+  },
 });

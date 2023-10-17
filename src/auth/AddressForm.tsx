@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, TextInput, Text } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from '../components/Buttons/Button';
 import { Input } from './Input';
@@ -7,6 +7,7 @@ import { Colors } from '../../assets/styles/Colors';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAddress } from '../../contexts/zustand';
+import { useNavigation } from '@react-navigation/native';
 
 export const AddressForm = () => {
   const schemaValidate = yup.object({
@@ -36,7 +37,8 @@ export const AddressForm = () => {
   const [zipCode, setZipCode] = useState('');
   const [isValidZipCode, setIsValidZipCode] = useState(false);
   const [allFieldsFilled, setFieldsFilled] = useState(false);
-  const setAddress = useAddress(state => state.setAddress);
+  const setAddress = useAddress((state) => state.setAddress);
+  const navigation = useNavigation();
 
   const onSubmit = async () => {
     if (isValidZipCode && allFieldsFilled) {
@@ -56,9 +58,10 @@ export const AddressForm = () => {
     }
 
     if (isValidZipCode) {
-      console.log('deu certo');
+      navigation.navigate('CheckoutScreen');
     } else {
       console.log('Dados inválidos.');
+
     }
   };
   useEffect(() => {
@@ -79,11 +82,17 @@ export const AddressForm = () => {
             console.log('Cep invalido');
             setIsValidZipCode(false);
           } else {
-            console.log('Erro desconhecido', zipCode, apiUrl, response.status, response.statusText);
+            console.log(
+              'Erro desconhecido',
+              zipCode,
+              apiUrl,
+              response.status,
+              response.statusText,
+            );
             setIsValidZipCode(false);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Erro ao chamar a API:', error);
           setIsValidZipCode(false);
         });
@@ -123,7 +132,9 @@ export const AddressForm = () => {
             />
           )}
         />
-        {errors.zipCode && <Text style={styles.errorMessage}>{errors.zipCode.message}</Text>}
+        {errors.zipCode && (
+          <Text style={styles.errorMessage}>{errors.zipCode.message}</Text>
+        )}
 
         <Controller
           name="address"
@@ -133,7 +144,9 @@ export const AddressForm = () => {
             <Input placeholder="Address" value={value} onChangeText={onChange} />
           )}
         />
-        {errors.address && <Text style={styles.errorMessage}>{errors.address.message}</Text>}
+        {errors.address && (
+          <Text style={styles.errorMessage}>{errors.address.message}</Text>
+        )}
 
         <Controller
           name="city"
@@ -143,7 +156,9 @@ export const AddressForm = () => {
             <Input placeholder="City" value={value} onChangeText={onChange} />
           )}
         />
-        {errors.city && <Text style={styles.errorMessage}>{errors.city.message}</Text>}
+        {errors.city && (
+          <Text style={styles.errorMessage}>{errors.city.message}</Text>
+        )}
 
         <Controller
           name="state"
@@ -153,7 +168,9 @@ export const AddressForm = () => {
             <Input placeholder="State/Province/Region" value={value} onChangeText={onChange} />
           )}
         />
-        {errors.state && <Text style={styles.errorMessage}>{errors.state.message}</Text>}
+        {errors.state && (
+          <Text style={styles.errorMessage}>{errors.state.message}</Text>
+        )}
 
         <Controller
           name="fullName"
@@ -163,11 +180,13 @@ export const AddressForm = () => {
             <Input placeholder="Full name" value={value} onChangeText={onChange} />
           )}
         />
-        {errors.fullName && <Text style={styles.errorMessage}>{errors.fullName.message}</Text>}
+        {errors.fullName && (
+          <Text style={styles.errorMessage}>{errors.fullName.message}</Text>
+        )}
       </View>
 
       <Button disabled={!isValidZipCode} onPress={handleSubmit(onSubmit)}>
-				SAVE ADDRESS
+        SAVE ADDRESS
       </Button>
     </View>
   );

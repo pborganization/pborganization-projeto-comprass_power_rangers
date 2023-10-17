@@ -9,11 +9,15 @@ import {
   Image,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import CreditCardModal from '../components/checkoutComponents/CreditCardModal';
 import DeliverySelection from '../components/checkoutComponents/DeliverySelection';
+import { useAddress } from '../../contexts/zustand';
 
-const CheckoutScreen = () => {
-  const [shippingAddress, setShippingAddress] = useState('');
+const CheckoutScreen = (props: any) => {
+  const [shippingAddress, setShippingAddress] = useState(
+    useAddress.getState().address[0] || {},
+  );
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [highlightedOption, setHighlightedOption] = useState(null);
@@ -23,8 +27,12 @@ const CheckoutScreen = () => {
   const [showCardLogo, setShowCardLogo] = useState(false);
   const [showBoletoLogo, setShowBoletoLogo] = useState(false);
   const [cardNumber, setCardNumber] = useState(false);
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
+  const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(null);
 
   useEffect(() => {}, []);
+
+  const navigation = useNavigation();
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -64,145 +72,195 @@ const CheckoutScreen = () => {
     setIsModalVisible(false);
   };
 
+  const handleSubmitOrder = () => {
+    if (shippingAddress && selectedPaymentMethod && selectedDeliveryMethod) {
+      navigation.navigate('SuccessScreen', {
+        paymentMethod: selectedPaymentMethod,
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.section}>
-        <Text style={styles.shippingTitle}>Shipping address</Text>
-        <View style={styles.shippingContainer}>
-          <TouchableOpacity style={styles.changeButton}>
-            <Text style={styles.changeButtonText}>Change</Text>
-          </TouchableOpacity>
-          <TextInput
-            style={styles.input}
-            value={shippingAddress}
-            onChangeText={(text) => setShippingAddress(text)}
-            placeholder="Click to add an address"
-          />
-        </View>
-      </View>
-
-      <View style={styles.section}>
-        <View style={styles.paymentSection}>
-          <Text style={styles.paymentTitle}>Payment method</Text>
-          <TouchableOpacity style={styles.changePButton} onPress={toggleModal}>
-            <Text style={styles.changeButtonText}>Change</Text>
-          </TouchableOpacity>
-          <View style={styles.logoMethod}>
-            {showPixLogo && (
-              <Image
-                source={require('../../assets/images/pix.png')}
-                style={styles.pixLogo}
-              />
-            )}
-            {showBoletoLogo && (
-              <Image
-                source={require('../../assets/images/boleto.png')}
-                style={styles.boletoLogo}
-              />
-            )}
-            {showCardLogo && (
-              <Image
-                source={require('../../assets/images/mastercard.png')}
-                style={styles.cartaoLogo}
-              />
-            )}
-            {cardNumber && <Text style={styles.cardNumber}>{cardNumber} </Text>}
-            <Text style={styles.paymentMethod}>
-              {' '}
-              {selectedPaymentMethod ? selectedPaymentMethod : 'None added'}
+      <View style={styles.container}>
+        <View style={styles.section}>
+          <Text style={styles.shippingTitle}>Shipping address</Text>
+          <View style={styles.shippingContainer}>
+            <TouchableOpacity
+              style={styles.changeButton}
+              onPress={() => navigation.navigate('AddressForm')}
+            >
+              <Text style={styles.changeButtonText}>Change</Text>
+            </TouchableOpacity>
+            <Text style={styles.fullName}>{shippingAddress.fullName}</Text>
+            <Text style={styles.address}>{shippingAddress.address}</Text>
+            <Text style={styles.address2}>
+              {shippingAddress.city}, {shippingAddress.zipCode},{' '}
+              {shippingAddress.state}
             </Text>
           </View>
         </View>
-      </View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={toggleModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
-              <AntDesign name="minus" size={70} color="gray" />
+        <View style={styles.section}>
+          <View style={styles.paymentSection}>
+            <Text style={styles.paymentTitle}>Payment method</Text>
+            <TouchableOpacity
+              style={styles.changePButton}
+              onPress={toggleModal}
+            >
+              <Text style={styles.changeButtonText}>Change</Text>
             </TouchableOpacity>
-            <Text style={styles.modalTit}>Choose your payment method</Text>
-            <View style={styles.modalOp}>
-              <TouchableOpacity
-                onPress={() => {
-                  handlePaymentMethodSelect('Cartão');
-                  handleOptionHighlight('Cartão');
-                  toggleCreditCardModal();
-                }}
-                style={[
-                  styles.modalOption,
-                  highlightedOption === 'Cartão' && styles.highlightedOption,
-                ]}
-              >
-                <Text
-                  style={
-                    highlightedOption === 'Cartão' ? { color: 'white' } : {}
-                  }
-                >
-                  Cartão de crédito ou débito
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  handlePaymentMethodSelect('Pix');
-                  handleOptionHighlight('Pix');
-                }}
-                style={[
-                  styles.modalOption,
-                  highlightedOption === 'Pix' && styles.highlightedOption,
-                ]}
-              >
-                <Text
-                  style={highlightedOption === 'Pix' ? { color: 'white' } : {}}
-                >
-                  Pix
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  handlePaymentMethodSelect('Boleto Bancário');
-                  handleOptionHighlight('Boleto');
-                }}
-                style={[
-                  styles.modalOption,
-                  highlightedOption === 'Boleto' && styles.highlightedOption,
-                ]}
-              >
-                <Text
-                  style={
-                    highlightedOption === 'Boleto' ? { color: 'white' } : {}
-                  }
-                >
-                  Boleto
-                </Text>
-              </TouchableOpacity>
+            <View style={styles.logoMethod}>
+              {showPixLogo && (
+                <Image
+                  source={require('../../assets/images/pix.png')}
+                  style={styles.pixLogo}
+                />
+              )}
+              {showBoletoLogo && (
+                <Image
+                  source={require('../../assets/images/boleto.png')}
+                  style={styles.boletoLogo}
+                />
+              )}
+              {showCardLogo && (
+                <Image
+                  source={require('../../assets/images/mastercard.png')}
+                  style={styles.cartaoLogo}
+                />
+              )}
+              {cardNumber && (
+                <Text style={styles.cardNumber}>{cardNumber} </Text>
+              )}
+              <Text style={styles.paymentMethod}>
+                {' '}
+                {selectedPaymentMethod ? selectedPaymentMethod : 'None added'}
+              </Text>
             </View>
           </View>
         </View>
-      </Modal>
-      <CreditCardModal
-        isVisible={isCreditCardModalVisible}
-        toggleModal={toggleCreditCardModal}
-        ModalVisible={isModalVisible}
-        onAddCard={handleAddCard}
-      />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isModalVisible}
+          onRequestClose={toggleModal}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={toggleModal}
+              >
+                <AntDesign name="minus" size={70} color="gray" />
+              </TouchableOpacity>
+              <Text style={styles.modalTit}>Choose your payment method</Text>
+              <View style={styles.modalOp}>
+                <TouchableOpacity
+                  onPress={() => {
+                    handlePaymentMethodSelect('Cartão');
+                    handleOptionHighlight('Cartão');
+                    toggleCreditCardModal();
+                  }}
+                  style={[
+                    styles.modalOption,
+                    highlightedOption === 'Cartão' && styles.highlightedOption,
+                  ]}
+                >
+                  <Text
+                    style={
+                      highlightedOption === 'Cartão' ? { color: 'white' } : {}
+                    }
+                  >
+                    Cartão de crédito ou débito
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    handlePaymentMethodSelect('Pix');
+                    handleOptionHighlight('Pix');
+                  }}
+                  style={[
+                    styles.modalOption,
+                    highlightedOption === 'Pix' && styles.highlightedOption,
+                  ]}
+                >
+                  <Text
+                    style={
+                      highlightedOption === 'Pix' ? { color: 'white' } : {}
+                    }
+                  >
+                    Pix
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    handlePaymentMethodSelect('Boleto Bancário');
+                    handleOptionHighlight('Boleto');
+                  }}
+                  style={[
+                    styles.modalOption,
+                    highlightedOption === 'Boleto' && styles.highlightedOption,
+                  ]}
+                >
+                  <Text
+                    style={
+                      highlightedOption === 'Boleto' ? { color: 'white' } : {}
+                    }
+                  >
+                    Boleto
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <CreditCardModal
+          isVisible={isCreditCardModalVisible}
+          toggleModal={toggleCreditCardModal}
+          ModalVisible={isModalVisible}
+          onAddCard={handleAddCard}
+        />
 
-      <View style={styles.section}>
-        <Text style={styles.deliveryTitle}>Delivery method</Text>
-        <DeliverySelection />
+        <View style={styles.section}>
+          <Text style={styles.deliveryTitle}>Delivery method</Text>
+          <DeliverySelection
+            setSelectedDeliveryMethod={setSelectedDeliveryMethod}
+          />
+        </View>
+        <TouchableOpacity
+          style={[
+            styles.sbutton,
+            shippingAddress && selectedPaymentMethod && selectedDeliveryMethod
+              ? { backgroundColor: '#FF0024' }
+              : {},
+          ]}
+          onPress={handleSubmitOrder}
+        >
+          <Text style={styles.sbuttonText}>SUBMIT ORDER</Text>
+        </TouchableOpacity>
       </View>
-
-      <TouchableOpacity style={styles.sbutton}>
-        <Text style={styles.sbuttonText}>SUBMIT ORDER</Text>
-      </TouchableOpacity>
     </View>
   );
 };
 const styles = StyleSheet.create({
+  fullName: {
+    marginTop: 20,
+    marginLeft: 24,
+    color: '#000',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  address: {
+    fontSize: 14,
+    fontWeight: '400',
+    marginLeft: 24,
+    marginTop: 2,
+  },
+  address2: {
+    fontSize: 14,
+    fontWeight: '400',
+    marginLeft: 24,
+  },
+
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -215,11 +273,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 34,
   },
   modalTit: {
-    width: 272,
+    width: '100%',
+    textAlign: 'center',
     height: 24,
     fontSize: 18,
     fontWeight: '700',
-    marginLeft: 63,
     marginTop: 8,
     marginBottom: 32,
   },
@@ -240,11 +298,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   container: {
-    marginTop: 120,
+    marginTop: 100,
     marginLeft: 8,
     marginRight: 8,
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#rgba',
   },
   section: {
     padding: 10,
@@ -255,19 +313,20 @@ const styles = StyleSheet.create({
   },
   shippingContainer: {
     height: 108,
-    width: 343,
+    width: '100%',
     marginTop: 16,
     padding: 10,
     borderRadius: 8,
     backgroundColor: '#FFF',
     shadowColor: '#rgba',
+
     shadowOffset: {
       width: 0,
       height: 1,
     },
     shadowOpacity: 25,
     shadowRadius: 4,
-    elevation: 4,
+    elevation: 2,
   },
 
   changeButton: {
@@ -285,7 +344,7 @@ const styles = StyleSheet.create({
 
   input: {
     fontSize: 14,
-    marginTop: 30,
+    height: '100%',
     marginLeft: 24,
   },
   paymentSection: {
@@ -308,12 +367,12 @@ const styles = StyleSheet.create({
   },
   paymentMethod: {
     marginTop: 10,
-    width: 500,
+    width: '100%',
     height: 20,
     color: '#9B9B9B',
     fontSize: 14,
     fontWeight: '400',
-    marginLeft: 16,
+    marginLeft: '5%',
   },
   pixLogo: {
     width: 40,
@@ -339,11 +398,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  containerButtom: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   sbutton: {
-    width: 343,
+    width: '90%',
     height: 48,
-    marginLeft: 16,
-    marginRight: 8,
+    marginHorizontal: 20,
     backgroundColor: '#444',
     borderRadius: 24,
     justifyContent: 'center',
@@ -351,6 +414,7 @@ const styles = StyleSheet.create({
   },
   sbuttonText: {
     color: '#FFF',
+    marginHorizontal: 18,
   },
 });
 

@@ -5,9 +5,9 @@ import { DecreaseButton } from './decreaseButton';
 import { useProductStore } from '../../hooks/productStore';
 
 interface QuantityIndicatorProps {
-	productId: number;
-	increasestyle?: any;
-	decreasestyle?: any;
+  productId: number;
+  increasestyle?: any;
+  decreasestyle?: any;
 }
 
 export const QuantityIndicator: React.FC<QuantityIndicatorProps> = React.memo(
@@ -16,6 +16,8 @@ export const QuantityIndicator: React.FC<QuantityIndicatorProps> = React.memo(
     const [localQuantity, setLocalQuantity] = useState(
       products[productId]?.quantity || 0,
     );
+
+    console.log(products);
 
     const increaseQuantityHandler = useCallback(() => {
       if (localQuantity === 0) {

@@ -1,19 +1,17 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
-import React, {useMemo}  from 'react';
+import React, { useMemo } from 'react';
 import { Delete } from '../../../assets/images/svg/DeleteProduct';
 import { Colors } from '../../../assets/styles/Colors';
 import { ProductType } from '../../interfaces/productType';
 import { useProductStore } from '../../hooks/productStore';
 import { Indicator } from './Indicator';
 
-
 interface ProductProps {
-	product: ProductType;
+  product: ProductType;
 }
 
 export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
   const { products, setProductState } = useProductStore();
-
 
   const productState = products[product.id];
 
@@ -21,7 +19,7 @@ export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
     return productState.quantity * product.price;
   }, [productState.quantity, product.price]);
 
-  const handleDelete = async  () => {
+  const handleDelete = async () => {
     setProductState(product.id, {
       ...productState,
       quantity: 0,
@@ -45,9 +43,7 @@ export const CartProductCard: React.FC<ProductProps> = ({ product }) => {
           </View>
         </View>
         <View style={styles.itemContainer}>
-          <Indicator
-            productId={product.id}
-          />
+          <Indicator productId={product.id} />
 
           <Text style={styles.price}>{totalPrice}.00 R$</Text>
         </View>
@@ -60,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    width: 343,
+    width: '92%',
     height: 104,
     backgroundColor: Colors.white,
     marginHorizontal: 16,
@@ -69,11 +65,12 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   imageContainer: {
-    flex: 1,
+    flex: 0,
   },
   infoContainer: {
     flex: 2,
     justifyContent: 'space-between',
+    marginLeft: 18,
   },
   deleteIcon: {
     position: 'absolute',
@@ -95,7 +92,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginVertical: 12,
+    marginLeft: 0,
   },
   countText: {
     fontSize: 14,
@@ -113,7 +110,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 8,
     width: 104,
     height: 104,
-
   },
   increaseButton: {
     width: 15,

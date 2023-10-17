@@ -5,13 +5,13 @@ import { AntDesign } from '@expo/vector-icons';
 import { Colors } from '../../../assets/styles/Colors';
 
 interface IndicatorProps {
-	productId: number;
-	increasestyle?: any;
-	decreasestyle?: any;
+  productId: number;
+  increasestyle?: any;
+  decreasestyle?: any;
 }
 
 export const Indicator: React.FC<IndicatorProps> = React.memo(
-  ({ productId}) => {
+  ({ productId }) => {
     const { products, setProductState } = useProductStore();
     const productState = products[productId] || { quantity: 0 };
 
@@ -43,12 +43,24 @@ export const Indicator: React.FC<IndicatorProps> = React.memo(
 
     return (
       <View style={styles.container}>
-          <AntDesign name="minuscircle" size={36} color={Colors.red_500} onPress={decreaseQuantity} style={styles.icon} />
-          <Text style={styles.text}>{productState.quantity}</Text>
-          <AntDesign name="pluscircle" size={36} color={Colors.red_500} onPress={increaseQuantity}  style={styles.icon} />
+        <AntDesign
+          name="minuscircle"
+          size={36}
+          color={Colors.red_500}
+          onPress={decreaseQuantity}
+          style={styles.icon}
+        />
+        <Text style={styles.text}>{productState.quantity}</Text>
+        <AntDesign
+          name="pluscircle"
+          size={36}
+          color={Colors.red_500}
+          onPress={increaseQuantity}
+          style={styles.icon}
+        />
       </View>
     );
-  }
+  },
 );
 
 const styles = StyleSheet.create({
@@ -56,8 +68,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 12
+    justifyContent: 'flex-start',
+    marginBottom: 12,
   },
   numberContainer: {
     flex: 1,
@@ -67,6 +79,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontWeight: '600',
-    marginHorizontal: 8
-  }
+    marginHorizontal: 8,
+  },
 });

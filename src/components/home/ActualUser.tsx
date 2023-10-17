@@ -1,14 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
-export const ActualUser = () => {
+interface ActualUserProps {
+  isAuthenticated: boolean;
+  profileName: string;
+}
+
+export const ActualUser = ({
+  isAuthenticated = true,
+  profileName,
+}: ActualUserProps) => {
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
     <View style={[styles.absoluteContainer]}>
       <Image
         style={styles.image}
         source={require('../../../assets/images/home/compass-banner.jpg')}
       />
-      <Text style={styles.text}>Hello, Juliane Golçalves</Text>
+      <Text style={styles.text}>Hello, {profileName}</Text>
     </View>
   );
 };

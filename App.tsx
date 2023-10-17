@@ -4,7 +4,6 @@ import { Colors } from './assets/styles/Colors';
 import { HomeNavigator } from './src/routes/homeRoutes';
 
 export default function App() {
-
   return (
     <View style={styles.container}>
       <NavigationContainer>

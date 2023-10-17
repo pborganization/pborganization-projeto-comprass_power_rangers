@@ -50,7 +50,6 @@ export const AddressForm = () => {
       };
 
       setAddress(formData);
-
       console.log('Novo estado do endereço:', useAddress.getState().address);
     } else {
       console.log('preencha todos os campos');

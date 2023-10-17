@@ -27,7 +27,7 @@ export const CategoryList = () => {
       } else {
         const newCategories = categoriesData.filter((category: any) => {
           return !categories.some(
-            (existingCategory) => existingCategory.id === category.id
+            (existingCategory) => existingCategory.id === category.id,
           );
         });
 
@@ -60,7 +60,10 @@ export const CategoryList = () => {
         keyExtractor={(category) => category.id.toString()}
         renderItem={({ item }) => (
           <View>
-            <Text style={styles.categoryTitle}>{item.name}</Text>
+            <View style={styles.container}>
+              <Text style={styles.categoryTitle}>{item.name}</Text>
+              <Text>View all</Text>
+            </View>
             <ProductList categoryId={item.id} />
           </View>
         )}
@@ -74,9 +77,16 @@ export const CategoryList = () => {
 const styles = StyleSheet.create({
   categoryTitle: {
     fontSize: 32,
-    marginLeft: 16,
-    marginRight: 16,
+    fontWeight: 'bold',
     color: 'black',
     textTransform: 'capitalize',
+  },
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: 16,
+    marginRight: 16,
+    marginTop: 16,
   },
 });

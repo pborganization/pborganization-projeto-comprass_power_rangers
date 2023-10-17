@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, Image, StyleSheet, Text } from 'react-native';
 import { Colors } from '../../../assets/styles/Colors';
 import { EmptyCartIcon } from '../../../assets/images/svg/EmptyCartIcon';
 

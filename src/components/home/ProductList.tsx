@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { fetchProductsForCategory } from '../../services/fakeStoreAPI';
-import { ProductType } from '../../contexts/productType';
+import { ProductType } from '../../interfaces/productType';
 import { LoadingProducts } from './loadingProduct';
 import { ProductContainer } from './productContainer';
 
@@ -9,7 +9,9 @@ interface ProductListProps {
   categoryId: number;
 }
 
-export const ProductList: React.FC<ProductListProps> = ({ categoryId }) => {
+export const ProductList: React.FC<ProductListProps> = ({
+  categoryId,
+}: ProductListProps) => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -21,7 +23,7 @@ export const ProductList: React.FC<ProductListProps> = ({ categoryId }) => {
       const newProducts = await fetchProductsForCategory(
         categoryId,
         (page - 1) * 10,
-        10
+        10,
       );
       if (newProducts.length === 0) {
         setHasMore(false);
@@ -57,12 +59,14 @@ export const ProductList: React.FC<ProductListProps> = ({ categoryId }) => {
         renderItem={({ item }) => <ProductContainer product={item} />}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.1}
+        ListFooterComponent={() =>
+          loading && page > 1 && hasMore ? (
+            <View style={styles.loadingProducts}>
+              <ActivityIndicator size="large" color="red" />
+            </View>
+          ) : null
+        }
       />
-      {loading && page > 1 && (
-        <View style={styles.loadingProducts}>
-          <ActivityIndicator size="large" color="red" />
-        </View>
-      )}
     </View>
   );
 };
@@ -72,6 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginHorizontal: 30,
   },
   productItem: {
     marginRight: 16,
@@ -82,6 +87,5 @@ const styles = StyleSheet.create({
   },
   productList: {
     marginLeft: 16,
-    marginRight: 16,
   },
 });

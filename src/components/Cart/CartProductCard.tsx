@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import React, {useMemo}  from 'react';
 import { Delete } from '../../../assets/images/svg/DeleteProduct';
 import { Colors } from '../../../assets/styles/Colors';
-import { ProductType } from '../../contexts/productType';
+import { ProductType } from '../../interfaces/productType';
 import { useProductStore } from '../../hooks/productStore';
 import { Indicator } from './Indicator';
 

@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Modal, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Modal,
+  Image,
+} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import CreditCardModal from '../components/checkoutComponents/CreditCardModal';
 import DeliverySelection from '../components/checkoutComponents/DeliverySelection';
@@ -9,14 +17,14 @@ const CheckoutScreen = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [highlightedOption, setHighlightedOption] = useState(null);
-  const [isCreditCardModalVisible, setIsCreditCardModalVisible] = useState(false);
+  const [isCreditCardModalVisible, setIsCreditCardModalVisible] =
+    useState(false);
   const [showPixLogo, setShowPixLogo] = useState(false);
   const [showCardLogo, setShowCardLogo] = useState(false);
   const [showBoletoLogo, setShowBoletoLogo] = useState(false);
   const [cardNumber, setCardNumber] = useState(false);
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -25,7 +33,7 @@ const CheckoutScreen = () => {
   const handlePaymentMethodSelect = (method: any) => {
     setSelectedPaymentMethod(method);
 
-    if ( method === 'Pix') {
+    if (method === 'Pix') {
       setCardNumber(false);
       setShowPixLogo(true);
       setShowCardLogo(false);
@@ -35,17 +43,15 @@ const CheckoutScreen = () => {
       setShowPixLogo(false);
       setShowCardLogo(false);
       setShowBoletoLogo(true);
-    }  else if (method === 'Cartão') {
+    } else if (method === 'Cartão') {
       setCardNumber(true);
       setShowPixLogo(false);
       setShowCardLogo(true);
       setShowBoletoLogo(false);
-    } 
-  
-
+    }
   };
 
-  const handleAddCard = (newCardNumber : any) => {
+  const handleAddCard = (newCardNumber: any) => {
     setCardNumber(newCardNumber);
   };
 
@@ -79,23 +85,32 @@ const CheckoutScreen = () => {
         <View style={styles.paymentSection}>
           <Text style={styles.paymentTitle}>Payment method</Text>
           <TouchableOpacity style={styles.changePButton} onPress={toggleModal}>
-            <Text style={styles.changeButtonText}>
-             Change
-            </Text>
+            <Text style={styles.changeButtonText}>Change</Text>
           </TouchableOpacity>
           <View style={styles.logoMethod}>
             {showPixLogo && (
-              <Image  source={require('../../assets/images/pix.png')} style={styles.pixLogo}/>
+              <Image
+                source={require('../../assets/images/pix.png')}
+                style={styles.pixLogo}
+              />
             )}
             {showBoletoLogo && (
-              <Image  source={require('../../assets/images/boleto.png')} style={styles.boletoLogo}/>
+              <Image
+                source={require('../../assets/images/boleto.png')}
+                style={styles.boletoLogo}
+              />
             )}
             {showCardLogo && (
-              <Image source={require('../../assets/images/mastercard.png')} style={styles.cartaoLogo}/>
-            )} 
-            {cardNumber && (
-              <Text style={styles.cardNumber}>{cardNumber} </Text> ) }
-            <Text style={styles.paymentMethod}> {selectedPaymentMethod ? selectedPaymentMethod :  'None added'}</Text>
+              <Image
+                source={require('../../assets/images/mastercard.png')}
+                style={styles.cartaoLogo}
+              />
+            )}
+            {cardNumber && <Text style={styles.cardNumber}>{cardNumber} </Text>}
+            <Text style={styles.paymentMethod}>
+              {' '}
+              {selectedPaymentMethod ? selectedPaymentMethod : 'None added'}
+            </Text>
           </View>
         </View>
       </View>
@@ -103,11 +118,12 @@ const CheckoutScreen = () => {
         animationType="slide"
         transparent={true}
         visible={isModalVisible}
-        onRequestClose={toggleModal}>
+        onRequestClose={toggleModal}
+      >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
-              <AntDesign name="minus" size={70} color="gray" /> 
+              <AntDesign name="minus" size={70} color="gray" />
             </TouchableOpacity>
             <Text style={styles.modalTit}>Choose your payment method</Text>
             <View style={styles.modalOp}>
@@ -119,10 +135,16 @@ const CheckoutScreen = () => {
                 }}
                 style={[
                   styles.modalOption,
-                  highlightedOption === 'Cartão' && styles.highlightedOption
+                  highlightedOption === 'Cartão' && styles.highlightedOption,
                 ]}
               >
-                <Text style={highlightedOption === 'Cartão' ? { color: 'white' } : {}}>Cartão de crédito ou débito</Text>
+                <Text
+                  style={
+                    highlightedOption === 'Cartão' ? { color: 'white' } : {}
+                  }
+                >
+                  Cartão de crédito ou débito
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -131,10 +153,14 @@ const CheckoutScreen = () => {
                 }}
                 style={[
                   styles.modalOption,
-                  highlightedOption === 'Pix' && styles.highlightedOption
+                  highlightedOption === 'Pix' && styles.highlightedOption,
                 ]}
               >
-                <Text style={highlightedOption === 'Pix' ? { color: 'white' } : {}}>Pix</Text>
+                <Text
+                  style={highlightedOption === 'Pix' ? { color: 'white' } : {}}
+                >
+                  Pix
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
@@ -143,32 +169,40 @@ const CheckoutScreen = () => {
                 }}
                 style={[
                   styles.modalOption,
-                  highlightedOption === 'Boleto' && styles.highlightedOption
+                  highlightedOption === 'Boleto' && styles.highlightedOption,
                 ]}
               >
-                <Text style={highlightedOption === 'Boleto' ? { color: 'white' } : {}}>Boleto</Text>
+                <Text
+                  style={
+                    highlightedOption === 'Boleto' ? { color: 'white' } : {}
+                  }
+                >
+                  Boleto
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </Modal>
-      <CreditCardModal isVisible={isCreditCardModalVisible} 
-        toggleModal={toggleCreditCardModal} ModalVisible={isModalVisible} onAddCard={handleAddCard} />
+      <CreditCardModal
+        isVisible={isCreditCardModalVisible}
+        toggleModal={toggleCreditCardModal}
+        ModalVisible={isModalVisible}
+        onAddCard={handleAddCard}
+      />
 
       <View style={styles.section}>
         <Text style={styles.deliveryTitle}>Delivery method</Text>
         <DeliverySelection />
       </View>
-     
+
       <TouchableOpacity style={styles.sbutton}>
         <Text style={styles.sbuttonText}>SUBMIT ORDER</Text>
       </TouchableOpacity>
     </View>
-
   );
 };
 const styles = StyleSheet.create({
-
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -187,20 +221,20 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginLeft: 63,
     marginTop: 8,
-    marginBottom: 32
+    marginBottom: 32,
   },
-  modalOp:{
-    marginBottom: 22
+  modalOp: {
+    marginBottom: 22,
   },
   modalOption: {
     color: '#000',
     fontSize: 16,
     padding: 15,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   highlightedOption: {
     backgroundColor: '#FF0024',
-    fontWeight: '600'
+    fontWeight: '600',
   },
   closeButton: {
     alignSelf: 'center',
@@ -242,19 +276,19 @@ const styles = StyleSheet.create({
     right: 30,
   },
   changeButtonText: {
-    color: '#FF0024', 
+    color: '#FF0024',
     fontSize: 14,
     fontStyle: 'normal',
     fontWeight: '600',
     lineHeight: 20,
   },
 
-  input:{
+  input: {
     fontSize: 14,
     marginTop: 30,
-    marginLeft: 24
+    marginLeft: 24,
   },
-  paymentSection:{
+  paymentSection: {
     flexDirection: 'column',
   },
   changePButton: {
@@ -266,11 +300,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     top: 24,
     fontSize: 16,
-    marginBottom: 10
+    marginBottom: 10,
   },
-  logoMethod:{
+  logoMethod: {
     flexDirection: 'row',
-    marginTop: 40
+    marginTop: 40,
   },
   paymentMethod: {
     marginTop: 10,
@@ -281,43 +315,43 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginLeft: 16,
   },
-  pixLogo:{
+  pixLogo: {
     width: 40,
     height: 38,
-    marginLeft: 31
+    marginLeft: 31,
   },
-  boletoLogo:{
+  boletoLogo: {
     width: 100,
-    height: 38
+    height: 38,
   },
   cartaoLogo: {
     width: 45,
     height: 35,
-    marginLeft: 31
+    marginLeft: 31,
   },
-  cardNumber:{
+  cardNumber: {
     marginTop: 10,
     marginLeft: 32,
-    marginRight: 120
+    marginRight: 120,
   },
   deliveryTitle: {
     marginTop: 20,
     fontSize: 16,
-    fontWeight: '500'
+    fontWeight: '500',
   },
   sbutton: {
     width: 343,
     height: 48,
     marginLeft: 16,
     marginRight: 8,
-    backgroundColor: '#444', 
-    borderRadius: 24, 
+    backgroundColor: '#444',
+    borderRadius: 24,
     justifyContent: 'center',
     alignItems: 'center',
   },
   sbuttonText: {
-    color: '#FFF'
+    color: '#FFF',
   },
 });
 
-export default CheckoutScreen; 
+export default CheckoutScreen;

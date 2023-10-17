@@ -20,4 +20,3 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
 });
-

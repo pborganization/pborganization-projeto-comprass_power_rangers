@@ -10,9 +10,9 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Entypo } from '@expo/vector-icons';
-import { CategoryList } from '../components/home/CategoryList';
-import { Button } from '../components/Button';
-import { useNavigation } from '@react-navigation/native';
+import { CategoryList } from '../../components/home/CategoryList';
+import { SearchButton } from '../../components/home/SearchButtom/searchButtom';
+
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -24,18 +24,18 @@ export const HomeScreen = () => {
   };
   return (
     <View style={styles.container}>
-      <Button onPress={handleNav}>Cart</Button>
+      <SearchButton />
       <FlatList
         ListHeaderComponent={
           <View style={styles.bannercontainer}>
             <ImageBackground
-              source={require('../../assets/images/compass-banner.jpg')}
+              source={require('../../../assets/images/home/compass-banner.jpg')}
               style={styles.backgroundImage}
             >
               <View style={styles.logo}>
                 <Text style={styles.logotext}>C</Text>
                 <Image
-                  source={require('../../assets/icons/logo-compass-uol.png')}
+                  source={require('../../../assets/images/home/logo-compass-uol.png')}
                   style={styles.logopic}
                 />
                 <Text style={styles.logotext}>mprass</Text>
@@ -48,7 +48,7 @@ export const HomeScreen = () => {
           </View>
         }
         data={[1]}
-        renderItem={({ item }) => (
+        renderItem={() => (
           <View style={styles.productscontainer}>
             <CategoryList />
           </View>
@@ -63,6 +63,7 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   bannercontainer: {
     height: screenHeight * 0.5,

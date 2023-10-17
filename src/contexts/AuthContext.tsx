@@ -14,7 +14,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if the user is authenticated on app startup
     AsyncStorage.getItem('accessToken').then((accessToken) => {
       if (accessToken) {
         setUser(accessToken);

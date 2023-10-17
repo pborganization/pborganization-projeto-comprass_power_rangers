@@ -20,4 +20,7 @@ export const Input = styled.TextInput`
   font-size: 14px;
   line-height: 20px;
 `;
-export const IconContainer = styled.TouchableOpacity``;
+
+export const IconContainer = styled.TouchableOpacity`
+`;
+

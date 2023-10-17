@@ -18,6 +18,8 @@ interface LoginFieldProps {
   isPassword?: boolean;
   value: string;
   isSubmitting?: boolean;
+  editable?: boolean;
+  isEmailCheck?: boolean;
 }
 
 export function LoginField({
@@ -28,6 +30,8 @@ export function LoginField({
   isPassword,
   value,
   isSubmitting,
+  editable,
+  isEmailCheck,
   ...rest
 }: LoginFieldProps) {
   const [isFocused, setIsFocused] = useState(false);
@@ -50,6 +54,7 @@ export function LoginField({
         value={value}
         onFocus={handleFocus}
         onBlur={!value ? handleBlur : null}
+        editable={editable}
         {...rest}
       />
 
@@ -66,8 +71,8 @@ export function LoginField({
         <></>
       )}
 
-      {isSubmitting ? (
-        <IconContainer styles={styles.Icon}>
+      {isEmailCheck && isSubmitting ? (
+        <IconContainer style={styles.Loader}>
           <ActivityIndicator size="large" animating={true} color="#FF0024" />
         </IconContainer>
       ) : (
@@ -104,6 +109,11 @@ const styles = StyleSheet.create({
   Icon: {
     position: 'absolute',
     top: 22,
+    right: 16,
+  },
+  Loader: {
+    position: 'absolute',
+    top: 16,
     right: 16,
   },
   Transparent: {

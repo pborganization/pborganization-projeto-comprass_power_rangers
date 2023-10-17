@@ -8,20 +8,18 @@ import { Button } from '../../components/Button';
 import { LoginField } from '../../components/LoginField';
 import { Text } from '../../components/Text';
 import { LeftArrow } from '../../components/LeftArrow';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { StatusBar } from 'react-native';
+import { useAuth } from '../../contexts/AuthContext';
 
-const schema = yup.object({
-  name: yup
-    .string()
-    .matches(
-      /^[a-zA-Z0-9\s]+$/,
-      'Name can only contain letters, numbers, and spaces'
-    )
-    .required('Please complete all fields'),
+const emailSchema = yup.object({
   email: yup
     .string()
     .email('Your email is not valid')
     .required('Please complete all fields'),
+});
+
+const passwordSchema = yup.object({
   password: yup
     .string()
     .min(6, 'Your password must be longer than 6 digits.')
@@ -43,197 +41,248 @@ export function ForgotPasswordScreen() {
     'OpenSans-800': require('../../assets/fonts/OpenSans-ExtraBold.ttf'),
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  useCallback(() => {
+    StatusBar.setBarStyle('light-content');
+  }, []);
+
+  const [isEmailSubmitting, setIsEmailSubmitting] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [emailValue, setEmailValue] = useState('');
+  const [isPasswordSubmitting, setIsPasswordSubmitting] = useState(false);
+
+  const { user } = useAuth();
 
   const {
-    control,
-    handleSubmit,
-    formState: { errors },
+    control: emailControl,
+    handleSubmit: handleEmailSubmit,
+    formState: { errors: emailErrors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(emailSchema),
+  });
+
+  const {
+    control: passwordControl,
+    handleSubmit: handlePasswordSubmit,
+    formState: { errors: passwordErrors },
+  } = useForm({
+    resolver: yupResolver(passwordSchema),
   });
 
   if (!isFontsLoaded) {
     return null;
   }
 
-  async function handleEmailCheck(data: any) {
-    setIsSubmitting(true);
+  async function checkEmailValidity() {
+    setIsEmailSubmitting(true);
 
-    const { email } = data;
+    emailSchema
+      .validate({ email: emailValue })
+      .then(() => {
+        // Email is valid; you can make the API call here
+        const userData = {
+          email: emailValue,
+        };
 
-    const userData = {
-      email: email,
-    };
-
-    fetch('https://api.escuelajs.co/api/v1/users/is-available', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json(); // Parse the response as JSON
-      })
-      .then((data) => {
-        // Handle the response data here
-        console.log('Successfully registered:', data);
+        fetch('https://api.escuelajs.co/api/v1/users/is-available', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parse the response as JSON
+          })
+          .then((data) => {
+            // Handle the response data here
+            console.log('Email is valid:', data);
+            setIsEmailValid(true);
+          })
+          .catch((error) => {
+            // Handle errors here
+            console.error('Error:', error);
+          })
+          .finally(() => {
+            setIsEmailSubmitting(false);
+          });
       })
       .catch((error) => {
-        // Handle errors here
-        console.error('Error:', error);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
+        console.error('Invalid email:', error);
+        setIsEmailSubmitting(false);
       });
   }
 
-  function handlePasswordChange(data: any) {
-    setIsSubmitting(true);
+  async function handlePasswordChange(data: any) {
+    setIsPasswordSubmitting(true);
 
-    const { email, password } = data;
+    const { password } = data;
 
-    const userData = {
-      email: email,
-      password: password,
-    };
+    try {
+      if (!user) {
+        console.error('User is not authenticated');
+        setIsPasswordSubmitting(false);
+        return;
+      }
 
-    fetch('https://api.escuelajs.co/api/v1/users/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json(); // Parse the response as JSON
-      })
-      .then((data) => {
-        // Handle the response data here
-        console.log('Successfully registered:', data);
-      })
-      .catch((error) => {
-        // Handle errors here
-        console.error('Error:', error);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
+      // Obtém o ID do usuário do perfil
+      const profileResponse = await fetch('https://api.escuelajs.co/api/v1/auth/profile', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${user}`,
+        },
       });
+
+      if (!profileResponse.ok) {
+        throw new Error('Error fetching user profile');
+      }
+
+      const userProfile = await profileResponse.json();
+      const userId = userProfile.id;
+
+      // Atualiza a senha do usuário
+      const updateUserResponse = await fetch(`https://api.escuelajs.co/api/v1/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user}`,
+        },
+        body: JSON.stringify({
+          password: password,
+        }),
+      });
+
+      if (!updateUserResponse.ok) {
+        throw new Error('Error updating user');
+      }
+
+      const updatedUserData = await updateUserResponse.json();
+      console.log('Successfully updated user:', updatedUserData);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setIsPasswordSubmitting(false);
+    }
   }
+
   return (
-    <Container>
-      <ImageBackground
-        source={require('../../assets/img/CompassBackgroundLogo.png')}
-        style={{
-          width: Dimensions.get('window').width,
-          height: Dimensions.get('window').height,
-        }}
-        resizeMode="contain"
-      >
-        <LeftArrow />
+    <>
+      <StatusBar
+        backgroundColor="#111213"
+        translucent
+        barStyle={'light-content'}
+      />
+      <Container>
+        <ImageBackground
+          source={require('../../assets/img/CompassBackgroundLogo.png')}
+          style={{
+            width: Dimensions.get('window').width,
+            height: Dimensions.get('window').height,
+          }}
+          resizeMode="contain"
+        >
+          <LeftArrow />
 
-        <Text size={32} weight={800} color="#FFF" style={styles.Title}>
-          Forgot Password
-        </Text>
-        <Text size={16} color="#FFF" style={styles.Description}>
-          Enter your email and let us see if it exists for you to change your
-          password :)
-        </Text>
-        <Form>
-          <Controller
-            control={control}
-            name="email"
-            render={({
-              formState: { isSubmitted },
-              field: { onChange, value, ...rest },
-            }) => (
-              <LoginField
-                isInvalid={errors.email}
-                showIcon={isSubmitted}
-                onChangeText={onChange}
-                value={value}
-              >
-                Email
-              </LoginField>
+          <Text size={32} weight={800} color="#FFF" style={styles.Title}>
+            Forgot Password
+          </Text>
+          <Text size={16} color="#FFF" style={styles.Description}>
+            Enter your email and let us see if it exists for you to change your
+            password :)
+          </Text>
+          <Form>
+            <Controller
+              control={emailControl}
+              name="email"
+              render={({ field }) => (
+                <LoginField
+                  isInvalid={emailErrors.email}
+                  showIcon={isEmailValid || emailErrors.email}
+                  onChangeText={(text) => {
+                    setEmailValue(text);
+                    field.onChange(text);
+                  }}
+                  value={field.value}
+                  isEmailCheck={true}
+                  isSubmitting={isEmailSubmitting}
+                >
+                  Email
+                </LoginField>
+              )}
+            />
+
+            <Controller
+              control={passwordControl}
+              name="password"
+              render={({ field }) => (
+                <LoginField
+                  isInvalid={passwordErrors.password}
+                  showIcon={passwordErrors.password}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                  isPassword={true}
+                  editable={isEmailValid}
+                >
+                  New Password
+                </LoginField>
+              )}
+            />
+
+            <Controller
+              control={passwordControl}
+              name="confirmPassword"
+              render={({ field }) => (
+                <LoginField
+                  isInvalid={passwordErrors.confirmPassword}
+                  showIcon={passwordErrors.confirmPassword}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                  isPassword={true}
+                  isSubmitting={isPasswordSubmitting}
+                  editable={isEmailValid}
+                >
+                  Confirm New Password
+                </LoginField>
+              )}
+            />
+
+            <Button
+              onPress={handleEmailSubmit(checkEmailValidity)}
+              disabled={isEmailSubmitting}
+            >
+              SEARCH
+            </Button>
+
+            <Button
+              onPress={handlePasswordSubmit(handlePasswordChange)}
+              disabled={isPasswordSubmitting || !isEmailValid}
+            >
+              CONFIRM
+            </Button>
+
+            {emailErrors.email && (
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {emailErrors.email?.message}
+              </Text>
             )}
-          />
 
-          <Controller
-            control={control}
-            name="password"
-            render={({
-              formState: { isSubmitted },
-              field: { onChange, value, ...rest },
-            }) => (
-              <LoginField
-                isInvalid={errors.password}
-                showIcon={isSubmitted}
-                onChangeText={onChange}
-                value={value}
-                isPassword={true}
-              >
-                New Password
-              </LoginField>
+            {passwordErrors.password && (
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {passwordErrors.password?.message}
+              </Text>
             )}
-          />
 
-          <Controller
-            control={control}
-            name="confirmPassword"
-            render={({
-              formState: { isSubmitted },
-              field: { onChange, value, ...rest },
-            }) => (
-              <LoginField
-                isInvalid={errors.confirmPassword}
-                showIcon={isSubmitted}
-                onChangeText={onChange}
-                value={value}
-                isPassword={true}
-                isSubmitting={isSubmitting}
-              >
-                Confirm New Password
-              </LoginField>
+            {!passwordErrors.password && passwordErrors.confirmPassword && (
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {passwordErrors.confirmPassword?.message}
+              </Text>
             )}
-          />
-
-          {errors.email && (
-            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-              {errors.email?.message}
-            </Text>
-          )}
-
-          {!errors.email && errors.password && (
-            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-              {errors.password?.message}
-            </Text>
-          )}
-
-          {!errors.email &&
-            !errors.password &&
-            errors.confirmPassword && (
-            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-              {errors.confirmPassword?.message}
-            </Text>
-          )}
-
-          <Button onPress={handleSubmit(handleEmailCheck)} disabled={isSubmitting}>
-            SEARCH
-          </Button>
-
-          <Button onPress={handleSubmit(handlePasswordChange)} disabled={isSubmitting}>
-            CONFIRM
-          </Button>
-        </Form>
-      </ImageBackground>
-    </Container>
+          </Form>
+        </ImageBackground>
+      </Container>
+    </>
   );
 }
 

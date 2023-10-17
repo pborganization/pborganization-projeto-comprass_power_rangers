@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -14,6 +15,19 @@ import DeliverySelection from '../components/checkoutComponents/DeliverySelectio
 
 export const CheckoutScreen = () => {
   const [shippingAddress, setShippingAddress] = useState('');
+=======
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Modal, Image } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from '@react-navigation/native';
+import CreditCardModal from "../components/checkoutComponents/CreditCardModal";
+import DeliverySelection from "../components/checkoutComponents/DeliverySelection";
+import { useAddress } from "../../contexts/zustand";
+
+
+const CheckoutScreen = (props : any) => {
+  const [shippingAddress, setShippingAddress] = useState(useAddress.getState().address[0] || {});
+>>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [highlightedOption, setHighlightedOption] = useState(null);
@@ -23,8 +37,14 @@ export const CheckoutScreen = () => {
   const [showCardLogo, setShowCardLogo] = useState(false);
   const [showBoletoLogo, setShowBoletoLogo] = useState(false);
   const [cardNumber, setCardNumber] = useState(false);
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
+  const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(null);
+  
 
   useEffect(() => {}, []);
+
+  const navigation = useNavigation();
+
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -64,23 +84,25 @@ export const CheckoutScreen = () => {
     setIsModalVisible(false);
   };
 
+  const handleSubmitOrder = () => {
+    if (shippingAddress && selectedPaymentMethod && selectedDeliveryMethod) {
+      navigation.navigate('SuccessScreen', { paymentMethod: selectedPaymentMethod });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.section}>
         <Text style={styles.shippingTitle}>Shipping address</Text>
         <View style={styles.shippingContainer}>
-          <TouchableOpacity style={styles.changeButton}>
-            <Text style={styles.changeButtonText}>Change</Text>
-          </TouchableOpacity>
-          <TextInput
-            style={styles.input}
-            value={shippingAddress}
-            onChangeText={(text) => setShippingAddress(text)}
-            placeholder="Click to add an address"
-          />
-        </View>
+       <TouchableOpacity style={styles.changeButton} onPress={() => navigation.navigate('AddressForm')}>
+        <Text style={styles.changeButtonText}>Change</Text>
+         </TouchableOpacity>
+       <Text style={styles.fullName}>{shippingAddress.fullName}</Text>
+      <Text style={styles.address}>{shippingAddress.address}</Text>
+      <Text style={styles.address2}>{shippingAddress.city}, {shippingAddress.zipCode}, {shippingAddress.state}</Text>
       </View>
-
+      </View>
       <View style={styles.section}>
         <View style={styles.paymentSection}>
           <Text style={styles.paymentTitle}>Payment method</Text>
@@ -193,8 +215,22 @@ export const CheckoutScreen = () => {
 
       <View style={styles.section}>
         <Text style={styles.deliveryTitle}>Delivery method</Text>
+<<<<<<< HEAD
         <DeliverySelection />
       </View>
+=======
+        <DeliverySelection setSelectedDeliveryMethod={setSelectedDeliveryMethod} />
+      </View>
+      <TouchableOpacity
+      style={[
+        styles.sbutton,
+        (shippingAddress && selectedPaymentMethod && selectedDeliveryMethod) ? { backgroundColor: '#FF0024' } : {}
+      ]}
+      onPress={handleSubmitOrder} >
+      <Text style={styles.sbuttonText}>SUBMIT ORDER</Text>
+    </TouchableOpacity>
+    </View>
+>>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
 
       <View style={styles.containerButtom}>
         <TouchableOpacity style={styles.sbutton}>
@@ -205,6 +241,29 @@ export const CheckoutScreen = () => {
   );
 };
 const styles = StyleSheet.create({
+<<<<<<< HEAD
+=======
+
+  fullName:{
+    marginTop: 20,
+    marginLeft: 24,
+    color: '#000',
+    fontSize: 14,
+    fontWeight: '600'
+  },
+  address:{
+    fontSize: 14,
+    fontWeight: '400',
+    marginLeft: 24,
+    marginTop: 2
+  },
+  address2:{
+    fontSize: 14,
+    fontWeight: '400',
+    marginLeft: 24,
+  },
+
+>>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -242,8 +301,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   container: {
+<<<<<<< HEAD
     flex: 1,
     backgroundColor: '#fff',
+=======
+    marginTop: 100,
+    marginLeft: 8,
+    marginRight: 8,
+    flex: 1,
+    backgroundColor: "#rgba",
+>>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
   },
   section: {
     padding: 10,
@@ -358,3 +425,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 18,
   },
 });
+<<<<<<< HEAD
+=======
+
+export default CheckoutScreen;
+>>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7

@@ -6,16 +6,10 @@ import { Colors } from '../../assets/styles/Colors';
 import { Button } from '../components/Buttons/Button';
 import { TotalAmount } from '../components/Cart/TotalAmount';
 import { useProductStore } from '../hooks/productStore';
-<<<<<<< HEAD
-import { ProductType } from '../contexts/productType';
-import { fetchProductById } from '../services/fakeStoreAPI';
-import { useAmountStore } from '../contexts/useAmountStore';
-=======
 import { ProductType } from '../interfaces/productType';
 import { fetchProductById } from '../services/fakeStoreAPI';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 
 export const CartScreen = () => {
   const { products } = useProductStore();

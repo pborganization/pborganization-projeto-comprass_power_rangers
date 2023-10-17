@@ -1,6 +1,10 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+<<<<<<< HEAD
+import { ProductType } from '../../contexts/productType';
+=======
 import { ProductType } from '../../interfaces/productType';
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 import { useNavigation } from '@react-navigation/native';
 
 interface ProductProps {
@@ -15,12 +19,20 @@ export const Products: React.FC<ProductProps> = React.memo(
   ({ product }: ProductProps) => {
     const navigation = useNavigation();
 
+<<<<<<< HEAD
+  const handleProductPress = () => {
+    const params: ProductDetailsParams = { productId: product.id };
+    // @ts-ignore
+    navigation.navigate('ProductDetailsScreen', params);
+  };
+=======
     const handleProductPress = () => {
       const params: ProductDetailsParams = { productId: product.id };
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       navigation.navigate('ProductDetailsScreen', params);
     };
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 
     const description =
       product.description.length > 50

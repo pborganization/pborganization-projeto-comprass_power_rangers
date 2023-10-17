@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+<<<<<<< HEAD
+import { ProductType } from '../../contexts/productType';
+=======
 import { ProductType } from '../../interfaces/productType';
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 import { useNavigation } from '@react-navigation/native';
 
 interface ProductProps {

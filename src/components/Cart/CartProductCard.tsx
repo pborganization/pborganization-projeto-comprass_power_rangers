@@ -1,10 +1,20 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
+<<<<<<< HEAD
+import React, { useState } from 'react';
+import { Delete } from '../../../assets/images/svg/DeleteProduct';
+import { Colors } from '../../../assets/styles/Colors';
+import { AntDesign } from '@expo/vector-icons';
+import { ProductType } from '../../contexts/productType';
+import { useProductStore } from '../homeComponents/Products';
+import { QuantityIndicator } from '../homeComponents/quantityIndicator';
+=======
 import React, { useMemo } from 'react';
 import { Delete } from '../../../assets/images/svg/DeleteProduct';
 import { Colors } from '../../../assets/styles/Colors';
 import { ProductType } from '../../interfaces/productType';
 import { useProductStore } from '../../hooks/productStore';
 import { Indicator } from './Indicator';
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 
 interface ProductProps {
   product: ProductType;
@@ -56,7 +66,11 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
+<<<<<<< HEAD
+    width: 343,
+=======
     width: '92%',
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
     height: 104,
     backgroundColor: Colors.white,
     marginHorizontal: 16,
@@ -70,7 +84,10 @@ const styles = StyleSheet.create({
   infoContainer: {
     flex: 2,
     justifyContent: 'space-between',
+<<<<<<< HEAD
+=======
     marginLeft: 18,
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
   },
   deleteIcon: {
     position: 'absolute',
@@ -92,7 +109,11 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: 'bold',
+<<<<<<< HEAD
+    marginVertical: 12,
+=======
     marginLeft: 0,
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
   },
   countText: {
     fontSize: 14,

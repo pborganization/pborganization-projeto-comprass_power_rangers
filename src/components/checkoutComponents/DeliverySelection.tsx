@@ -1,7 +1,13 @@
+<<<<<<< HEAD
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Feather } from '@expo/vector-icons'; 
+=======
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 
 const DeliverySection = (props : any) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -40,10 +46,14 @@ const DeliverySection = (props : any) => {
             ]}
           >
             <View style={styles.optionContent}>
+<<<<<<< HEAD
+              <Image source={require('../../../assets/images/fedex-logo.png')} style={styles.logo} />
+=======
               <Image
                 source={require('../../../assets/images/fedex-logo.png')}
                 style={styles.logo}
               />
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
               <Text style={styles.optionDate}>2-3 days</Text>
             </View>
             {selectedOption === 'FedEx' && (
@@ -64,10 +74,14 @@ const DeliverySection = (props : any) => {
             ]}
           >
             <View style={styles.optionContent}>
+<<<<<<< HEAD
+              <Image source={require('../../../assets/images/usps.png')} style={styles.logo} />
+=======
               <Image
                 source={require('../../../assets/images/usps.png')}
                 style={styles.logo}
               />
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
               <Text style={styles.optionDate}>2-3 days</Text>
             </View>
             {selectedOption === 'USPS' && (
@@ -88,10 +102,14 @@ const DeliverySection = (props : any) => {
             ]}
           >
             <View style={styles.optionContent}>
+<<<<<<< HEAD
+              <Image source={require('../../../assets/images/dhl.png')} style={styles.logo}/>
+=======
               <Image
                 source={require('../../../assets/images/dhl.png')}
                 style={styles.logo}
               />
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
               <Text style={styles.optionDate}>2-3 days</Text>
             </View>
             {selectedOption === 'DHL' && (

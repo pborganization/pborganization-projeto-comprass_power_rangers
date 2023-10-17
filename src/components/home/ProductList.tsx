@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { fetchProductsForCategory } from '../../services/fakeStoreAPI';
+<<<<<<< HEAD
+import { ProductType } from '../../contexts/productType';
+=======
 import { ProductType } from '../../interfaces/productType';
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 import { LoadingProducts } from './loadingProduct';
 import { ProductContainer } from './productContainer';
 
@@ -76,7 +80,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+<<<<<<< HEAD
+=======
     marginHorizontal: 30,
+>>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
   },
   productItem: {
     marginRight: 16,

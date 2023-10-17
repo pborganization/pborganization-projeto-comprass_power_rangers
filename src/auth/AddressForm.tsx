@@ -37,6 +37,12 @@ export const AddressForm = () => {
   const [zipCode, setZipCode] = useState('');
   const [isValidZipCode, setIsValidZipCode] = useState(false);
   const [allFieldsFilled, setFieldsFilled] = useState(false);
+  const [validInput, setValidInput] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const setAddress = useAddress((state) => state.setAddress);
+
+  const onSubmit = async () => {
+    if (isValidZipCode && allFieldsFilled) {
   const setAddress = useAddress((state) => state.setAddress);
   const navigation = useNavigation();
 
@@ -65,7 +71,9 @@ export const AddressForm = () => {
     }
   };
   useEffect(() => {
-    if (zipCode.length <= 8) {
+    setValidInput(true);
+    setLoading(true);
+    if (zipCode.length <= 8 && zipCode.length > 0) {
       const apiUrl = `https://viacep.com.br/ws/${zipCode}/json/`;
 
       fetch(apiUrl, {
@@ -95,9 +103,13 @@ export const AddressForm = () => {
         .catch((error) => {
           console.error('Erro ao chamar a API:', error);
           setIsValidZipCode(false);
+        })
+        .finally(() => {
+          setValidInput(true);
         });
     } else {
-      console.log('Codigo invalidooo');
+      console.log("Codigo invalidooo");
+      setValidInput(true);
     }
   }, [zipCode]);
 
@@ -140,8 +152,15 @@ export const AddressForm = () => {
           name="address"
           control={control}
           rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <Input placeholder="Address" value={value} onChangeText={onChange} />
+          render={({
+            field: { onChange, value },
+          }) => (
+            <Input
+              placeholder="Address"
+              value={value}
+              onChangeText={onChange}
+              editable={validInput && isValidZipCode}
+            />
           )}
         />
         {errors.address && (
@@ -152,8 +171,15 @@ export const AddressForm = () => {
           name="city"
           control={control}
           rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <Input placeholder="City" value={value} onChangeText={onChange} />
+          render={({
+            field: { onChange, value },
+          }) => (
+            <Input
+              placeholder="City"
+              value={value}
+              onChangeText={onChange}
+              editable={validInput && isValidZipCode}
+            />
           )}
         />
         {errors.city && (
@@ -164,8 +190,15 @@ export const AddressForm = () => {
           name="state"
           control={control}
           rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <Input placeholder="State/Province/Region" value={value} onChangeText={onChange} />
+          render={({
+            field: { onChange, value },
+          }) => (
+            <Input
+              placeholder="State/Province/Region"
+              value={value}
+              onChangeText={onChange}
+              editable={validInput && isValidZipCode}
+            />
           )}
         />
         {errors.state && (
@@ -176,18 +209,26 @@ export const AddressForm = () => {
           name="fullName"
           control={control}
           rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <Input placeholder="Full name" value={value} onChangeText={onChange} />
+          render={({
+            field: { onChange, value },
+          }) => (
+            <Input
+              placeholder="Full name"
+              value={value}
+              onChangeText={onChange}
+              editable={validInput && isValidZipCode}
+            />
           )}
         />
         {errors.fullName && (
           <Text style={styles.errorMessage}>{errors.fullName.message}</Text>
         )}
       </View>
-
-      <Button disabled={!isValidZipCode} onPress={handleSubmit(onSubmit)}>
-        SAVE ADDRESS
-      </Button>
+      <View style={styles.buttonContainer}>
+        <Button disabled={!isValidZipCode} onPress={handleSubmit(onSubmit)}>
+          SAVE ADDRESS
+        </Button>
+      </View>
     </View>
   );
 };
@@ -206,5 +247,9 @@ const styles = StyleSheet.create({
   },
   validInput: {
     borderColor: Colors.green_900,
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: 25,
   },
 });

@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import { ProductType } from '../../interfaces/productType';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,8 +24,6 @@ export const Products: React.FC<ProductProps> = React.memo(
 
     const handleProductPress = () => {
       const params: ProductDetailsParams = { productId: product.id };
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       navigation.navigate('ProductDetailsScreen', params);
     };
 
@@ -48,30 +53,33 @@ export const Products: React.FC<ProductProps> = React.memo(
 
 Products.displayName = 'Products';
 
+const screenWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 8,
-    width: 150,
+    borderRadius: screenWidth * 0.01,
+    width: screenWidth * 0.4,
   },
   image: {
-    width: 148,
-    height: 184,
+    width: '100%',
+    aspectRatio: 4 / 5,
   },
   title: {
-    fontSize: 14,
+    fontSize: screenWidth * 0.03,
     fontWeight: 'bold',
     color: 'gray',
   },
   priceContainer: {
     flex: 1,
+    marginTop: screenWidth * 0.02,
   },
   price: {
-    fontSize: 16,
+    fontSize: screenWidth * 0.035,
     fontWeight: 'bold',
     color: 'red',
   },
   description: {
-    fontSize: 10,
+    fontSize: screenWidth * 0.02,
   },
   info: {
     flex: 0,

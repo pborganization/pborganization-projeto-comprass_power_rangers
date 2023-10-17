@@ -16,6 +16,7 @@ import { ActualUser } from '../../components/home/ActualUser';
 import { useAuth } from '../../contexts/AuthContext';
 
 const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
 
 export const HomeScreen = () => {
   const { user } = useAuth();
@@ -80,17 +81,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logotext: {
-    fontSize: 56,
+    fontSize: screenHeight * 0.05,
     color: 'white',
   },
   logopic: {
-    width: 45,
-    height: 45,
+    width: screenWidth * 0.08,
+    height: screenWidth * 0.08,
   },
   slogan: {
     color: 'white',
-    marginLeft: 16,
-    marginBottom: 16,
+    marginLeft: screenWidth * 0.03,
+    marginBottom: screenHeight * 0.02,
     position: 'absolute',
     bottom: 0,
     flexDirection: 'row',
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
   },
   slogantext: {
     color: 'white',
-    fontSize: 22,
-    marginRight: 16,
+    fontSize: screenHeight * 0.03,
+    marginRight: screenWidth * 0.03,
   },
 });

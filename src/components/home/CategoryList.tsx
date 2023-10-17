@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
 import { fetchCategories } from '../../services/fakeStoreAPI';
 import { ProductList } from './ProductList';
 
@@ -74,9 +74,11 @@ export const CategoryList = () => {
   );
 };
 
+const screenWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   categoryTitle: {
-    fontSize: 32,
+    fontSize: screenWidth * 0.075,
     fontWeight: 'bold',
     color: 'black',
     textTransform: 'capitalize',
@@ -85,8 +87,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginLeft: 16,
-    marginRight: 16,
-    marginTop: 16,
+    marginLeft: screenWidth * 0.04,
+    marginRight: screenWidth * 0.04,
+    marginTop: screenWidth * 0.04,
   },
 });

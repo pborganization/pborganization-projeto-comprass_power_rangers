@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DeliverySection = () => {
+const DeliverySection = (props : any) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [delPrice, setDelPrice] = useState(0);
   const [storedPrice, setStoredPrice] = useState(0);
@@ -21,10 +21,13 @@ const DeliverySection = () => {
     }
     getPriceFromAsyncStorage()
   }, [])
+
   const handleOptionPress = (option : any) => {
     setSelectedOption(option);
     setDelPrice(15);
+    props.setSelectedDeliveryMethod(option);
   };
+
 
   return (
     <View style={styles.delivery}>

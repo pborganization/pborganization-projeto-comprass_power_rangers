@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const SuccessQRcodeScreen = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Image
@@ -13,7 +15,7 @@ const SuccessQRcodeScreen = () => {
         Pay your pix using the QR code above and then follow the steps sent by
         email.
       </Text>
-      <TouchableOpacity style={styles.continueButton}>
+      <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate('HomeScreen')}>
           <Text style={styles.continue}>CONTINUE SHOPPING</Text>
         </TouchableOpacity>
     </View>

@@ -8,6 +8,11 @@ import { LoginScreen } from '../screens/Login';
 import { SignUpScreen } from '../screens/SingUp';
 import { ForgotPasswordScreen } from '../screens/ForgotPassword';
 import { AdressScreen } from '../screens/AdressScreen';
+import SuccessScreen from '../screens/successScreen';
+import SuccessScreen2 from '../screens/successScreen2';
+import SuccessDownloadBill from '../screens/successDownloadBill';
+import SuccessQRcodeScreen from '../screens/successQRcodeScreen';
+import { HomeScreen } from '../screens/Home/homeScreen';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +50,7 @@ export const MainNavigator = () => {
         options={{
           title: 'Checkout',
           headerShown: true,
+          headerTransparent: true,
           headerTitleAlign: 'center',
         }}
       />
@@ -68,6 +74,41 @@ export const MainNavigator = () => {
         component={AdressScreen}
         options={{ headerShown: false }}
       />
+
+      <Stack.Screen
+        name="SuccessScreen"
+        component={SuccessScreen}
+        options={{ headerShown: false }}
+      />
+
+       <Stack.Screen
+        name="SuccessScreen2"
+        component={SuccessScreen2}
+        options={{ headerShown: false }}
+      />
+
+       <Stack.Screen
+        name="SuccessDownloadBill"
+        component={SuccessDownloadBill}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="SuccessQRcodeScreen"
+        component={SuccessQRcodeScreen}
+        options={{ headerShown: false }}
+      />
+
+       <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+
+
+
+
     </Stack.Navigator>
+    
   );
 };

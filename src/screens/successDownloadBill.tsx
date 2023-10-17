@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Alert, Linking } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, Linking } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const SuccessDownloadBill = () => {
+  const navigation = useNavigation();
   const handleDownloadBoleto = () => {
 
     const downloadLink = 'http://exemplo.com/boleto.pdf';
@@ -17,7 +19,7 @@ const SuccessDownloadBill = () => {
       <TouchableOpacity style={styles.baixarBoletoButton} onPress={handleDownloadBoleto}>
         <Text style={styles.baixarBoleto}>BAIXAR BOLETO</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.continueButton}>
+      <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate('HomeScreen')}>
         <Text style={styles.continue}>CONTINUE SHOPPING</Text>
       </TouchableOpacity>
     </View>

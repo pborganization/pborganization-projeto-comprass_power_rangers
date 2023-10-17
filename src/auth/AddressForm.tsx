@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
-import { View, StyleSheet, Text } from 'react-native';
-=======
 import { View, StyleSheet, TextInput, Text } from 'react-native';
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from '../components/Buttons/Button';
 import { Input } from './Input';
@@ -11,10 +7,7 @@ import { Colors } from '../../assets/styles/Colors';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAddress } from '../../contexts/zustand';
-<<<<<<< HEAD
-=======
 import { useNavigation } from '@react-navigation/native';
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
 
 export const AddressForm = () => {
   const schemaValidate = yup.object({
@@ -44,12 +37,8 @@ export const AddressForm = () => {
   const [zipCode, setZipCode] = useState('');
   const [isValidZipCode, setIsValidZipCode] = useState(false);
   const [allFieldsFilled, setFieldsFilled] = useState(false);
-<<<<<<< HEAD
-  const setAddress = useAddress(state => state.setAddress);
-=======
   const setAddress = useAddress((state) => state.setAddress);
   const navigation = useNavigation();
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
 
   const onSubmit = async () => {
     if (isValidZipCode && allFieldsFilled) {
@@ -63,26 +52,16 @@ export const AddressForm = () => {
       };
 
       setAddress(formData);
-<<<<<<< HEAD
-=======
-
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
       console.log('Novo estado do endereço:', useAddress.getState().address);
     } else {
       console.log('preencha todos os campos');
     }
 
     if (isValidZipCode) {
-<<<<<<< HEAD
-      console.log('deu certo');
-    } else {
-      console.log('Dados inválidos.');
-=======
       navigation.navigate('CheckoutScreen');
     } else {
       console.log('Dados inválidos.');
-      
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
+
     }
   };
   useEffect(() => {
@@ -103,13 +82,6 @@ export const AddressForm = () => {
             console.log('Cep invalido');
             setIsValidZipCode(false);
           } else {
-<<<<<<< HEAD
-            console.log('Erro desconhecido', zipCode, apiUrl, response.status, response.statusText);
-            setIsValidZipCode(false);
-          }
-        })
-        .catch(error => {
-=======
             console.log(
               'Erro desconhecido',
               zipCode,
@@ -121,7 +93,6 @@ export const AddressForm = () => {
           }
         })
         .catch((error) => {
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
           console.error('Erro ao chamar a API:', error);
           setIsValidZipCode(false);
         });
@@ -161,13 +132,9 @@ export const AddressForm = () => {
             />
           )}
         />
-<<<<<<< HEAD
-        {errors.zipCode && <Text style={styles.errorMessage}>{errors.zipCode.message}</Text>}
-=======
         {errors.zipCode && (
           <Text style={styles.errorMessage}>{errors.zipCode.message}</Text>
         )}
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
 
         <Controller
           name="address"
@@ -177,13 +144,9 @@ export const AddressForm = () => {
             <Input placeholder="Address" value={value} onChangeText={onChange} />
           )}
         />
-<<<<<<< HEAD
-        {errors.address && <Text style={styles.errorMessage}>{errors.address.message}</Text>}
-=======
         {errors.address && (
           <Text style={styles.errorMessage}>{errors.address.message}</Text>
         )}
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
 
         <Controller
           name="city"
@@ -193,13 +156,9 @@ export const AddressForm = () => {
             <Input placeholder="City" value={value} onChangeText={onChange} />
           )}
         />
-<<<<<<< HEAD
-        {errors.city && <Text style={styles.errorMessage}>{errors.city.message}</Text>}
-=======
         {errors.city && (
           <Text style={styles.errorMessage}>{errors.city.message}</Text>
         )}
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
 
         <Controller
           name="state"
@@ -209,13 +168,9 @@ export const AddressForm = () => {
             <Input placeholder="State/Province/Region" value={value} onChangeText={onChange} />
           )}
         />
-<<<<<<< HEAD
-        {errors.state && <Text style={styles.errorMessage}>{errors.state.message}</Text>}
-=======
         {errors.state && (
           <Text style={styles.errorMessage}>{errors.state.message}</Text>
         )}
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
 
         <Controller
           name="fullName"
@@ -225,13 +180,6 @@ export const AddressForm = () => {
             <Input placeholder="Full name" value={value} onChangeText={onChange} />
           )}
         />
-<<<<<<< HEAD
-        {errors.fullName && <Text style={styles.errorMessage}>{errors.fullName.message}</Text>}
-      </View>
-
-      <Button disabled={!isValidZipCode} onPress={handleSubmit(onSubmit)}>
-				SAVE ADDRESS
-=======
         {errors.fullName && (
           <Text style={styles.errorMessage}>{errors.fullName.message}</Text>
         )}
@@ -239,7 +187,6 @@ export const AddressForm = () => {
 
       <Button disabled={!isValidZipCode} onPress={handleSubmit(onSubmit)}>
         SAVE ADDRESS
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7
       </Button>
     </View>
   );
@@ -260,8 +207,4 @@ const styles = StyleSheet.create({
   validInput: {
     borderColor: Colors.green_900,
   },
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> a4cc0b902a5eff625fef0bbe99dd5e47e3f20bb7

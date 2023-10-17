@@ -80,7 +80,7 @@ export const CartScreen = () => {
       />
 
       <View style={styles.details}>
-        <TotalAmount>{totalAmount}</TotalAmount>
+        <TotalAmount>{totalAmount}.00</TotalAmount>
         <Button onPress={handleAmount}>BUY</Button>
       </View>
     </View>

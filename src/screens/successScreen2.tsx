@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const SuccessScreen2 = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Image
@@ -12,7 +14,7 @@ const SuccessScreen2 = () => {
       <Text style={styles.text}>
         Your order will be delivered soon. Thank you for choosing our app!
       </Text>
-      <TouchableOpacity style={styles.continueButton}>
+      <TouchableOpacity style={styles.continueButton}  onPress={() => navigation.navigate('HomeScreen')}>
         <Text style={styles.continue}>CONTNUE SHOPPING</Text>
       </TouchableOpacity>
     </View>

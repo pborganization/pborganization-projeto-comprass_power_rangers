@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   container: {
-    marginTop: 100,
+    marginTop: 30,
     marginLeft: 8,
     marginRight: 8,
     flex: 1,

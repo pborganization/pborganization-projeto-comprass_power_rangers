@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Modal, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 interface LogOutWarningProps {
   visible: boolean;
@@ -15,9 +16,11 @@ export const LogOutWarning: React.FC<LogOutWarningProps> = ({
 }) => {
   const { signOut } = useAuth();
 
+  const navigation = useNavigation();
+
   const handleYesPress = () => {
     signOut();
-    onCloseModal();
+    navigation.navigate('Home');
   };
 
   const handleNoPress = () => {

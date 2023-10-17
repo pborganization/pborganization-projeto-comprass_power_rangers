@@ -1,4 +1,4 @@
-import { ImageBackground, Dimensions, StyleSheet } from 'react-native';
+import { ImageBackground, Dimensions, StyleSheet, StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -94,135 +94,143 @@ export function SignUpScreen() {
         setIsSubmitting(false);
       });
   }
-  return (
-    <Container>
-      <ImageBackground
-        source={require('../../assets/img/CompassBackgroundLogo.png')}
-        style={{
-          width: Dimensions.get('window').width,
-          height: Dimensions.get('window').height,
-        }}
-        resizeMode="contain"
-      >
-        <LeftArrow />
 
-        <Text size={32} weight={800} color="#FFF" style={styles.Title}>
+  return (
+    <>
+      <StatusBar
+        backgroundColor="#111213"
+        translucent
+        barStyle={'light-content'}
+      />
+      <Container>
+        <ImageBackground
+          source={require('../../assets/img/CompassBackgroundLogo.png')}
+          style={{
+            width: Dimensions.get('window').width,
+            height: Dimensions.get('window').height,
+          }}
+          resizeMode="contain"
+        >
+          <LeftArrow />
+
+          <Text size={32} weight={800} color="#FFF" style={styles.Title}>
           Sign Up
-        </Text>
-        <Text size={16} color="#FFF" style={styles.Description}>
+          </Text>
+          <Text size={16} color="#FFF" style={styles.Description}>
           Choose a really cool name that only contains spaces as special
           characters. Oh, and your password must have more than 4 digits! :)
-        </Text>
-        <Form>
-          <Controller
-            control={control}
-            name="name"
-            render={({
-              formState: { isSubmitted },
-              field: { onChange, value, ...rest },
-            }) => (
-              <LoginField
-                isInvalid={errors.name}
-                showIcon={isSubmitted}
-                onChangeText={onChange}
-                value={value}
-              >
+          </Text>
+          <Form>
+            <Controller
+              control={control}
+              name="name"
+              render={({
+                formState: { isSubmitted },
+                field: { onChange, value, ...rest },
+              }) => (
+                <LoginField
+                  isInvalid={errors.name}
+                  showIcon={isSubmitted}
+                  onChangeText={onChange}
+                  value={value}
+                >
                 Name
-              </LoginField>
-            )}
-          />
+                </LoginField>
+              )}
+            />
 
-          <Controller
-            control={control}
-            name="email"
-            render={({
-              formState: { isSubmitted },
-              field: { onChange, value, ...rest },
-            }) => (
-              <LoginField
-                isInvalid={errors.email}
-                showIcon={isSubmitted}
-                onChangeText={onChange}
-                value={value}
-              >
+            <Controller
+              control={control}
+              name="email"
+              render={({
+                formState: { isSubmitted },
+                field: { onChange, value, ...rest },
+              }) => (
+                <LoginField
+                  isInvalid={errors.email}
+                  showIcon={isSubmitted}
+                  onChangeText={onChange}
+                  value={value}
+                >
                 Email
-              </LoginField>
-            )}
-          />
+                </LoginField>
+              )}
+            />
 
-          <Controller
-            control={control}
-            name="password"
-            render={({
-              formState: { isSubmitted },
-              field: { onChange, value, ...rest },
-            }) => (
-              <LoginField
-                isInvalid={errors.password}
-                showIcon={isSubmitted}
-                onChangeText={onChange}
-                value={value}
-                isPassword={true}
-              >
+            <Controller
+              control={control}
+              name="password"
+              render={({
+                formState: { isSubmitted },
+                field: { onChange, value, ...rest },
+              }) => (
+                <LoginField
+                  isInvalid={errors.password}
+                  showIcon={isSubmitted}
+                  onChangeText={onChange}
+                  value={value}
+                  isPassword={true}
+                >
                 Password
-              </LoginField>
-            )}
-          />
+                </LoginField>
+              )}
+            />
 
-          <Controller
-            control={control}
-            name="confirmPassword"
-            render={({
-              formState: { isSubmitted },
-              field: { onChange, value, ...rest },
-            }) => (
-              <LoginField
-                isInvalid={errors.confirmPassword}
-                showIcon={isSubmitted}
-                onChangeText={onChange}
-                value={value}
-                isPassword={true}
-              >
+            <Controller
+              control={control}
+              name="confirmPassword"
+              render={({
+                formState: { isSubmitted },
+                field: { onChange, value, ...rest },
+              }) => (
+                <LoginField
+                  isInvalid={errors.confirmPassword}
+                  showIcon={isSubmitted}
+                  onChangeText={onChange}
+                  value={value}
+                  isPassword={true}
+                >
                 Confirm Password
-              </LoginField>
+                </LoginField>
+              )}
+            />
+
+            {/* Que deus me perdoe por essa atrocidade que codarei nas linhas baixo, amém! */}
+
+            {errors.name && (
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {errors.name?.message}
+              </Text>
             )}
-          />
 
-          {/* Que deus me perdoe por essa atrocidade que codarei nas linhas baixo, amém! */}
+            {!errors.name && errors.email && (
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {errors.email?.message}
+              </Text>
+            )}
 
-          {errors.name && (
-            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-              {errors.name?.message}
-            </Text>
-          )}
+            {!errors.name && !errors.email && errors.password && (
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {errors.password?.message}
+              </Text>
+            )}
 
-          {!errors.name && errors.email && (
-            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-              {errors.email?.message}
-            </Text>
-          )}
-
-          {!errors.name && !errors.email && errors.password && (
-            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-              {errors.password?.message}
-            </Text>
-          )}
-
-          {!errors.name &&
+            {!errors.name &&
             !errors.email &&
             !errors.password &&
             errors.confirmPassword && (
-            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-              {errors.confirmPassword?.message}
-            </Text>
-          )}
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {errors.confirmPassword?.message}
+              </Text>
+            )}
 
-          <Button onPress={handleSubmit(handleSignUp)} disabled={isSubmitting}>
+            <Button onPress={handleSubmit(handleSignUp)} disabled={isSubmitting}>
             SIGN UP
-          </Button>
-        </Form>
-      </ImageBackground>
-    </Container>
+            </Button>
+          </Form>
+        </ImageBackground>
+      </Container>
+    </>
   );
 }
 

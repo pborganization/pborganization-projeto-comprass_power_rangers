@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { ProductDetailsScreen } from '../screens/productDetailsScreen';
-import { CheckoutScreen } from '../screens/checkoutScreen';
+import CheckoutScreen from '../screens/checkoutScreen';
 import { TabNavigator } from './tabBar';
 
 const Stack = createStackNavigator();

@@ -68,6 +68,7 @@ export const CartScreen = () => {
           ? navigation.navigate('AdressScreen')
           : navigation.navigate('CheckoutNotLoggedin');
       }
+
     } catch (error) {
       console.error(error);
     }

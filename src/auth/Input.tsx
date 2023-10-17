@@ -19,7 +19,7 @@ export const Input = forwardRef((props: TextInputProps, ref)  => {
     setIsFocused(false);
   };
 
- 
+
   return (
     <View style={[styles.container, isFocused ? styles.focusedInput : null, !props.editable ? styles.inputNotEditable : null]}>
       <TextInput style={[styles.input, isFocused ? styles.textInputFocused : null, inputValue ? styles.textInputFilled : null]}

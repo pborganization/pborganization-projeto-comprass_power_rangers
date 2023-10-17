@@ -11,10 +11,10 @@ import { useNavigation } from '@react-navigation/native';
 
 export const AddressForm = () => {
   const schemaValidate = yup.object({
-    zipCode: yup.string().required('Postal Code is required'),
+    zipCode: yup.string().required("Postal Code is required"),
     address: yup.string().required('Adress is required'),
     city: yup.string().required('City is required'),
-    state: yup.string().required('State, Province or region is required'),
+    state: yup.string().required('State, province or region is required'),
     fullName: yup.string().required('Full name is required'),
   });
   const {
@@ -39,6 +39,7 @@ export const AddressForm = () => {
   const [allFieldsFilled, setFieldsFilled] = useState(false);
   const setAddress = useAddress((state) => state.setAddress);
   const navigation = useNavigation();
+  const [validInput, setValidInput] = useState(false)
 
   const onSubmit = async () => {
     if (isValidZipCode && allFieldsFilled) {
@@ -65,7 +66,6 @@ export const AddressForm = () => {
   };
   useEffect(() => {
     setValidInput(true);
-    setLoading(true);
     if (zipCode.length <= 8 && zipCode.length > 0) {
       const apiUrl = `https://viacep.com.br/ws/${zipCode}/json/`;
 
@@ -102,6 +102,7 @@ export const AddressForm = () => {
         });
     } else {
       console.log('Codigo invalidooo');
+      setIsValidZipCode(false);
       setValidInput(true);
     }
   }, [zipCode]);
@@ -133,6 +134,7 @@ export const AddressForm = () => {
                 onChange(text);
                 setZipCode(text);
               }}
+              editable={true}
               style={[value && !errors.zipCode ? styles.validInput : null]}
             />
           )}
@@ -150,6 +152,7 @@ export const AddressForm = () => {
               placeholder="Address"
               value={value}
               onChangeText={onChange}
+              editable={validInput && isValidZipCode}
             />
           )}
         />
@@ -183,6 +186,7 @@ export const AddressForm = () => {
               placeholder="State/Province/Region"
               value={value}
               onChangeText={onChange}
+              editable={validInput && isValidZipCode}
             />
           )}
         />
@@ -199,6 +203,7 @@ export const AddressForm = () => {
               placeholder="Full name"
               value={value}
               onChangeText={onChange}
+              editable={validInput && isValidZipCode}
             />
           )}
         />
@@ -206,10 +211,11 @@ export const AddressForm = () => {
           <Text style={styles.errorMessage}>{errors.fullName.message}</Text>
         )}
       </View>
-
+      <View style={styles.buttonContainer}>
       <Button disabled={!isValidZipCode} onPress={handleSubmit(onSubmit)}>
         SAVE ADDRESS
       </Button>
+      </View>
     </View>
   );
 };
@@ -229,4 +235,8 @@ const styles = StyleSheet.create({
   validInput: {
     borderColor: Colors.green_900,
   },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 25
+  }
 });

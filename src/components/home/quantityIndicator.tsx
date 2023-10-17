@@ -17,8 +17,6 @@ export const QuantityIndicator: React.FC<QuantityIndicatorProps> = React.memo(
       products[productId]?.quantity || 0,
     );
 
-    console.log(products);
-
     const increaseQuantityHandler = useCallback(() => {
       if (localQuantity === 0) {
         increaseQuantity(productId);

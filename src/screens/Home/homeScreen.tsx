@@ -13,7 +13,9 @@ import { Entypo } from '@expo/vector-icons';
 import { CategoryList } from '../../components/home/CategoryList';
 import { SearchButton } from '../../components/home/SearchButtom/searchButtom';
 import { ActualUser } from '../../components/home/ActualUser';
+import { isAuthenticated } from '../../utils/isAuthenticated';
 
+const isLogged = isAuthenticated();
 const screenHeight = Dimensions.get('window').height;
 
 export const HomeScreen = () => {
@@ -27,7 +29,7 @@ export const HomeScreen = () => {
               source={require('../../../assets/images/home/compass-banner.jpg')}
               style={styles.backgroundImage}
             >
-              <ActualUser />
+              <ActualUser isAuthenticated={isLogged} />
               <View style={styles.logo}>
                 <Text style={styles.logotext}>C</Text>
                 <Image

@@ -1,26 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface ActualUserProps {
   isAuthenticated: boolean;
-  profileName: string;
 }
 
-export const ActualUser = ({
-  isAuthenticated = true,
-  profileName,
-}: ActualUserProps) => {
+export const ActualUser = ({ isAuthenticated }: ActualUserProps) => {
   if (!isAuthenticated) {
     return null;
   }
+
+  const { user } = useAuth();
+  const [nameInput, setNameInput] = useState('');
+  const [image, setImage] = useState('');
+
+  const fetchUserProfile = async (accessToken: string) => {
+    try {
+      const response = await fetch(
+        'https://api.escuelajs.co/api/v1/auth/profile',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setNameInput(data.name);
+        setImage(data.avatar);
+      } else {
+        console.error('Failed to fetch user profile');
+      }
+    } catch (error) {
+      console.error('Error fetching user profile', error);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchUserProfile(user);
+    }
+  }, [user]);
 
   return (
     <View style={[styles.absoluteContainer]}>
       <Image
         style={styles.image}
-        source={require('../../../assets/images/home/compass-banner.jpg')}
+        source={{
+          uri: `${image}`,
+        }}
       />
-      <Text style={styles.text}>Hello, {profileName}</Text>
+      <Text style={styles.text}>Hello, Clodosvaldo Moreiro{nameInput}</Text>
     </View>
   );
 };

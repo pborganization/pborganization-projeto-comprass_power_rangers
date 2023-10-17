@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, TextInput, StyleSheet, Image} from 'react-native';
-=======
 import React, { useState, useEffect } from 'react';
 import {
   Modal,
@@ -12,7 +8,6 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
 import { AntDesign } from '@expo/vector-icons';
 
 const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
@@ -74,20 +69,11 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
   };
 
   const handleAddCard = () => {
-<<<<<<< HEAD
-    if(isFormValid()) {
-      setCardLogo(require('../../../assets/images/mastercard.png'));
-      onAddCard(cardNumber);
-      toggleModal();
-    } else {
-      setError('Please fill in all fields corretly.');
-=======
     if (isFormValid()) {
       onAddCard(cardNumber);
       toggleModal();
     } else {
       setError('Please fill in all fields correctly.');
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
     }
   };
 
@@ -121,11 +107,7 @@ const CreditCardModal = ({ isVisible, toggleModal, onAddCard }: any) => {
               <TextInput
                 style={styles.input}
                 value={cardNumber}
-<<<<<<< HEAD
-                placeholder='Card number'
-=======
                 placeholder="Card number"
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
                 onChangeText={handleCardNumberChange}
               />
             </View>

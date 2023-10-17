@@ -106,7 +106,7 @@ export const AddressForm = () => {
     }
   }, [zipCode]);
 
-  const checkAllFields = () => 
+  const checkAllFields = () => {
     const { zipCode, address, city, state, fullName } = getValues();
     const fields = [zipCode, address, city, state, fullName];
 

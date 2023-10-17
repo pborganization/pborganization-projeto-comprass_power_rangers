@@ -8,11 +8,7 @@ export const LanguageOption = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleIconPress = () => {
-<<<<<<< HEAD
-    setIsIconUp(prevState => !prevState);
-=======
     setIsIconUp((prevState) => !prevState);
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
     setIsModalVisible(true);
   };
 
@@ -24,19 +20,11 @@ export const LanguageOption = () => {
     <View style={styles.edits}>
       <Text style={styles.text}>Language</Text>
       <TouchableOpacity onPress={handleIconPress}>
-<<<<<<< HEAD
-        <Entypo 
-          name={isIconUp ? 'chevron-up' : 'chevron-down'}
-          size={24} 
-          color='#9B9B9B' 
-          style={styles.iconLanguage} 
-=======
         <Entypo
           name={isIconUp ? 'chevron-up' : 'chevron-down'}
           size={24}
           color="#9B9B9B"
           style={styles.iconLanguage}
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
         />
         <ModalLanguages visible={isModalVisible} onClose={closeModal} />
       </TouchableOpacity>

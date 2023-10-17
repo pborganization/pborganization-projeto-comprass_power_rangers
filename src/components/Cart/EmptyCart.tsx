@@ -16,11 +16,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-<<<<<<< HEAD
-    width: 324,
-=======
     width: '100%',
->>>>>>> 41e4ee3f43de29f84097831a2090f44313038d50
     height: 150,
     marginVertical: 56,
   },

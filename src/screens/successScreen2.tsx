@@ -14,7 +14,10 @@ const SuccessScreen2 = () => {
       <Text style={styles.text}>
         Your order will be delivered soon. Thank you for choosing our app!
       </Text>
-      <TouchableOpacity style={styles.continueButton}  onPress={() => navigation.navigate('HomeScreen')}>
+      <TouchableOpacity
+        style={styles.continueButton}
+        onPress={() => navigation.navigate('TabNavigatorHome')}
+      >
         <Text style={styles.continue}>CONTNUE SHOPPING</Text>
       </TouchableOpacity>
     </View>

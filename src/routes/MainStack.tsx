@@ -20,7 +20,7 @@ export const MainNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="TabNavigatorScreen"
+        name="TabNavigatorHome"
         component={TabNavigator}
         options={{
           headerShown: false,
@@ -81,13 +81,13 @@ export const MainNavigator = () => {
         options={{ headerShown: false }}
       />
 
-       <Stack.Screen
+      <Stack.Screen
         name="SuccessScreen2"
         component={SuccessScreen2}
         options={{ headerShown: false }}
       />
 
-       <Stack.Screen
+      <Stack.Screen
         name="SuccessDownloadBill"
         component={SuccessDownloadBill}
         options={{ headerShown: false }}
@@ -98,17 +98,6 @@ export const MainNavigator = () => {
         component={SuccessQRcodeScreen}
         options={{ headerShown: false }}
       />
-
-       <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-
-
-
-
     </Stack.Navigator>
-    
   );
 };

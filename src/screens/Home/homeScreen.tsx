@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Entypo } from '@expo/vector-icons';
@@ -20,10 +21,29 @@ const screenWidth = Dimensions.get('window').width;
 
 export const HomeScreen = () => {
   const { user } = useAuth();
+  const [refreshing, setRefreshing] = useState(false);
+  const [forceRerender, setForceRerender] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      setForceRerender((prev) => !prev);
+    }, 1000);
+  };
+
   return (
     <View style={styles.container}>
       <SearchButton />
       <FlatList
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="red"
+          />
+        }
+        key={forceRerender ? 'key-1' : 'key-2'}
         ListHeaderComponent={
           <View style={styles.bannercontainer}>
             <ImageBackground
@@ -47,6 +67,7 @@ export const HomeScreen = () => {
           </View>
         }
         data={[1]}
+        extraData={forceRerender}
         renderItem={() => (
           <View style={styles.productscontainer}>
             <CategoryList />

@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
 
 export const LoadingProducts: React.FC = () => {
   const loadingData = Array.from({ length: 10 }).map((_, index) => ({
@@ -28,23 +30,20 @@ export const LoadingProducts: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  containerquanty: {
-    borderRadius: 8,
-    width: 150,
-  },
   container: {
-    borderRadius: 8,
-    width: 150,
-    marginLeft: 16,
+    width: windowWidth * 0.4,
+    marginLeft: windowWidth * 0.04,
     marginTop: 16,
+    borderRadius: 8,
   },
   productInfo: {
     marginVertical: 8,
   },
   imagePlaceholder: {
-    width: 148,
-    height: 184,
-    backgroundColor: 'lightgray', // Cor de fundo para a imagem de carregamento
+    width: '100%', // Preencha a largura do contêiner
+    aspectRatio: 0.85, // Proporção da imagem
+    backgroundColor: 'lightgray',
+    height: windowWidth * 0.45,
     marginBottom: 3,
     borderRadius: 8,
   },
@@ -52,14 +51,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: 'gray',
-    backgroundColor: 'lightgray', // Cor de fundo para o título de carregamento
+    backgroundColor: 'lightgray',
     marginBottom: 3,
     borderRadius: 8,
     width: '60%',
   },
   descriptionPlaceholder: {
     fontSize: 10,
-    backgroundColor: 'lightgray', // Cor de fundo para a descrição de carregamento
+    backgroundColor: 'lightgray',
     marginBottom: 3,
     borderRadius: 8,
   },
@@ -67,9 +66,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: 'red',
-    backgroundColor: 'lightgray', // Cor de fundo para o preço de carregamento
+    backgroundColor: 'lightgray',
     borderRadius: 8,
     width: '40%',
-    height: 15,
+    height: 25,
   },
 });

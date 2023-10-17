@@ -1,43 +1,49 @@
-import React, { useState } from 'react';
-import { View, Modal, Text, StyleSheet, TouchableOpacity} from 'react-native';
-
-interface EditWarningProps {
-    visible: boolean,
-}
+import React from 'react';
+import { View, Modal, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface LogOutWarningProps {
-    visible: boolean,
-    onCloseModal: () => void; 
+  visible: boolean;
+  onCloseModal: () => void;
+  onNoPress: () => void;
 }
 
-export const EditWarning: React.FC<EditWarningProps> = ({ visible }) => {
-  return (
-    <Modal transparent visible={visible}>
+export const LogOutWarning: React.FC<LogOutWarningProps> = ({
+  visible,
+  onCloseModal,
+  onNoPress
+}) => {
+  const { signOut } = useAuth();
 
-    </Modal>
-  );
-};
+  const handleYesPress = () => {
+    signOut();
+    onCloseModal();
+  };
 
-export const LogOutWarning: React.FC<LogOutWarningProps> = ({ visible, onCloseModal }) => {
+  const handleNoPress = () => {
+    onNoPress();
+    onCloseModal();
+  };
+
   return (
-    <Modal transparent visible={visible} animationType='fade'> 
+    <Modal transparent visible={visible} animationType="fade">
       <View style={styles.warningContainer}>
-        <View style={styles.background}/>
+        <View style={styles.background} />
         <View style={styles.warningContent}>
           <View>
             <Text style={styles.warningTitle}>Warning</Text>
           </View>
           <Text style={styles.text}>Do you really want to leave?</Text>
           <View style={styles.buttons}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleYesPress}>
               <Text style={styles.buttonText}>Yes</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={onCloseModal}>
+            <TouchableOpacity onPress={handleNoPress}>
               <Text style={styles.buttonText}>No</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </View> 
+      </View>
     </Modal>
   );
 };
@@ -46,7 +52,7 @@ const styles = StyleSheet.create({
   warningContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   background: {
     ...StyleSheet.absoluteFillObject,
@@ -69,15 +75,15 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontWeight: '400',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 29
+    marginTop: 29,
   },
   buttonText: {
     fontSize: 14,
-    fontWeight: '700'
-  }
+    fontWeight: '700',
+  },
 });

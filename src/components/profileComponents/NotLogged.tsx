@@ -1,21 +1,18 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native';
 import { LanguageOption } from './LanguageOption';
 
 export const NotLogged = () => {
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor={'#F9F9F9'} barStyle={'dark-content'}/>
       <View style={styles.titleContainer}>
         <Text style={styles.textTitle}>My profile</Text>
       </View>
       <View style={styles.subtitleContainer}>
-        <Text style={styles.subtitle}>You need to log in to see your details</Text>
+        <Text style={styles.subtitle}>
+          You need to log in to see your details
+        </Text>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.textButton}>LOGIN</Text>
         </TouchableOpacity>
@@ -38,7 +35,7 @@ const styles = StyleSheet.create({
     marginRight: 190,
     flexDirection: 'column',
   },
-  textTitle:{
+  textTitle: {
     color: '#000',
     fontSize: 32,
     fontWeight: '800',
@@ -65,11 +62,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textButton: {
-    color:'#FFFF' ,
+    color: '#FFFF',
     fontSize: 16,
     fontWeight: '800',
   },
-  language: {
-
-  }
+  language: {},
 });

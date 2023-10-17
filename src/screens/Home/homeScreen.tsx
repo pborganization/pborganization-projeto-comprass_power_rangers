@@ -12,16 +12,11 @@ import { StatusBar } from 'expo-status-bar';
 import { Entypo } from '@expo/vector-icons';
 import { CategoryList } from '../../components/home/CategoryList';
 import { SearchButton } from '../../components/home/SearchButtom/searchButtom';
-
+import { ActualUser } from '../../components/home/ActualUser';
 
 const screenHeight = Dimensions.get('window').height;
 
 export const HomeScreen = () => {
-  const navigation = useNavigation();
-
-  const handleNav = () => {
-    navigation.navigate('CartScreen');
-  };
   return (
     <View style={styles.container}>
       <SearchButton />
@@ -32,6 +27,7 @@ export const HomeScreen = () => {
               source={require('../../../assets/images/home/compass-banner.jpg')}
               style={styles.backgroundImage}
             >
+              <ActualUser />
               <View style={styles.logo}>
                 <Text style={styles.logotext}>C</Text>
                 <Image

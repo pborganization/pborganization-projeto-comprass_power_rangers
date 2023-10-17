@@ -12,7 +12,7 @@ import { AntDesign } from '@expo/vector-icons';
 import CreditCardModal from '../components/checkoutComponents/CreditCardModal';
 import DeliverySelection from '../components/checkoutComponents/DeliverySelection';
 
-const CheckoutScreen = () => {
+export const CheckoutScreen = () => {
   const [shippingAddress, setShippingAddress] = useState('');
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -196,9 +196,11 @@ const CheckoutScreen = () => {
         <DeliverySelection />
       </View>
 
-      <TouchableOpacity style={styles.sbutton}>
-        <Text style={styles.sbuttonText}>SUBMIT ORDER</Text>
-      </TouchableOpacity>
+      <View style={styles.containerButtom}>
+        <TouchableOpacity style={styles.sbutton}>
+          <Text style={styles.sbuttonText}>SUBMIT ORDER</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -215,11 +217,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 34,
   },
   modalTit: {
-    width: 272,
+    width: '100%',
+    textAlign: 'center',
     height: 24,
     fontSize: 18,
     fontWeight: '700',
-    marginLeft: 63,
     marginTop: 8,
     marginBottom: 32,
   },
@@ -240,9 +242,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   container: {
-    marginTop: 120,
-    marginLeft: 8,
-    marginRight: 8,
     flex: 1,
     backgroundColor: '#fff',
   },
@@ -255,19 +254,20 @@ const styles = StyleSheet.create({
   },
   shippingContainer: {
     height: 108,
-    width: 343,
+    width: '100%',
     marginTop: 16,
     padding: 10,
     borderRadius: 8,
     backgroundColor: '#FFF',
     shadowColor: '#rgba',
+
     shadowOffset: {
       width: 0,
       height: 1,
     },
     shadowOpacity: 25,
     shadowRadius: 4,
-    elevation: 4,
+    elevation: 2,
   },
 
   changeButton: {
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
 
   input: {
     fontSize: 14,
-    marginTop: 30,
+    height: '100%',
     marginLeft: 24,
   },
   paymentSection: {
@@ -308,12 +308,12 @@ const styles = StyleSheet.create({
   },
   paymentMethod: {
     marginTop: 10,
-    width: 500,
+    width: '100%',
     height: 20,
     color: '#9B9B9B',
     fontSize: 14,
     fontWeight: '400',
-    marginLeft: 16,
+    marginLeft: '5%',
   },
   pixLogo: {
     width: 40,
@@ -339,11 +339,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  containerButtom: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   sbutton: {
-    width: 343,
+    width: '90%',
     height: 48,
-    marginLeft: 16,
-    marginRight: 8,
+    marginHorizontal: 20,
     backgroundColor: '#444',
     borderRadius: 24,
     justifyContent: 'center',
@@ -351,7 +355,6 @@ const styles = StyleSheet.create({
   },
   sbuttonText: {
     color: '#FFF',
+    marginHorizontal: 18,
   },
 });
-
-export default CheckoutScreen;

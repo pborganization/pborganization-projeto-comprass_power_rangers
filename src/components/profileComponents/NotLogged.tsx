@@ -5,7 +5,7 @@ import { LanguageOption } from './LanguageOption';
 export const NotLogged = () => {
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={'#FFFF'} barStyle={'dark-content'}/>
+      <StatusBar backgroundColor={'#F9F9F9'} barStyle={'dark-content'}/>
       <View style={styles.titleContainer}>
         <Text style={styles.textTitle}>My profile</Text>
       </View>

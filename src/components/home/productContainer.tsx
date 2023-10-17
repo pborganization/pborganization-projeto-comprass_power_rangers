@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-import React, { useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { QuantityIndicator } from './quantityIndicator';
-import { Products } from './Products';
-import { ProductType } from '../../contexts/productType';
-import { useProductStore } from '../../hooks/productStore';
-=======
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { QuantityIndicator } from './quantityIndicator';
 import { Products } from './Products';
 import { ProductType } from '../../interfaces/productType';
->>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4
 
 interface ProductContainerProps {
   product: ProductType;

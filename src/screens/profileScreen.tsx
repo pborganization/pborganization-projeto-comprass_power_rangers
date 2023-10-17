@@ -99,7 +99,7 @@ export const ProfileScreen = () => {
   
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={'#FFFF'} barStyle={'dark-content'}/>
+      <StatusBar backgroundColor={'#F9F9F9'} barStyle={'dark-content'}/>
       {verificationIcon && (
         <TouchableOpacity style={styles.verification} onPress={handleVerificationPress}>
           <AntDesign name='checkcircle' size={46} color='#2AA952'/>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 16,
-    marginTop: 23.87,
+    marginTop: 35,
     marginRight: 5,
   },
   titleImageContainer: {

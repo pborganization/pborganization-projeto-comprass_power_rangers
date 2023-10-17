@@ -87,11 +87,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 16,
     marginRight: 16,
-<<<<<<< HEAD
-    color: 'black',
-    textTransform: 'capitalize',
-=======
     marginTop: 16,
->>>>>>> acef90d31156a07de56c9200dc6410ecc28c6ad4
   },
 });

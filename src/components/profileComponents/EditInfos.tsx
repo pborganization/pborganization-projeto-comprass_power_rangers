@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
   textInput: {
     width: 300,
     height: 40,
-    borderTopColor: '#FFF',
-    borderRightColor: '#FFF',
-    borderLeftColor: '#FFF',
+    borderTopColor: '#F9F9F9',
+    borderRightColor: '#F9F9F9',
+    borderLeftColor: '#F9F9F9',
     borderWidth: 1,
     marginTop: 20,
     fontSize: 24,

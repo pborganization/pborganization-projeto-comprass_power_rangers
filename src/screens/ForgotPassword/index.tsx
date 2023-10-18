@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Container, Form } from './styles';
+import { ButtonsContainer, Container } from './styles';
 import { Button } from '../../components/Button';
 import { LoginField } from '../../components/LoginField';
 import { Text } from '../../components/Text';
@@ -11,6 +11,7 @@ import { LeftArrow } from '../../components/LeftArrow';
 import { useCallback, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 const emailSchema = yup.object({
   email: yup
@@ -28,7 +29,7 @@ const passwordSchema = yup.object({
     .string()
     .oneOf(
       [yup.ref('password'), null],
-      'Your password is not the same as your confirmation'
+      'Your password is not the same as your confirmation',
     )
     .required('Please complete all fields'),
 });
@@ -43,12 +44,15 @@ export function ForgotPasswordScreen() {
 
   useCallback(() => {
     StatusBar.setBarStyle('light-content');
+    StatusBar.setBackgroundColor('#111213');
   }, []);
 
+  const navigation = useNavigation();
   const [isEmailSubmitting, setIsEmailSubmitting] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailValue, setEmailValue] = useState('');
   const [isPasswordSubmitting, setIsPasswordSubmitting] = useState(false);
+  const [requestStatus, setRequestStatus] = useState('');
 
   const { user } = useAuth();
 
@@ -78,7 +82,6 @@ export function ForgotPasswordScreen() {
     emailSchema
       .validate({ email: emailValue })
       .then(() => {
-        // Email is valid; you can make the API call here
         const userData = {
           email: emailValue,
         };
@@ -94,23 +97,16 @@ export function ForgotPasswordScreen() {
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
-            return response.json(); // Parse the response as JSON
+            return response.json();
           })
-          .then((data) => {
-            // Handle the response data here
-            console.log('Email is valid:', data);
-            setIsEmailValid(true);
-          })
-          .catch((error) => {
-            // Handle errors here
-            console.error('Error:', error);
-          })
+          .then((data) => {})
+          .catch((error) => {})
           .finally(() => {
+            setIsEmailValid(true);
             setIsEmailSubmitting(false);
           });
       })
       .catch((error) => {
-        console.error('Invalid email:', error);
         setIsEmailSubmitting(false);
       });
   }
@@ -122,18 +118,20 @@ export function ForgotPasswordScreen() {
 
     try {
       if (!user) {
-        console.error('User is not authenticated');
+        setRequestStatus('User is not authenticated');
         setIsPasswordSubmitting(false);
         return;
       }
 
-      // Obtém o ID do usuário do perfil
-      const profileResponse = await fetch('https://api.escuelajs.co/api/v1/auth/profile', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${user}`,
+      const profileResponse = await fetch(
+        'https://api.escuelajs.co/api/v1/auth/profile',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${user}`,
+          },
         },
-      });
+      );
 
       if (!profileResponse.ok) {
         throw new Error('Error fetching user profile');
@@ -142,26 +140,25 @@ export function ForgotPasswordScreen() {
       const userProfile = await profileResponse.json();
       const userId = userProfile.id;
 
-      // Atualiza a senha do usuário
-      const updateUserResponse = await fetch(`https://api.escuelajs.co/api/v1/users/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user}`,
+      const updateUserResponse = await fetch(
+        `https://api.escuelajs.co/api/v1/users/${userId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user}`,
+          },
+          body: JSON.stringify({
+            password: password,
+          }),
         },
-        body: JSON.stringify({
-          password: password,
-        }),
-      });
+      );
 
       if (!updateUserResponse.ok) {
         throw new Error('Error updating user');
       }
-
-      const updatedUserData = await updateUserResponse.json();
-      console.log('Successfully updated user:', updatedUserData);
     } catch (error) {
-      console.error('Error:', error);
+      setRequestStatus('Something happened, try again later');
     } finally {
       setIsPasswordSubmitting(false);
     }
@@ -183,7 +180,7 @@ export function ForgotPasswordScreen() {
           }}
           resizeMode="contain"
         >
-          <LeftArrow />
+          <LeftArrow onPress={() => navigation.goBack()} />
 
           <Text size={32} weight={800} color="#FFF" style={styles.Title}>
             Forgot Password
@@ -192,94 +189,106 @@ export function ForgotPasswordScreen() {
             Enter your email and let us see if it exists for you to change your
             password :)
           </Text>
-          <Form>
-            <Controller
-              control={emailControl}
-              name="email"
-              render={({ field }) => (
-                <LoginField
-                  isInvalid={emailErrors.email}
-                  showIcon={isEmailValid || emailErrors.email}
-                  onChangeText={(text) => {
-                    setEmailValue(text);
-                    field.onChange(text);
-                  }}
-                  value={field.value}
-                  isEmailCheck={true}
-                  isSubmitting={isEmailSubmitting}
-                >
-                  Email
-                </LoginField>
-              )}
-            />
+          <Controller
+            control={emailControl}
+            name="email"
+            render={({ formState: { isSubmitted }, field }) => (
+              <LoginField
+                isInvalid={emailErrors.email}
+                showIcon={isSubmitted}
+                onChangeText={(text) => {
+                  setEmailValue(text);
+                  field.onChange(text);
+                }}
+                value={field.value}
+                isEmailCheck={true}
+                isSubmitting={isEmailSubmitting}
+              >
+                Email
+              </LoginField>
+            )}
+          />
 
-            <Controller
-              control={passwordControl}
-              name="password"
-              render={({ field }) => (
-                <LoginField
-                  isInvalid={passwordErrors.password}
-                  showIcon={passwordErrors.password}
-                  onChangeText={field.onChange}
-                  value={field.value}
-                  isPassword={true}
-                  editable={isEmailValid}
-                >
-                  New Password
-                </LoginField>
-              )}
-            />
+          <Controller
+            control={passwordControl}
+            name="password"
+            render={({ field }) => (
+              <LoginField
+                isInvalid={passwordErrors.password}
+                onChangeText={field.onChange}
+                value={field.value}
+                isPassword={true}
+                isSubmitting={isPasswordSubmitting}
+                editable={isEmailValid}
+              >
+                New Password
+              </LoginField>
+            )}
+          />
 
-            <Controller
-              control={passwordControl}
-              name="confirmPassword"
-              render={({ field }) => (
-                <LoginField
-                  isInvalid={passwordErrors.confirmPassword}
-                  showIcon={passwordErrors.confirmPassword}
-                  onChangeText={field.onChange}
-                  value={field.value}
-                  isPassword={true}
-                  isSubmitting={isPasswordSubmitting}
-                  editable={isEmailValid}
-                >
-                  Confirm New Password
-                </LoginField>
-              )}
-            />
+          <Controller
+            control={passwordControl}
+            name="confirmPassword"
+            render={({ field }) => (
+              <LoginField
+                isInvalid={passwordErrors.confirmPassword}
+                onChangeText={field.onChange}
+                value={field.value}
+                isPassword={true}
+                isSubmitting={isPasswordSubmitting}
+                editable={isEmailValid}
+              >
+                Confirm New Password
+              </LoginField>
+            )}
+          />
 
+          {emailErrors.email && (
+            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+              {emailErrors.email?.message}
+            </Text>
+          )}
+
+          {!emailErrors.email && passwordErrors.password && (
+            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+              {passwordErrors.password?.message}
+            </Text>
+          )}
+
+          {!emailErrors.email &&
+            !passwordErrors.password &&
+            passwordErrors.confirmPassword && (
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {passwordErrors.confirmPassword?.message}
+              </Text>
+            )}
+
+          {!emailErrors.email &&
+            !passwordErrors.password &&
+            !passwordErrors.confirmPassword &&
+            requestStatus && (
+              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+                {requestStatus}
+              </Text>
+            )}
+
+          <ButtonsContainer>
             <Button
               onPress={handleEmailSubmit(checkEmailValidity)}
-              disabled={isEmailSubmitting}
+              disabled={emailValue.length === 0}
+              checking={isEmailSubmitting}
             >
               SEARCH
             </Button>
 
             <Button
               onPress={handlePasswordSubmit(handlePasswordChange)}
-              disabled={isPasswordSubmitting || !isEmailValid}
+              disabled={!isEmailValid}
+              checking={isPasswordSubmitting}
             >
               CONFIRM
             </Button>
-
-            {emailErrors.email && (
-              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-                {emailErrors.email?.message}
-              </Text>
-            )}
-
-            {passwordErrors.password && (
-              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-                {passwordErrors.password?.message}
-              </Text>
-            )}
-
-            {!passwordErrors.password && passwordErrors.confirmPassword && (
-              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-                {passwordErrors.confirmPassword?.message}
-              </Text>
-            )}
-          </Form>
+          </ButtonsContainer>
         </ImageBackground>
       </Container>
     </>

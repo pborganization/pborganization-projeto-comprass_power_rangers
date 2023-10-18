@@ -6,9 +6,10 @@ interface ButtonProps {
   children: string;
   onPress: () => void;
   disabled?: boolean;
+  checking?: boolean;
 }
 
-export function Button({ children, onPress, disabled, ...rest }: ButtonProps) {
+export function Button({ children, onPress, disabled, checking, ...rest }: ButtonProps) {
   return (
     <Container
       onPress={onPress}
@@ -17,7 +18,7 @@ export function Button({ children, onPress, disabled, ...rest }: ButtonProps) {
       disabled={disabled}
     >
       <Text weight="800" color="#FFF">
-        {disabled ? (
+        {checking ? (
           <ActivityIndicator size="large" animating={true} color="#FFF" />
         ) : (
           children

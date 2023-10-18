@@ -9,6 +9,6 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const Form = styled.SafeAreaView`
-
+export const ButtonsContainer = styled.SafeAreaView`
+  margin: 48px 0 0 0;
 `;

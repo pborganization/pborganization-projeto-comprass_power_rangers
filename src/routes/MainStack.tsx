@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ProductDetailsScreen } from '../screens/productDetailsScreen';
 import CheckoutScreen from '../screens/checkoutScreen';
 import CheckoutNotLoggedin from '../screens/checkoutNotLoggedIn';
@@ -12,20 +12,38 @@ import SuccessScreen from '../screens/successScreen';
 import SuccessScreen2 from '../screens/successScreen2';
 import SuccessDownloadBill from '../screens/successDownloadBill';
 import SuccessQRcodeScreen from '../screens/successQRcodeScreen';
-import { HomeScreen } from '../screens/Home/homeScreen';
+import { SplashScreen } from '../screens/Splash';
 
 const Stack = createStackNavigator();
 
 export const MainNavigator = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="TabNavigatorHome"
-        component={TabNavigator}
-        options={{
-          headerShown: false,
-        }}
-      />
+      {isLoading ? (
+        <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+      ) : (
+        <Stack.Screen
+          name="TabNavigatorHome"
+          component={TabNavigator}
+          options={{
+            headerShown: false,
+          }}
+        />
+      )}
       <Stack.Screen
         name="ProductDetailsScreen"
         component={ProductDetailsScreen}
@@ -72,11 +90,7 @@ export const MainNavigator = () => {
       <Stack.Screen
         name="AdressScreen"
         component={AdressScreen}
-        options={{
-          title: 'Adding Shipping Address',
-          headerShown: true,
-          headerTitleAlign: 'center',
-        }}
+        options={{ headerShown: false }}
       />
 
       <Stack.Screen

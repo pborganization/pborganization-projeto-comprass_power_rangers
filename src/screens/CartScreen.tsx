@@ -84,10 +84,14 @@ export const CartScreen = () => {
         renderItem={({ item }) => <CartProductCard product={item} />}
         ListEmptyComponent={<EmptyCard />}
       />
-
       <View style={styles.details}>
         <TotalAmount>{totalAmount}</TotalAmount>
-        <Button onPress={handleAmount}>BUY</Button>
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonContainer}>
+            <Button onPress={handleAmount}>BUY</Button>
+          </View>
+        </View>
+
       </View>
     </View>
   );
@@ -112,4 +116,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     marginBottom: 8,
   },
+  buttonContainer: {
+    width: '100%',
+  }
 });

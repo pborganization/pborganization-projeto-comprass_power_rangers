@@ -1,12 +1,11 @@
+import React from 'react';
 import { useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { Text } from '../Text';
 import { Container, IconContainer, Input } from './styles';
 import { StyleSheet } from 'react-native';
 import { FieldError } from 'react-hook-form';
-// import {ValidIcon} from '../Icons/ValidIcon';
-// import {InvalidIcon} from '../Icons/InvalidIcon';
-import React from 'react';
+import { ValidIcon } from '../Icons/ValidIcon';
 import { ClosedEye } from '../Icons/ClosedEye';
 import { OpenEye } from '../Icons/OpenEye';
 
@@ -30,17 +29,19 @@ export function LoginField({
   isPassword,
   value,
   isSubmitting,
-  editable,
   isEmailCheck,
   ...rest
 }: LoginFieldProps) {
+  const [isSecureEntry, setIsSecureEntry] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
-  const [isSecureEntry, setIsSecureEntry] = useState(true);
 
   return (
-    <Container style={isInvalid && styles.isInvalid}>
+    <Container
+      style={ isInvalid && styles.isInvalid}
+      isSubmitting={isSubmitting}
+    >
       <Text
         size={11}
         color={isInvalid ? '#EA6275' : '#9B9B9B'}
@@ -54,7 +55,7 @@ export function LoginField({
         value={value}
         onFocus={handleFocus}
         onBlur={!value ? handleBlur : null}
-        editable={editable}
+        editable={!isSubmitting}
         {...rest}
       />
 
@@ -73,19 +74,18 @@ export function LoginField({
 
       {isEmailCheck && isSubmitting ? (
         <IconContainer style={styles.Loader}>
-          <ActivityIndicator size="large" animating={true} color="#FF0024" />
+          {isInvalid ? (
+            <ActivityIndicator size="large" color="#EA6275" animating={false} />
+          ) : isSubmitting ? (
+            <ActivityIndicator size="large" color="#FF0024" animating={true} />
+          ) : (
+            <ValidIcon />
+          )}
         </IconContainer>
       ) : (
         <></>
       )}
 
-      {/* {showIcon ? (
-        <IconContainer style={styles.Icon}>
-          {isInvalid ? <InvalidIcon /> : <ValidIcon />}
-        </IconContainer>
-      ) : (
-        <></>
-      )} */}
     </Container>
   );
 }
@@ -102,8 +102,12 @@ const styles = StyleSheet.create({
     top: 12,
     fontSize: 12,
   },
+  isValid: {
+    borderWidth: 2,
+    borderColor: '#2AA952',
+  },
   isInvalid: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#EA6275',
   },
   Icon: {

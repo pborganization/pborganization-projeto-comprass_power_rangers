@@ -1,21 +1,27 @@
-import { ImageBackground, Dimensions, StyleSheet, StatusBar } from 'react-native';
+import {
+  ImageBackground,
+  Dimensions,
+  StyleSheet,
+  StatusBar,
+} from 'react-native';
 import { useFonts } from 'expo-font';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Container, Form } from './styles';
+import { ButtonsContainer, Container } from './styles';
 import { Button } from '../../components/Button';
 import { LoginField } from '../../components/LoginField';
 import { Text } from '../../components/Text';
 import { LeftArrow } from '../../components/LeftArrow';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 const schema = yup.object({
   name: yup
     .string()
     .matches(
       /^[a-zA-Z0-9\s]+$/,
-      'Name can only contain letters, numbers, and spaces'
+      'Name can only contain letters, numbers, and spaces',
     )
     .required('Please complete all fields'),
   email: yup
@@ -30,7 +36,7 @@ const schema = yup.object({
     .string()
     .oneOf(
       [yup.ref('password'), null],
-      'Your password is not the same as your confirmation'
+      'Your password is not the same as your confirmation',
     )
     .required('Please complete all fields'),
 });
@@ -42,6 +48,8 @@ export function SignUpScreen() {
     'OpenSans-700': require('../../assets/fonts/OpenSans-Bold.ttf'),
     'OpenSans-800': require('../../assets/fonts/OpenSans-ExtraBold.ttf'),
   });
+
+  const navigation = useNavigation();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -80,16 +88,9 @@ export function SignUpScreen() {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json(); // Parse the response as JSON
+        return response.json();
       })
-      .then((data) => {
-        // Handle the response data here
-        console.log('Successfully registered:', data);
-      })
-      .catch((error) => {
-        // Handle errors here
-        console.error('Error:', error);
-      })
+      .catch((error) => {})
       .finally(() => {
         setIsSubmitting(false);
       });
@@ -111,111 +112,108 @@ export function SignUpScreen() {
           }}
           resizeMode="contain"
         >
-          <LeftArrow />
+          <LeftArrow onPress={() => navigation.goBack()} />
 
           <Text size={32} weight={800} color="#FFF" style={styles.Title}>
-          Sign Up
+            Sign Up
           </Text>
           <Text size={16} color="#FFF" style={styles.Description}>
-          Choose a really cool name that only contains spaces as special
-          characters. Oh, and your password must have more than 4 digits! :)
+            Choose a really cool name that only contains spaces as special
+            characters. Oh, and your password must have more than 4 digits! :)
           </Text>
-          <Form>
-            <Controller
-              control={control}
-              name="name"
-              render={({
-                formState: { isSubmitted },
-                field: { onChange, value, ...rest },
-              }) => (
-                <LoginField
-                  isInvalid={errors.name}
-                  showIcon={isSubmitted}
-                  onChangeText={onChange}
-                  value={value}
-                >
+          <Controller
+            control={control}
+            name="name"
+            render={({
+              formState: { isSubmitted },
+              field: { onChange, value, ...rest },
+            }) => (
+              <LoginField
+                isInvalid={errors.name}
+                showIcon={isSubmitted}
+                onChangeText={onChange}
+                value={value}
+              >
                 Name
-                </LoginField>
-              )}
-            />
+              </LoginField>
+            )}
+          />
 
-            <Controller
-              control={control}
-              name="email"
-              render={({
-                formState: { isSubmitted },
-                field: { onChange, value, ...rest },
-              }) => (
-                <LoginField
-                  isInvalid={errors.email}
-                  showIcon={isSubmitted}
-                  onChangeText={onChange}
-                  value={value}
-                >
+          <Controller
+            control={control}
+            name="email"
+            render={({
+              formState: { isSubmitted },
+              field: { onChange, value, ...rest },
+            }) => (
+              <LoginField
+                isInvalid={errors.email}
+                showIcon={isSubmitted}
+                onChangeText={onChange}
+                value={value}
+              >
                 Email
-                </LoginField>
-              )}
-            />
+              </LoginField>
+            )}
+          />
 
-            <Controller
-              control={control}
-              name="password"
-              render={({
-                formState: { isSubmitted },
-                field: { onChange, value, ...rest },
-              }) => (
-                <LoginField
-                  isInvalid={errors.password}
-                  showIcon={isSubmitted}
-                  onChangeText={onChange}
-                  value={value}
-                  isPassword={true}
-                >
+          <Controller
+            control={control}
+            name="password"
+            render={({
+              formState: { isSubmitted },
+              field: { onChange, value, ...rest },
+            }) => (
+              <LoginField
+                isInvalid={errors.password}
+                showIcon={isSubmitted}
+                onChangeText={onChange}
+                value={value}
+                isPassword={true}
+              >
                 Password
-                </LoginField>
-              )}
-            />
+              </LoginField>
+            )}
+          />
 
-            <Controller
-              control={control}
-              name="confirmPassword"
-              render={({
-                formState: { isSubmitted },
-                field: { onChange, value, ...rest },
-              }) => (
-                <LoginField
-                  isInvalid={errors.confirmPassword}
-                  showIcon={isSubmitted}
-                  onChangeText={onChange}
-                  value={value}
-                  isPassword={true}
-                >
+          <Controller
+            control={control}
+            name="confirmPassword"
+            render={({
+              formState: { isSubmitted },
+              field: { onChange, value, ...rest },
+            }) => (
+              <LoginField
+                isInvalid={errors.confirmPassword}
+                showIcon={isSubmitted}
+                onChangeText={onChange}
+                value={value}
+                isPassword={true}
+              >
                 Confirm Password
-                </LoginField>
-              )}
-            />
-
-            {/* Que deus me perdoe por essa atrocidade que codarei nas linhas baixo, amém! */}
-
-            {errors.name && (
-              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-                {errors.name?.message}
-              </Text>
+              </LoginField>
             )}
+          />
 
-            {!errors.name && errors.email && (
-              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-                {errors.email?.message}
-              </Text>
-            )}
+          {errors.name && (
+            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+              {errors.name?.message}
+            </Text>
+          )}
 
-            {!errors.name && !errors.email && errors.password && (
-              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-                {errors.password?.message}
-              </Text>
-            )}
+          {!errors.name && errors.email && (
+            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+              {errors.email?.message}
+            </Text>
+          )}
 
-            {!errors.name &&
+          {!errors.name && !errors.email && errors.password && (
+            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+              {errors.password?.message}
+            </Text>
+          )}
+
+          {!errors.name &&
             !errors.email &&
             !errors.password &&
             errors.confirmPassword && (
@@ -223,11 +221,14 @@ export function SignUpScreen() {
                 {errors.confirmPassword?.message}
               </Text>
             )}
-
-            <Button onPress={handleSubmit(handleSignUp)} disabled={isSubmitting}>
-            SIGN UP
+          <ButtonsContainer>
+            <Button
+              onPress={handleSubmit(handleSignUp)}
+              disabled={isSubmitting}
+            >
+              SIGN UP
             </Button>
-          </Form>
+          </ButtonsContainer>
         </ImageBackground>
       </Container>
     </>

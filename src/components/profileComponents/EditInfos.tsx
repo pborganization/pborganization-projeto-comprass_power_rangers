@@ -7,7 +7,6 @@ interface EditInfosProps {
 }
 
 export const EditInfos = ({ userName, onNameChange }: EditInfosProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [name, setName] = useState(userName);
   const handleNameChange = (text: string) => {
     setName(text);

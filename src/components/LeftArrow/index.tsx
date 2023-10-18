@@ -1,9 +1,13 @@
 import { LeftIcon } from '../Icons/LeftArrow';
 import { Container } from './styles';
 
-export function LeftArrow() {
+interface LeftArrowProps {
+  onPress?: () => void;
+}
+
+export function LeftArrow({onPress}: LeftArrowProps) {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <LeftIcon/>
     </Container>
   );

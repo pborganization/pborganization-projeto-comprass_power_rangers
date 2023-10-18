@@ -9,9 +9,6 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const Form = styled.SafeAreaView`
-`;
-
 export const Logo = styled.SafeAreaView`
   margin-top: 66px;
   margin-bottom: 40px;
@@ -20,8 +17,11 @@ export const Logo = styled.SafeAreaView`
   flex-direction: row;
 `;
 
+export const ButtonsContainer = styled.SafeAreaView`
+  margin: 64px 0 15px 0;
+`;
+
 export const OtherOptions = styled.SafeAreaView`
   justify-content: center;
   align-items: center;
-  margin-top: 7px;
 `;

@@ -70,36 +70,37 @@ export const ProfileScreen = () => {
         setUserId(data.id);
         setImage(data.avatar);
       } else {
-        console.error('Failed to fetch user profile');
       }
     } catch (error) {
-      console.error('Error fetching user profile', error);
     }
   };
 
   const updateUserProfile = async (newName: string) => {
     try {
-      const response = await fetch(
-        `https://api.escuelajs.co/api/v1/users/${userId}`,
-        {
-          method: 'PUT',
-          body: JSON.stringify({
-            name: newName,
-          }),
+      const url = `https://api.escuelajs.co/api/v1/users/${userId}`;
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({
+          name: newName,
+        }),
+      });
 
       if (response.ok) {
-      } else {
+        const updatedUser = await response.json();
+        setNameInput(updatedUser.name);
       }
-    } catch (error) {}
+    } catch (error) {
+    }
   };
 
   const handleVerificationPress = () => {
     if (isEnabled) {
       setNameInput(nameInput);
-      setIsEnabled(false);
       updateUserProfile(nameInput);
+      setIsEnabled(false);
     }
   };
 

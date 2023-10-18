@@ -4,7 +4,7 @@ import { useFonts } from 'expo-font';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Container, Form, Logo, OtherOptions } from './styles';
+import { ButtonsContainer, Container, Logo, OtherOptions } from './styles';
 import { LoginField } from '../../components/LoginField';
 import { Text } from '../../components/Text';
 import { Button } from '../../components/Button';
@@ -35,10 +35,9 @@ export function LoginScreen() {
     'OpenSans-800': require('../../assets/fonts/OpenSans-ExtraBold.ttf'),
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const navigation = useNavigation();
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [requestStatus, setRequestStatus] = useState('');
   const { user, signIn } = useAuth();
 
   const {
@@ -51,6 +50,7 @@ export function LoginScreen() {
 
   function handleLogIn(data: any) {
     setIsSubmitting(true);
+    setRequestStatus('');
 
     const { email, password } = data;
 
@@ -70,25 +70,18 @@ export function LoginScreen() {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json(); // Parse the response as JSON
+        return response.json();
       })
       .then((data) => {
-        // Handle the response data here
         const { access_token } = data;
         signIn(access_token);
-        console.log('Successfully registered:', data);
       })
       .catch((error) => {
-        // Handle errors here
-        console.error('Error:', error);
+        setRequestStatus('Something happened, try again later');
       })
       .finally(() => {
         setIsSubmitting(false);
       });
-
-    {
-      console.log(user);
-    }
   }
 
   if (!isFontsLoaded) {
@@ -127,64 +120,71 @@ export function LoginScreen() {
             </View>
           </Logo>
 
-          <Form>
-            <Controller
-              control={control}
-              name="email"
-              render={({
-                formState: { isSubmitted },
-                field: { onChange, value, ...rest },
-              }) => (
-                <LoginField
-                  isInvalid={errors.email}
-                  showIcon={isSubmitted}
-                  onChangeText={onChange}
-                  value={value}
-                >
-                  Email
-                </LoginField>
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="password"
-              render={({
-                formState: { isSubmitted },
-                field: { onChange, value, ...rest },
-              }) => (
-                <LoginField
-                  isInvalid={errors.password}
-                  showIcon={isSubmitted}
-                  onChangeText={onChange}
-                  value={value}
-                  isPassword={true}
-                >
-                  Password
-                </LoginField>
-              )}
-            />
-
-            {errors.email && (
-              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-                {errors.email?.message}
-              </Text>
+          <Controller
+            control={control}
+            name="email"
+            render={({
+              formState: { isSubmitted },
+              field: { onChange, value, ...rest },
+            }) => (
+              <LoginField
+                isInvalid={errors.email}
+                onChangeText={onChange}
+                value={value}
+                isSubmitting={isSubmitting}
+              >
+                Email
+              </LoginField>
             )}
+          />
 
-            {!errors.email && errors.password && (
-              <Text size={14} color="#EA6275" style={styles.ErrorsText}>
-                {errors.password?.message}
-              </Text>
+          <Controller
+            control={control}
+            name="password"
+            render={({
+              formState: { isSubmitted },
+              field: { onChange, value, ...rest },
+            }) => (
+              <LoginField
+                isInvalid={errors.password}
+                showIcon={isSubmitted}
+                onChangeText={onChange}
+                value={value}
+                isPassword={true}
+                isSubmitting={isSubmitting}
+              >
+                Password
+              </LoginField>
             )}
+          />
 
+          {errors.email && (
+            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+              {errors.email?.message}
+            </Text>
+          )}
+
+          {!errors.email && errors.password && (
+            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+              {errors.password?.message}
+            </Text>
+          )}
+
+          {!errors.email && !errors.password && requestStatus && (
+            <Text size={14} color="#EA6275" style={styles.ErrorsText}>
+              {requestStatus}
+            </Text>
+          )}
+
+          <ButtonsContainer>
             <Button
               styles={styles.Button}
-              disabled={isSubmitting}
+              checking={isSubmitting}
               onPress={handleSubmit(handleLogIn)}
             >
               LOGIN
             </Button>
-          </Form>
+          </ButtonsContainer>
 
           <OtherOptions>
             <SubText onPress={handleSignUp}>

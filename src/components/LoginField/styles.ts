@@ -8,7 +8,7 @@ export const Container = styled.View`
   margin: 8px 16px;
   padding-top: 26px;
   padding-left: 16px;
-  background: #fff;
+  background: ${({isSubmitting}) => isSubmitting ? '#B6B6B6' : '#FFF'};
   border-radius: 12px;
   box-shadow: 0px 1px 8px rgba(0, 0, 0, ${isAndroid ? 0.5 : 0.05});
   elevation: 1;

@@ -1,5 +1,5 @@
 import React,  { forwardRef, useRef, useState } from 'react';
-import { TextInput, TextInputProps, View, StyleSheet } from 'react-native';
+import { TextInput, TextInputProps, View, StyleSheet, Text } from 'react-native';
 import { Colors } from '../../assets/styles/Colors';
 
 
@@ -27,6 +27,8 @@ export const Input = forwardRef((props: TextInputProps, ref)  => {
         ref={(inputRef as any)}
         onBlur={handlerBlur}
         {...props}/>
+         {isFocused || inputValue ? (
+        <Text style={[styles.label, styles.labelFocused]}>{props.placeholder}</Text> ) : null}
     </View>
   );
 });
@@ -65,5 +67,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.gray_200,
     borderColor: Colors.gray_200
   },
-
+  label: {
+    position: 'absolute',
+    left: 15,
+    top: 10,
+    fontSize: 14,
+    color: Colors.gray_500,
+  },
+  labelFocused: {
+    top: 4,
+    fontSize: 12,
+    color: Colors.gray_500,
+  }
 });

@@ -72,7 +72,11 @@ export const MainNavigator = () => {
       <Stack.Screen
         name="AdressScreen"
         component={AdressScreen}
-        options={{ headerShown: false }}
+        options={{
+          title: 'Adding Shipping Address',
+          headerShown: true,
+          headerTitleAlign: 'center',
+        }}
       />
 
       <Stack.Screen
